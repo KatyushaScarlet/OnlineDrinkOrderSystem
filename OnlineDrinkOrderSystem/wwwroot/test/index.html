@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">
+</head>
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <input type="button" onclick="signOut();" value="Sign out" />
+    <input type="button" onclick="checkStatus();" value="Check Status" />
+    <p>User Info</p>
+    <p id="pId">ID:</p>
+    <p id="pName">Name: </p>
+    <p id="pImageUrl">Image URL: </p>
+    <p id="pEmail">Email: </p>
+    <img id="pImage" />
+    <script>
+        var profile;
+        function onSignIn(googleUser) {
+            profile = googleUser.getBasicProfile();
+            console.log(profile);
+            getUserInfo();
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+                profile = "";
+            });
+        }
+
+        function checkStatus() {
+            console.log(profile);
+            getUserInfo();
+        }
+
+        function getUserInfo() 
+        {
+            if (profile!="") {
+            document.getElementById('pId').innerText = 'ID: ' + profile.getId(); // Do not send to your backend! Use an ID token instead.
+            document.getElementById('pName').innerText = 'Name: ' + profile.getName();
+            document.getElementById('pImageUrl').innerText = 'Image URL: ' + profile.getImageUrl();
+            document.getElementById('pEmail').innerText = 'Email: ' + profile.getEmail(); // This is null if the 'email' scope is not present.
+            document.getElementById('pImage').src = profile.getImageUrl();
+            }
+        }
+    </script>
+</body>
+</html>
