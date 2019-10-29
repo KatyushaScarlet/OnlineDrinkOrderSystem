@@ -13,24 +13,10 @@ namespace OnlineDrinkOrderSystem
 {
     public class Program
     {
-        //private static readonly IOptions<Models.ConnectionStrings> connectionString;
+        public static IConfigurationRoot configuration;
+
         public static void Main(string[] args)
         {
-            //        var builder = new ConfigurationBuilder()
-            //.SetBasePath(Directory.GetCurrentDirectory())
-            //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-            //        IConfigurationRoot configuration = builder.Build();
-
-            //        Console.WriteLine("ConnectionStrings");
-            //        Console.WriteLine(configuration.GetConnectionString("Database"))
-
-
-            //Console.WriteLine(Program.connectionString.Value.Database);
-            //Console.WriteLine(Program.connectionString.Value.Server);
-            //Console.WriteLine(Program.connectionString.Value.Uid);
-            //Console.WriteLine(Program.connectionString.Value.Pwd);
-
             CreateHostBuilder(args).Build().Run();
         }
 

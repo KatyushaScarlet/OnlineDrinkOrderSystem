@@ -8,16 +8,17 @@ using Microsoft.Extensions.Logging;
 using OnlineDrinkOrderSystem.Models;
 using Newtonsoft.Json;
 using OnlineDrinkOrderSystem.Common;
+using Microsoft.Extensions.Options;
 
 namespace OnlineDrinkOrderSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly GoogleOauth _googleOauth;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(GoogleOauth googleOauth)
         {
-            _logger = logger;
+            _googleOauth = googleOauth;
         }
 
         public IActionResult Index()
@@ -33,7 +34,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             result.message = "Token:" + token;
             if (!string.IsNullOrEmpty(token))
             {
-                result.status = Common.Common.GoogleJwtVerify(token);
+                result.status = _googleOauth.GoogleJwtVerify(token);
             }
             return JsonConvert.SerializeObject(result);
         }

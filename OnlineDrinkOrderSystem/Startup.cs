@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OnlineDrinkOrderSystem.Models;
+using OnlineDrinkOrderSystem.Common;
 
 namespace OnlineDrinkOrderSystem
 {
@@ -23,10 +25,10 @@ namespace OnlineDrinkOrderSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            //services.AddOptions();
-
-            //services.Configure<Models.ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            //读取自定义配置文件
+            services.Configure<GoogleOauthSettings>(Configuration.GetSection("GoogleOauthSettings"));
+            //传入GoogleOauth类
+            services.AddTransient<GoogleOauth>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

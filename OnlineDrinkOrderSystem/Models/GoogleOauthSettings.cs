@@ -9,6 +9,6 @@ namespace OnlineDrinkOrderSystem.Models
     {
         public string GoogleAppId { get; set; }
         public string GoogleIss { get; set; }
-        public string GoogleCerts { get; set; }
+        public string GoogleCertUrl { get; set; }
     }
 }
