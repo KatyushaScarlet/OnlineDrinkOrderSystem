@@ -7,24 +7,29 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace OnlineDrinkOrderSystem
 {
     public class Program
     {
+        //private static readonly IOptions<Models.ConnectionStrings> connectionString;
         public static void Main(string[] args)
         {
-    //        var builder = new ConfigurationBuilder()
-    //.SetBasePath(Directory.GetCurrentDirectory())
-    //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            //        var builder = new ConfigurationBuilder()
+            //.SetBasePath(Directory.GetCurrentDirectory())
+            //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
-    //        IConfigurationRoot configuration = builder.Build();
+            //        IConfigurationRoot configuration = builder.Build();
 
-    //        Console.WriteLine("ConnectionStrings");
-    //        Console.WriteLine(configuration.GetConnectionString("Host"));
-    //        Console.WriteLine(configuration.GetConnectionString("Port"));
-    //        Console.WriteLine(configuration.GetConnectionString("User"));
-    //        Console.WriteLine(configuration.GetConnectionString("Password"));
+            //        Console.WriteLine("ConnectionStrings");
+            //        Console.WriteLine(configuration.GetConnectionString("Database"))
+
+
+            //Console.WriteLine(Program.connectionString.Value.Database);
+            //Console.WriteLine(Program.connectionString.Value.Server);
+            //Console.WriteLine(Program.connectionString.Value.Uid);
+            //Console.WriteLine(Program.connectionString.Value.Pwd);
 
             CreateHostBuilder(args).Build().Run();
         }
