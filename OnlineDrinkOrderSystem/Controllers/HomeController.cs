@@ -14,13 +14,6 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GoogleOauth _googleOauth;
-
-        public HomeController(GoogleOauth googleOauth)
-        {
-            _googleOauth = googleOauth;
-        }
-
         public IActionResult Index()
         {
             return View();
@@ -34,7 +27,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             result.message = "Token:" + token;
             if (!string.IsNullOrEmpty(token))
             {
-                result.status = _googleOauth.GoogleJwtVerify(token);
+                result.status = GoogleOauth.GoogleJwtVerify(token);
             }
             return JsonConvert.SerializeObject(result);
         }

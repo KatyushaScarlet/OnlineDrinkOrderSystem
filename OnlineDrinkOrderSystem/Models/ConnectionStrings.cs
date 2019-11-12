@@ -7,9 +7,9 @@ namespace OnlineDrinkOrderSystem.Models
 {
     public class ConnectionStrings
     {
-        public string Server;
-        public string Database;
-        public string Uid;
-        public string Pwd;
+        public static string Server { get; set; }
+        public static string Database { get; set; }
+        public static string User { get; set; }
+        public static string Password { get; set; }
     }
 }

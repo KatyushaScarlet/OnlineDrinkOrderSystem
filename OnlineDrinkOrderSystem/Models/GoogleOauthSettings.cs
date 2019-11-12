@@ -7,8 +7,8 @@ namespace OnlineDrinkOrderSystem.Models
 {
     public class GoogleOauthSettings
     {
-        public string GoogleAppId { get; set; }
-        public string GoogleIss { get; set; }
-        public string GoogleCertUrl { get; set; }
+        public static string GoogleAppId { get; set; }
+        public static string GoogleIss { get; set; }
+        public static string GoogleCertUrl { get; set; }
     }
 }

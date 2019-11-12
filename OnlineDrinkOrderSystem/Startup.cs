@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OnlineDrinkOrderSystem.Models;
 using OnlineDrinkOrderSystem.Common;
+using OnlineDrinkOrderSystem.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace OnlineDrinkOrderSystem
 {
@@ -25,10 +25,11 @@ namespace OnlineDrinkOrderSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //读取自定义配置文件
-            services.Configure<GoogleOauthSettings>(Configuration.GetSection("GoogleOauthSettings"));
-            //传入GoogleOauth类
-            services.AddTransient<GoogleOauth>();
+            //读入配置
+            Models.ConnectionStrings connectionStrings = new ConnectionStrings();
+            Models.GoogleOauthSettings googleOauthSettings = new GoogleOauthSettings();
+            Configuration.GetSection("ConnectionStrings").Bind(connectionStrings);
+            Configuration.GetSection("GoogleOauthSettings").Bind(googleOauthSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
