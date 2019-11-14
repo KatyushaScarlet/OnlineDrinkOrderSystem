@@ -30,6 +30,13 @@ namespace OnlineDrinkOrderSystem
             Models.GoogleOauthSettings googleOauthSettings = new GoogleOauthSettings();
             Configuration.GetSection("ConnectionStrings").Bind(connectionStrings);
             Configuration.GetSection("GoogleOauthSettings").Bind(googleOauthSettings);
+            //Session 设置
+            services.AddSession(options =>
+            {
+                // 设置 Session 过期时间
+                options.IdleTimeout = TimeSpan.FromDays(7);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +50,9 @@ namespace OnlineDrinkOrderSystem
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            //使用 Session
+            app.UseSession();
+
             app.UseStaticFiles();
 
             app.UseRouting();

@@ -29,17 +29,25 @@ namespace OnlineDrinkOrderSystem.Controllers
             {
                 result.status = GoogleOauth.GoogleJwtVerify(token);
             }
+            //Tool.setSessionObject(HttpContext.Session, "isLogin", true);
+
             return JsonConvert.SerializeObject(result);
         }
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[HttpGet]
+        //public string Islogin()
+        //{
+        //    return Convert.ToString(Tool.getSessionObject<bool>(HttpContext.Session, "isLogin"));
+        //}
+        //public IActionResult Privacy()
+        //{
+        //    return View();
+        //}
+
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }

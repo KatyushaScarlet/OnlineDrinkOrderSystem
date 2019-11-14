@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace OnlineDrinkOrderSystem.Common
 {
-    public class Common
+    public class Tool
     {
         public static Jwt JwtConvertObject(string jwtString)//序列化jwt
         {
@@ -43,7 +44,7 @@ namespace OnlineDrinkOrderSystem.Common
         //    return Encoding.UTF8.GetString(Convert.FromBase64String(input));
         //}
 
-        public static string HttpGet(string Url, string postDataStr="")
+        public static string HttpGet(string Url, string postDataStr = "")
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);
             request.Method = "GET";
@@ -77,6 +78,23 @@ namespace OnlineDrinkOrderSystem.Common
             StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(encoding));
             string retString = reader.ReadToEnd();
             return retString;
+        }
+
+        public static T getSessionObject<T>(ISession session, string key)
+        {
+            if (session.TryGetValue(key, out byte[] value))
+            {
+                string json = System.Text.Encoding.UTF8.GetString(value);
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            return default(T);
+        }
+
+        public static void setSessionObject(ISession session, string key,object value)
+        {
+            string json = JsonConvert.SerializeObject(value);
+            byte[] result = System.Text.Encoding.UTF8.GetBytes(json);
+            session.Set(key, result);
         }
     }
 }
