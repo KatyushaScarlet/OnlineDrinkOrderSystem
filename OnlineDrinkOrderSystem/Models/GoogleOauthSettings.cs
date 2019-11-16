@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineDrinkOrderSystem.Models
 {
-    public class GoogleOauthSettings
+    public static class GoogleOauthSettings
     {
         public static string GoogleAppId { get; set; }
         public static string GoogleIss { get; set; }

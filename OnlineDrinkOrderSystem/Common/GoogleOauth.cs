@@ -20,7 +20,7 @@ namespace OnlineDrinkOrderSystem.Common
 {
     public class GoogleOauth
     {
-        public static bool GoogleJwtVerify(string jwtString)//验证jwt是否有效
+        public static bool GoogleTokenVerify(string token)//验证jwt是否有效
         {
             //设定Google认证
             string googleAppId = Models.GoogleOauthSettings.GoogleAppId;
@@ -28,7 +28,7 @@ namespace OnlineDrinkOrderSystem.Common
             string googleCertsUrl = Models.GoogleOauthSettings.GoogleCertUrl;
 
             //获取公钥
-            GoogleCerts certs = JsonConvert.DeserializeObject<Models.GoogleCerts>(Common.HttpGet(googleCertsUrl));
+            GoogleCerts certs = JsonConvert.DeserializeObject<Models.GoogleCerts>(Tool.HttpGet(googleCertsUrl));
 
             List<SecurityKey> keys = new List<SecurityKey>();
 
@@ -42,7 +42,7 @@ namespace OnlineDrinkOrderSystem.Common
                 //验证Token
                 IdentityModelEventSource.ShowPII = true;
                 var principal = new JwtSecurityTokenHandler()
-                    .ValidateToken(jwtString, new TokenValidationParameters()
+                    .ValidateToken(token, new TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,

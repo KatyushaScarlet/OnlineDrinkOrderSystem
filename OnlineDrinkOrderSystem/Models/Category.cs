@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace OnlineDrinkOrderSystem.Models
 {
-    public class ResultResponse
+    public class Category
     {
-        public bool status;//响应状态
-        public string message;//响应消息
+        public int Category_ID;
+        public string Category_Name;
     }
 }

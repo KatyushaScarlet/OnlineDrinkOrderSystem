@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OnlineDrinkOrderSystem.Models
 {
-    public class ConnectionStrings
+    public static class ConnectionStrings
     {
         public static string Server { get; set; }
         public static string Database { get; set; }

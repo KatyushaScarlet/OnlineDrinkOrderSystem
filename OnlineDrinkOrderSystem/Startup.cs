@@ -32,6 +32,7 @@ namespace OnlineDrinkOrderSystem
             Models.GoogleOauthSettings googleOauthSettings = new GoogleOauthSettings();
             Configuration.GetSection("ConnectionStrings").Bind(connectionStrings);
             Configuration.GetSection("GoogleOauthSettings").Bind(googleOauthSettings);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
