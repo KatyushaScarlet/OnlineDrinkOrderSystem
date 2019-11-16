@@ -59,6 +59,8 @@ namespace OnlineDrinkOrderSystem
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

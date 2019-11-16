@@ -40,11 +40,21 @@
     }
 
     function onSuccess(googleUser) {
-
+        var id_token = googleUser.getAuthResponse().id_token;
+        $.post("/User/VerifyToken", {
+            token: id_token
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    //登录成功则跳转
+                    window.location.href = "/";
+                }
+        })
     }
 
     function onFailure() {
-
+        alert("授权失败！");
     }
     //function onSignIn(googleUser) {
     //    var id_token = googleUser.getAuthResponse().id_token;
@@ -53,7 +63,7 @@
     //function onSignIn(googleUser) {
     //    alert("click!");
     //    var id_token = googleUser.getAuthResponse().id_token;
-    //    $.post("/Home/SubmitToken", {
+    //    $.post("/User/VerifyToken", {
     //        token: id_token
     //    }, function (data) {
     //        data = JSON.parse(data);
