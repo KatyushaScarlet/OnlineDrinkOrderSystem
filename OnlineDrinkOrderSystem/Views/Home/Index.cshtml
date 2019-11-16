@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    List<Category> categories = ViewData["categories"] as List<Category>;
 }
 <!-- slider-group-start -->
 <div class="slider-group  mt-30">
@@ -91,9 +92,9 @@
                     <div class="category-menu">
                         <nav class="menu">
                             <ul>
-                                @for (int i = 0; i < 5; i++)
+                                @foreach (var item in categories)
                                 {
-                                    <li><a href="#">类别 @(i+1)</a></li>
+                                    <li><a href="#@item.Category_ID">@item.Category_Name</a></li>
                                 }
                             </ul>
                         </nav>

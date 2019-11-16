@@ -7,7 +7,7 @@ namespace OnlineDrinkOrderSystem.Models
 {
     public class ResultResponse
     {
-        public bool status;//响应状态
-        public string message;//响应消息
+        public bool status{ get; set; }//响应状态
+        public string message{ get; set; }//响应消息
     }
 }

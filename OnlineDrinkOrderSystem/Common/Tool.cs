@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -19,7 +20,8 @@ namespace OnlineDrinkOrderSystem.Common
 {
     public class Tool
     {
-        public static Jwt GoogleToken2Jwt(string jwtString)//序列化token
+        //序列化token
+        public static Jwt GoogleToken2Jwt(string jwtString)
         {
             Jwt jwt = new Jwt();
 
@@ -45,6 +47,7 @@ namespace OnlineDrinkOrderSystem.Common
         //    return Encoding.UTF8.GetString(Convert.FromBase64String(input));
         //}
 
+        //Get
         public static string HttpGet(string Url, string postDataStr = "")
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);
@@ -61,6 +64,7 @@ namespace OnlineDrinkOrderSystem.Common
             return retString;
         }
 
+        //Post
         public static string HttpPost(string Url, string postDataStr)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
@@ -81,6 +85,7 @@ namespace OnlineDrinkOrderSystem.Common
             return retString;
         }
 
+        //GoogleJwt转User类
         public static User GoogleJwt2User(Jwt jwt)
         {
             User user = new User();
@@ -95,22 +100,41 @@ namespace OnlineDrinkOrderSystem.Common
             return user;
         }
 
-        public static T DataRow2Entity<T>(DataRow r)
+        //DataRow转实体
+        public static T DataRow2Entity<T>(DataRow dataRow)
         {
-            T t = default(T);
-            t = Activator.CreateInstance<T>();
-            PropertyInfo[] ps = t.GetType().GetProperties();
-            foreach (var item in ps)
+            T t = Activator.CreateInstance<T>(); //创建实例           
+            PropertyInfo[] pi = t.GetType().GetProperties();//取类的属性
+            
+            //属性赋值
+            foreach (PropertyInfo p in pi)
             {
-                if (r.Table.Columns.Contains(item.Name))
+                if (dataRow.Table.Columns.Contains(p.Name) && !string.IsNullOrWhiteSpace(dataRow[p.Name].ToString()))
                 {
-                    object v = r[item.Name];
-                    if (v.GetType() == typeof(System.DBNull))
-                        v = null;
-                    item.SetValue(t, v, null);
+                    p.SetValue(t, Convert.ChangeType(dataRow[p.Name], p.PropertyType), null);
                 }
             }
-            return t;
+
+            return t; //Return
+        }
+
+        //读取Session
+        public static T getSessionObject<T>(ISession session, string key)
+        {
+            if (session.TryGetValue(key, out byte[] value))
+            {
+                string json = System.Text.Encoding.UTF8.GetString(value);
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            return default(T);
+        }
+
+        //设置Sessin
+        public static void setSessionObject(ISession session, string key, object value)
+        {
+            string json = JsonConvert.SerializeObject(value);
+            byte[] result = System.Text.Encoding.UTF8.GetBytes(json);
+            session.Set(key, result);
         }
     }
 }

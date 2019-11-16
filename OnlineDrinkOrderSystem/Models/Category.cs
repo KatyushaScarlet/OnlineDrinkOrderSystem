@@ -7,7 +7,7 @@ namespace OnlineDrinkOrderSystem.Models
 {
     public class Category
     {
-        public int Category_ID;
-        public string Category_Name;
+        public int Category_ID { get; set; }
+        public string Category_Name { get; set; }
     }
 }

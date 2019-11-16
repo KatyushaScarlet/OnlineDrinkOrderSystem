@@ -23,9 +23,9 @@ namespace OnlineDrinkOrderSystem.Common
         public static bool GoogleTokenVerify(string token)//验证jwt是否有效
         {
             //设定Google认证
-            string googleAppId = Models.GoogleOauthSettings.GoogleAppId;
-            string googleIss = Models.GoogleOauthSettings.GoogleIss;
-            string googleCertsUrl = Models.GoogleOauthSettings.GoogleCertUrl;
+            string googleAppId = Startup.googleOauthSetting.GoogleAppId;
+            string googleIss = Startup.googleOauthSetting.GoogleIss;
+            string googleCertsUrl = Startup.googleOauthSetting.GoogleCertUrl;
 
             //获取公钥
             GoogleCerts certs = JsonConvert.DeserializeObject<Models.GoogleCerts>(Tool.HttpGet(googleCertsUrl));

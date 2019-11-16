@@ -23,12 +23,8 @@ namespace OnlineDrinkOrderSystem.Controllers
                 ViewBag.errorMessage = errorMessage;
             }
 
-
-            var temp = Common.GoogleOauth.GoogleTokenVerify("test");
-
             List<Category> categories = DAL.ItemManager.GetCategories();
-
-
+            ViewData["categories"] = categories;
             return View();
         }
         public IActionResult Item()
