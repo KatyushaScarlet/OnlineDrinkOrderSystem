@@ -1,74 +1,371 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!doctype html>
+<html class="no-js" lang="zh-cn">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewData["Title"] - AQUAS Club</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    @*Google OAuth*@
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Favicon -->
+    <link rel="shortcut icon" type="/image/x-icon" href="/img/favicon.png"><!-- all css here -->
+    <!-- bootstrap v3.3.6 css -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css"><!-- animate css -->
+    <link rel="stylesheet" href="/css/animate.css"><!-- meanmenu css -->
+    <link rel="stylesheet" href="/css/meanmenu.min.css"><!-- owl.carousel css -->
+    <link rel="stylesheet" href="/css/owl.carousel.css"><!-- font-awesome css -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css"><!-- flexslider.css-->
+    <link rel="stylesheet" href="/css/flexslider.css"><!-- chosen.min.css-->
+    <link rel="stylesheet" href="/css/chosen.min.css"><!-- style css -->
+    <link rel="stylesheet" href="/css/style.css"><!-- responsive css -->
+    <link rel="stylesheet" href="/css/responsive.css"><!-- modernizr css -->
+    <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
+
+<body class="home-4">
+    <!-- Add your site or application content here -->
+    <!-- header-area-start -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <!-- header-top-area-start -->
+        <div class="header-top-area">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AQUAS Club</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                        </li>
-                    </ul>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="language-area">
+                            <ul>
+                                <li>
+                                    <a href="#">NTD $<i class="fa fa-angle-down"></i></a>
+                                    <div class="header-sub dolor">
+                                        <ul>
+                                            <li><a href="#">RMB ￥</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="account-area text-right">
+                            <ul>
+                                <li><a href="register.html">我的帐户</a></li>
+                                <li><a href="checkout.html">结账</a></li>
+                                <li><a href="login.html">登录</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - AQUAS Club - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script>
-        function onSignIn(googleUser) {
-            var id_token = googleUser.getAuthResponse().id_token;
-        }
-    </script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        @*Google OAuth*@
-        function onSignIn(googleUser) {
-            alert("click!");
-            var id_token = googleUser.getAuthResponse().id_token;
-            $.get("/Home/SubmitToken", {
-                token:id_token
-            }, function (data) {
-                    data = JSON.parse(data);
-                    //console.log(data.message);
-                    alert(data.status);
-            })
+    <!-- header-top-area-end -->
+        <!-- header-mid-area-start -->
+        <div class="header-mid-area ptb-40">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                        <div class="logo-area"><a href="/"><img src="/img/logo/logo.png" alt="logo" /></a></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                        <div class="header-search">
+                            <form action="#">
+                                <input type="text" placeholder="查找商品" /><a href="#"><i class="fa fa-search"></i></a>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="my-cart">
+                            <ul>
+                                <li>
+                                    <a href="@Url.ActionLink("Cart","Home")"><i class="fa fa-shopping-cart"></i>购物车</a>@*<span>2</span>*@
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- header-mid-area-end -->
+        <!-- main-menu-area-start -->
+        <div class="main-menu-area hidden-sm hidden-xs" id="header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="menu-area">
+                            <nav>
+                                <ul>
+                                    <li class="active">
+                                        <a href="@Url.ActionLink("Index","Home")">商店首页</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">商品浏览</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">跟踪清单</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">我的账号</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">历史订单</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">后台管理</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- main-menu-area-end -->
+        <!-- mobile-menu-area-start -->
+        <div class="mobile-menu-area hidden-md hidden-lg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mobile-menu">
+                            <nav id="mobile-menu-active">
+                                <ul id="nav">
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">商店首页</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">商品浏览</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">跟踪清单</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">我的账号</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">历史订单</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">后台管理</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- mobile-menu-area-end -->
+    </header>
+    <!-- header-area-end -->
+    @RenderBody()
+    <!-- footer-top-start -->
+    <!-- footer-area-start -->
+    <footer>
+        <!-- footer-top-start -->
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer-top-menu bb-2">
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">商店首页</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">商品浏览</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">跟踪清单</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">我的账号</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">历史订单</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Index","Home")">后台管理</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        }
-    </script>
-    @RenderSection("Scripts", required: false)
+        <!-- footer-mid-start -->
+        <div class="footer-mid ptb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-footer br-2 xs-mb">
+                                    <div class="footer-title mb-20">
+                                        <h3>Products</h3>
+                                    </div>
+                                    <div class="footer-mid-menu">
+                                        <ul>
+                                            <li><a href="about.html">About us</a></li>
+                                            <li><a href="#">Prices drop </a></li>
+                                            <li><a href="#">New products</a></li>
+                                            <li><a href="#">Best sales</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-footer br-2 xs-mb">
+                                    <div class="footer-title mb-20">
+                                        <h3>Our company</h3>
+                                    </div>
+                                    <div class="footer-mid-menu">
+                                        <ul>
+                                            <li>@Html.ActionLink("联系我们","Contact")</li>
+                                            <li><a href="#">Sitemap</a></li>
+                                            <li><a href="#">Stores</a></li>
+                                            <li><a href="register.html">My account </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-footer br-2 xs-mb">
+                                    <div class="footer-title mb-20">
+                                        <h3>Your account</h3>
+                                    </div>
+                                    <div class="footer-mid-menu">
+                                        <ul>
+                                            <li><a href="#">Addresses</a></li>
+                                            <li><a href="#">Credit slips </a></li>
+                                            <li><a href="#">Orders</a></li>
+                                            <li><a href="#">Personal info</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="single-footer mrg-sm">
+                            <div class="footer-title mb-20">
+                                <h3>商店信息</h3>
+                            </div>
+                            <div class="footer-contact">
+                                <p><span>地址：</span>10655臺北市大安區建國南路一段81號</p>
+                                <p><span>电话：</span>0X-XXXXXXXX</p>
+                                <p><span>邮件：</span>contact@aquas.club</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- footer-mid-end -->
+        <!-- footer-bottom-start -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row bt-2">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="copy-right-area">
+                            <p>Copyright ©<a href="http://www.bootstrapmb.com/">Koparion</a>. All Right Reserved.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="payment-img text-right"><a href="#"><img src="/img/1.png" alt="payment" /></a></div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- footer-bottom-end -->
+    </footer><!-- footer-area-end -->
+    <!-- Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-12">
+                            <div class="modal-tab">
+                                <div class="product-details-large tab-content">
+                                    <div class="tab-pane active" id="image-1">
+                                        <img src="/img/product/quickview-l4.jpg"
+                                             alt="" />
+                                    </div>
+                                    <div class="tab-pane" id="image-2">
+                                        <img src="/img/product/quickview-l2.jpg" alt="" />
+                                    </div>
+                                    <div class="tab-pane" id="image-3">
+                                        <img src="/img/product/quickview-l3.jpg" alt="" />
+                                    </div>
+                                    <div class="tab-pane" id="image-4">
+                                        <img src="/img/product/quickview-l5.jpg" alt="" />
+                                    </div>
+                                </div>
+                                <div class="product-details-small quickview-active owl-carousel">
+                                    <a class="active"
+                                       href="#image-1"><img src="/img/product/quickview-s4.jpg" alt="" /></a><a href="#image-2"><img src="/img/product/quickview-s2.jpg" alt="" /></a><a href="#image-3"><img src="/img/product/quickview-s3.jpg" alt="" /></a><a href="#image-4"><img src="/img/product/quickview-s5.jpg" alt="" /></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-12">
+                            <div class="modal-pro-content">
+                                <h3>Chaz Kangeroo Hoodie3</h3>
+                                <div class="price"><span>$70.00</span></div>
+                                <p>
+                                    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
+                                    egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet.
+                                </p>
+                                <div class="quick-view-select">
+                                    <div class="select-option-part">
+                                        <label>Size*</label><select class="select">
+                                            <option value="">S</option>
+                                            <option value="">M</option>
+                                            <option value="">L</option>
+                                        </select>
+                                    </div>
+                                    <div class="quickview-color-wrap">
+                                        <label>Color*</label>
+                                        <div class="quickview-color">
+                                            <ul>
+                                                <li class="blue">b</li>
+                                                <li class="red">r</li>
+                                                <li class="pink">p</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form action="#"><input type="number" value="1" /><button>Add to cart</button></form>
+                                <span><i class="fa fa-check"></i>In stock</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Modal end -->
+    <!-- all js here -->
+    <!-- jquery latest version -->
+    <script src="/js/vendor/jquery-1.12.0.min.js"></script><!-- bootstrap js -->
+    <script src="/js/bootstrap.min.js"></script><!-- owl.carousel js -->
+    <script src="/js/owl.carousel.min.js"></script><!-- meanmenu js -->
+    <script src="/js/jquery.meanmenu.js"></script><!-- wow js -->
+    <script src="/js/wow.min.js"></script><!-- jquery.parallax-1.1.3.js -->
+    <script src="/js/jquery.parallax-1.1.3.js"></script><!-- jquery.countdown.min.js -->
+    <script src="/js/jquery.countdown.min.js"></script><!-- jquery.flexslider.js -->
+    <script src="/js/jquery.flexslider.js"></script><!-- chosen.jquery.min.js -->
+    <script src="/js/chosen.jquery.min.js"></script><!-- jquery.counterup.min.js -->
+    <script src="/js/jquery.counterup.min.js"></script><!-- waypoints.min.js -->
+    <script src="/js/waypoints.min.js"></script><!-- plugins js -->
+    <script src="/js/plugins.js"></script><!-- main js -->
+    <script src="/js/main.js"></script>
 </body>
 </html>

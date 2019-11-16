@@ -25,6 +25,8 @@ namespace OnlineDrinkOrderSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            //View∂ØÃ¨±‡“Î
+            services.AddMvc().AddRazorRuntimeCompilation();
             //∂¡»Î≈‰÷√
             Models.ConnectionStrings connectionStrings = new ConnectionStrings();
             Models.GoogleOauthSettings googleOauthSettings = new GoogleOauthSettings();
