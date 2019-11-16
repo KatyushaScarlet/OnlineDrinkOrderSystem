@@ -118,23 +118,23 @@ namespace OnlineDrinkOrderSystem.Common
             return t; //Return
         }
 
-        //读取Session
-        public static T getSessionObject<T>(ISession session, string key)
-        {
-            if (session.TryGetValue(key, out byte[] value))
-            {
-                string json = System.Text.Encoding.UTF8.GetString(value);
-                return JsonConvert.DeserializeObject<T>(json);
-            }
-            return default(T);
-        }
+        ////读取Session
+        //public static T getSessionObject<T>(ISession session, string key)
+        //{
+        //    if (session.TryGetValue(key, out byte[] value))
+        //    {
+        //        string json = System.Text.Encoding.UTF8.GetString(value);
+        //        return JsonConvert.DeserializeObject<T>(json);
+        //    }
+        //    return default(T);
+        //}
 
-        //设置Sessin
-        public static void setSessionObject(ISession session, string key, object value)
-        {
-            string json = JsonConvert.SerializeObject(value);
-            byte[] result = System.Text.Encoding.UTF8.GetBytes(json);
-            session.Set(key, result);
-        }
+        ////设置Sessin
+        //public static void setSessionObject(ISession session, string key, object value)
+        //{
+        //    string json = JsonConvert.SerializeObject(value);
+        //    byte[] result = System.Text.Encoding.UTF8.GetBytes(json);
+        //    session.Set(key, result);
+        //}
     }
 }

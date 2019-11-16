@@ -1,8 +1,14 @@
-﻿@{
+﻿@using OnlineDrinkOrderSystem.Common;
+@using Microsoft.AspNetCore.Http
+@{
     //获取错误信息
     string errorMessage = ViewBag.errorMessage;
     //清空错误信息
     ViewBag.errorMessage = "";
+    //获取当前用户id
+    string userid = Context.Session.GetString("user_id");
+    //获取当前用户权限
+    bool isadmin = Convert.ToBoolean(Context.Session.GetString("is_admin"));
 }
 <!doctype html>
 <html class="no-js" lang="zh-cn">
@@ -51,9 +57,16 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="account-area text-right">
                             <ul>
-                                <li><a href=@Url.ActionLink("Account","Home")>我的帐户</a></li>
-                                <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
-                                <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
+                                @if (!string.IsNullOrEmpty(userid))
+                                {
+                                    <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
+                                    <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
+                                    <li><a href=#>登出</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -110,9 +123,12 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    <li>
-                                        <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                    </li>
+                                    @if (isadmin)
+                                    {
+                                        <li>
+                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
+                                        </li>
+                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>
@@ -146,9 +162,12 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    <li>
-                                        <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                    </li>
+                                    @if (isadmin)
+                                    {
+                                        <li>
+                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
+                                        </li>
+                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>
@@ -164,11 +183,11 @@
     <!-- header-area-end -->
     @RenderBody()
     <script>
+        window.onload=function () {
         //输出错误信息
         var errorMessage = "@Html.Raw(errorMessage)";
-        if (errorMessage != "") {
-        alert(errorMessage);
-    }
+        if (errorMessage != "")alert(errorMessage);
+        };
     </script>
     <!-- footer-top-start -->
     <!-- footer-area-start -->
@@ -196,9 +215,12 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    <li>
-                                        <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                    </li>
+                                    @if (isadmin)
+                                    {
+                                        <li>
+                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
+                                        </li>
+                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>

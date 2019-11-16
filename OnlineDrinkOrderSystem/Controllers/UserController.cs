@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using OnlineDrinkOrderSystem.Common;
 using OnlineDrinkOrderSystem.Models;
@@ -41,8 +42,10 @@ namespace OnlineDrinkOrderSystem.Controllers
                             //重新读取创建的用户id
                             var newId = UserManage.GetUserId(userInfo.Google_ID);
                             //设置id到session
-                            Tool.setSessionObject(HttpContext.Session, "userid", newId);
-                            Tool.setSessionObject(HttpContext.Session, "isadmin", userInfo.Admin);
+                            HttpContext.Session.SetString("user_id", newId);
+                            HttpContext.Session.SetString("is_admin", false.ToString());
+                            //Tool.setSessionObject(HttpContext.Session, "user_id", newId);
+                            //Tool.setSessionObject(HttpContext.Session, "is_admin", userInfo.Admin);
 
                             result.status = true;
                             result.message = "新用户 " + userInfo.User_Name + "，欢迎你！";
@@ -57,8 +60,10 @@ namespace OnlineDrinkOrderSystem.Controllers
                     {
                         //用户已存在,登录成功
                         //设置id到session
-                        Tool.setSessionObject(HttpContext.Session, "userid", userId);
-                        Tool.setSessionObject(HttpContext.Session, "isadmin", userInfo.Admin);
+                        HttpContext.Session.SetString("user_id", userId);
+                        HttpContext.Session.SetString("is_admin", userInfo.Admin.ToString());
+                        //Tool.setSessionObject(HttpContext.Session, "user_id", userId);
+                        //Tool.setSessionObject(HttpContext.Session, "is_admin", userInfo.Admin);
 
                         result.status = true;
                         result.message = userInfo.User_Name + "，欢迎回来";
@@ -77,18 +82,6 @@ namespace OnlineDrinkOrderSystem.Controllers
                 result.message = "登录失败";
             }
             return JsonConvert.SerializeObject(result);
-        }
-
-        public string Set()
-        {
-            Tool.setSessionObject(HttpContext.Session, "test", "hello user");
-            return "user";
-        }
-
-        public string Get()
-        {
-            var result = Tool.getSessionObject<string>(HttpContext.Session, "userid");
-            return result;
         }
     }
 }

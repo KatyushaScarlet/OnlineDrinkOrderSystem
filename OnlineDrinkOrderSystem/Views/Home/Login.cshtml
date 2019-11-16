@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 
@@ -29,14 +28,14 @@
 <script>
     function renderButton() {
         gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSuccess,
+            'onfailure': onFailure
+        });
     }
 
     function onSuccess(googleUser) {
@@ -44,31 +43,16 @@
         $.post("/User/VerifyToken", {
             token: id_token
         }, function (data) {
-                data = JSON.parse(data);
-                alert(data.message);
-                if (data.status) {
-                    //登录成功则跳转
-                    window.location.href = "/";
-                }
+            data = JSON.parse(data);
+            alert(data.message);
+            if (data.status) {
+                //登录成功则跳转
+                window.location.href = "/";
+            }
         })
     }
 
     function onFailure() {
-        alert("授权失败！");
+        alert("登录失败！");
     }
-    //function onSignIn(googleUser) {
-    //    var id_token = googleUser.getAuthResponse().id_token;
-    //}
-
-    //function onSignIn(googleUser) {
-    //    alert("click!");
-    //    var id_token = googleUser.getAuthResponse().id_token;
-    //    $.post("/User/VerifyToken", {
-    //        token: id_token
-    //    }, function (data) {
-    //        data = JSON.parse(data);
-    //        //console.log(data.message);
-    //        alert(data.status);
-    //    })
-    //}
 </script>
