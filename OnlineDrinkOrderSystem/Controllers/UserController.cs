@@ -14,6 +14,17 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class UserController : Controller
     {
+        //用户登出
+        [HttpGet]
+        public IActionResult SignOut()
+        {
+            //清空Session
+            HttpContext.Session.SetString("user_id", "");
+            //跳转回首页
+            return RedirectToAction("Index", "Home", new { errorMessage = "您已成功登出" });
+
+        }
+
         //用户登录
         [HttpPost]
         public string VerifyToken(string token)
@@ -26,7 +37,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                 //验证token
                 if (GoogleOauth.GoogleTokenVerify(token))
                 {
-                    //获取用户信息
+                    //从Google获取用户信息
                     var googleJwt = Tool.GoogleToken2Jwt(token);
                     var userInfo = Tool.GoogleJwt2User(googleJwt);
                     var userId = UserManage.GetUserId(userInfo.Google_ID);
@@ -44,8 +55,6 @@ namespace OnlineDrinkOrderSystem.Controllers
                             //设置id到session
                             HttpContext.Session.SetString("user_id", newId);
                             HttpContext.Session.SetString("is_admin", false.ToString());
-                            //Tool.setSessionObject(HttpContext.Session, "user_id", newId);
-                            //Tool.setSessionObject(HttpContext.Session, "is_admin", userInfo.Admin);
 
                             result.status = true;
                             result.message = "新用户 " + userInfo.User_Name + "，欢迎你！";
@@ -59,11 +68,11 @@ namespace OnlineDrinkOrderSystem.Controllers
                     else
                     {
                         //用户已存在,登录成功
+                        //重新获取信息（权限）
+                        userInfo = UserManage.GetUserInfo(userId);
                         //设置id到session
                         HttpContext.Session.SetString("user_id", userId);
                         HttpContext.Session.SetString("is_admin", userInfo.Admin.ToString());
-                        //Tool.setSessionObject(HttpContext.Session, "user_id", userId);
-                        //Tool.setSessionObject(HttpContext.Session, "is_admin", userInfo.Admin);
 
                         result.status = true;
                         result.message = userInfo.User_Name + "，欢迎回来";

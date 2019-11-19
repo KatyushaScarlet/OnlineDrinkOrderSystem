@@ -15,16 +15,12 @@ namespace OnlineDrinkOrderSystem.DAL
         {
             DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Category"));
             List<Category> categories = new List<Category>();
-            //如果查询结果行数不为0
-            if (dataSet.Tables[0].Rows.Count != 0)
+            //逐条取出
+            foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                //逐条取出
-                foreach (DataRow row in dataSet.Tables[0].Rows)
-                {
-                    Category category = new Category();
-                    category = Tool.DataRow2Entity<Category>(row);
-                    categories.Add(category);
-                }
+                Category category = new Category();
+                category = Tool.DataRow2Entity<Category>(row);
+                categories.Add(category);
             }
             return categories;
         }
@@ -42,14 +38,59 @@ namespace OnlineDrinkOrderSystem.DAL
         //根据销量/价格（从低到高/从高到低）/新品 排序
         //根据 类别 筛选
 
-        public static List<Item> GetItemList(int page = 0, int pageSize = 20, string keyWord = "", ItemOrder itemOrder = ItemOrder.none, int category_ID = 0)
+        public static List<Item> GetItemList(out int totalPages,int page = 0, int pageSize = 20, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
             string queryString = "";
             //计算计算偏移，页数*页大小
             int offSet = pageSize * page;
+            //如果查询字符串不为空，添加查询条件
+            if (!string.IsNullOrEmpty(keyWord))
+            {
+                queryString += string.Format(" and (Item_Name like'%{0}%' or Description like'%{0}%') ", keyWord);
+            }
             //如果分类id有效（>0），添加查询条件
-
+            if (category_ID > 0)
+            {
+                queryString += string.Format(" and Category.Category_ID='{0}' ", category_ID);
+            }
             //如果排序有效（非none），添加排序语句
+            switch (itemOrder)
+            {
+                case ItemOrder.none:
+                    break;
+                case ItemOrder.sold:
+                    queryString += " order by Sold desc ";
+                    break;
+                case ItemOrder.lastest:
+                    queryString += " order by Date_added desc ";
+                    break;
+                case ItemOrder.price_low2high:
+                    queryString += " order by Item_Price asc ";
+                    break;
+                case ItemOrder.price_high2low:
+                    queryString += " order by Item_Price desc ";
+                    break;
+                default:
+                    break;
+            }
+            //查询总条目数量
+            var sql2 = string.Format("select count(*) from Item left join Category on Item.Category_ID=Category.Category_ID where 1=1 {0}", queryString);
+            int itemCount = Convert.ToInt32(DbHelper.Read(sql2));
+            //计算总页数
+            totalPages = itemCount / pageSize;
+            //开始查询
+            var sql1 = string.Format("select * from Item left join Category on Item.Category_ID=Category.Category_ID where 1=1 {0} limit {1},{2}", queryString, offSet, pageSize);
+            DataSet dataSet = DbHelper.ReadDataSet(sql1);
+            List<Item> items = new List<Item>();
+            //逐条取出
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Item item = new Item();
+                item = Tool.DataRow2Entity<Item>(row);
+                items.Add(item);
+            }
+
+            return items;
         }
 
         //添加商品

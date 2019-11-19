@@ -25,7 +25,7 @@ Stock INT NOT NULL,-- 库存
 Date_added DATETIME NOT NULL,-- 上架时间
 Cost DOUBLE NOT NULL,-- 进价/成本
 Sold INT NOT NULL,-- 已售出
-Discount INT,-- 商品折扣（10 -> -10%）
+Discount INT NOT NULL,-- 商品折扣（10 -> -10%）
 primary key(Item_ID),-- 主键 商品id
 foreign key(Category_ID) REFERENCES Category(Category_ID)-- 外键 类型id
 );

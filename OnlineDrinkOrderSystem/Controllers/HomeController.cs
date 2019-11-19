@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using OnlineDrinkOrderSystem.DAL;
 
 namespace OnlineDrinkOrderSystem.Controllers
 {
@@ -25,14 +26,29 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
 
             //输出首页分类菜单
-            List<Category> categories = DAL.ItemManager.GetCategoryList();
+            List<Category> categories = ItemManager.GetCategoryList();
             ViewData["categories"] = categories;
 
             return View();
         }
-        public IActionResult Item()
+        public IActionResult Item(int page = 0, int pageSize = 16, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
             //商品浏览
+            //获取商品类别
+            List<Category> categories = ItemManager.GetCategoryList();
+            ViewData["categories"] = categories;
+            //获取商品
+            int totalPages = 0;
+            List<Item> items = ItemManager.GetItemList(out totalPages,page, pageSize, keyWord, category_ID, itemOrder);
+            ViewData["items"] = items;
+            ViewData["pages"] = totalPages;
+            //url参数
+            ViewData["page"] = page;
+            ViewData["pageSize"] = pageSize;
+            ViewData["keyWord"] = keyWord;
+            ViewData["category_ID"] = category_ID;
+            ViewData["itemOrder"] = itemOrder;
+
             return View();
         }
 

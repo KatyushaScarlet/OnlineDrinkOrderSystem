@@ -1,10 +1,9 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Http
+@{
     ViewData["Title"] = "Login";
+    //获取当前用户id
+    string userid = Context.Session.GetString("user_id");
 }
-
-<!--Google OAuth-->
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-<meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">
 <!-- user-login-area-start -->
 <div class="user-login-area mb-70 main-area">
     <div class="container">
@@ -40,7 +39,7 @@
 
     function onSuccess(googleUser) {
         var id_token = googleUser.getAuthResponse().id_token;
-        $.post("/User/VerifyToken", {
+        $.post("@Url.ActionLink("VerifyToken","User")", {
             token: id_token
         }, function (data) {
             data = JSON.parse(data);
@@ -55,4 +54,11 @@
     function onFailure() {
         alert("登录失败！");
     }
+
+    @*function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            location.href = "@Url.ActionLink("SignOut","User")";
+        });
+    }*@
 </script>

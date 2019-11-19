@@ -1,7 +1,165 @@
 ﻿
 @{
     ViewData["Title"] = "Item";
+    //获取商品列表与分类列表
+    List<Item> items = ViewData["items"] as List<Item>;
+    List<Category> categories = ViewData["categories"] as List<Category>;
+    //获取url参数
+    int totalPages = Convert.ToInt32(ViewData["pages"]);
+    int nowPage = Convert.ToInt32(ViewData["page"]);
+    int nowPageSize = Convert.ToInt32(ViewData["pageSize"]);
+    string nowKeyWord = Convert.ToString(ViewData["keyWord"]);
+    int nowCategory_ID = Convert.ToInt32(ViewData["category_ID"]);
+    int nowItemOrder = Convert.ToInt32(ViewData["itemOrder"]);
 }
 
-<h2>Item</h2>
+<!-- shop-main-area-start -->
+<script>
+    var totalPages = "@totalPages";
+    var page = "@nowPage";
+    var pageSize = "@nowPageSize";
+    var keyWord = "@nowKeyWord";
+    var category_ID = "@nowCategory_ID";
+    var itemOrder = "@nowItemOrder";
+    /*
+    * url 目标url
+    * arg 需要替换的参数名称
+    * arg_val 替换后的参数的值
+    * return url 参数替换后的url
+    */
+    function changeURLArg(url,arg,arg_val){
+        var pattern=arg+'=([^&]*)';
+        var replaceText=arg+'='+arg_val;
+        if(url.match(pattern)){
+            var tmp='/('+ arg+'=)([^&]*)/gi';
+            tmp=url.replace(eval(tmp),replaceText);
+            return tmp;
+        }else{
+            if(url.match('[\?]')){
+                return url+'&'+replaceText;
+            }else{
+                return url+'?'+replaceText;
+            }
+        }
+        return url+'\n'+arg+'\n'+arg_val;
+    }
+</script>
+<div class="shop-main-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                <!-- category-area-start -->
+                <div class="category-area mb-30">
+                    <h3><a href="#">商品类别<i class="fa fa-bars"></i></a></h3>
+                    <div class="category-menu">
+                        <nav class="menu">
+                            <ul>
+                                @foreach (var item in categories)
+                                {
+                                    <li><a href="#@item.Category_ID">@item.Category_Name</a></li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- category-area-end -->
+                <!-- banner-area-start -->
+                <div class="banner-area mb-30">
+                    <div class="banner-img-2">
+                        <a href="#"><img src="/img/banner/21.jpg" alt="banner"></a>
+                    </div>
+                </div>
+                <!-- banner-area-end -->
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                <div class="toolbar mb-30">
+                    <div class="shop-tab">
+                        <div class="list-page">
+                            <p>当前在第 @(nowPage + 1) 页，共有 @totalPages 页</p>
+                        </div>
+                    </div>
 
+                    <div class="toolbar-sorter">
+                        <span>排序</span>
+                        <select id="sorter" class="sorter-options" data-role="sorter">
+                            <option selected="selected" value="0">默认排序</option>
+                            <option value="1">销量最高</option>
+                            <option value="2">最新上架</option>
+                            <option value="3">价格从低到高</option>
+                            <option value="4">价格从高到低</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- tab-area-start -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="th">
+                        <div class="row">
+                            @foreach (Item item in items)
+                            {
+                                <!-- single-product-start -->
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="product-wrapper mb-40">
+                                        <div class="product-img">
+                                            <a href="#">
+                                                <img src="@item.Image_Url"
+                                                     class="primary" />
+                                            </a>
+                                            <div class="quick-view">
+                                                <a class="action-view" href="#"
+                                                   data-target="#productModal" data-toggle="modal"
+                                                   title="Quick View"><i class="fa fa-search-plus"></i></a>
+                                            </div>
+                                            <div class="product-flag">
+                                                <ul>
+                                                    @*<li><span class="sale">new</span></li>*@
+                                                    @if (item.Discount != 0)
+                                                    {
+                                                        <li><span class="discount-percentage">-@item.Discount%</span></li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product-details text-center">
+                                            <h4><a href="#">@item.Item_Name</a></h4>
+                                            <div class="product-price">
+                                                <ul>
+                                                    <li>$@item.Item_Price</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="product-link">
+                                            <div class="product-button">
+                                                <a href="#">
+                                                    <i class="fa fa-shopping-cart"></i>添加到购物车
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- single-product-end -->
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- tab-area-end -->
+                <!-- pagination-area-start -->
+                <div class="pagination-area mt-50">
+                    <div class="list-page-2">
+                        <p>当前在第 @(nowPage + 1) 页，共有 @totalPages 页</p>
+                    </div>
+                    <div class="page-number">
+                        <ul>
+                            <li><a href="#" class="active">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- pagination-area-end -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- shop-main-area-end -->
