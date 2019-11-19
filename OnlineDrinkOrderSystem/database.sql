@@ -26,8 +26,6 @@ Date_added DATETIME NOT NULL,-- 上架时间
 Cost DOUBLE NOT NULL,-- 进价/成本
 Sold INT NOT NULL,-- 已售出
 Discount INT,-- 商品折扣（10 -> -10%）
-Discount_Start_Time DATETIME,-- 商品折扣开始时间
-Discount_Expire_Time DATETIME,-- 商品折扣截止时间
 primary key(Item_ID),-- 主键 商品id
 foreign key(Category_ID) REFERENCES Category(Category_ID)-- 外键 类型id
 );
@@ -54,7 +52,7 @@ Review_ID INT NOT NULL AUTO_INCREMENT,-- 评论id
 User_ID INT ,-- 用户id
 Item_ID INT ,-- 商品id
 Content VARCHAR(255) NOT NULL,-- 评论内容
-Star DOUBLE NOT NULL,-- 评星（0.0-5.0）
+Recommend BOOLEAN NOT NULL,-- 推荐/不推荐
 Date DATETIME NOT NULL,-- 评价日期
 PRIMARY key(Review_ID),-- 主键 评论id
 foreign key(User_ID) REFERENCES User(User_ID),-- 外键 用户id
@@ -80,7 +78,6 @@ Order_ID INT NOT NULL AUTO_INCREMENT,-- 订单id
 User_ID INT ,-- 用户id
 Order_Sum DOUBLE NOT NULL,-- 订单总价
 Payment INT NOT NULL,-- 支付方式（1、货到付款，2、在线支付）
-Paied BOOLEAN NOT NULL,-- 是否已支付
 Delivery INT NOT NULL,-- 运送状态（1、未发货，2、已发货）
 Address VARCHAR(255) NOT NULL,-- 寄送地址
 Order_Date DATETIME NOT NULL,-- 下单时间

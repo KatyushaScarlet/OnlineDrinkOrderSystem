@@ -25,7 +25,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
 
             //输出首页分类菜单
-            List<Category> categories = DAL.ItemManager.GetCategories();
+            List<Category> categories = DAL.ItemManager.GetCategoryList();
             ViewData["categories"] = categories;
 
             return View();

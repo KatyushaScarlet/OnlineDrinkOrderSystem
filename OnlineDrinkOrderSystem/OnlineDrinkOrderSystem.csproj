@@ -29,6 +29,10 @@
     <None Include="wwwroot\test\index.html" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\item\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

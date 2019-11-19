@@ -136,5 +136,19 @@ namespace OnlineDrinkOrderSystem.Common
         //    byte[] result = System.Text.Encoding.UTF8.GetBytes(json);
         //    session.Set(key, result);
         //}
+
+        public static string GetRandomString(int n)//获取指定长度随机字符串
+        {
+            //string s = "0123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ~!@#$%^&*()_+`-=";
+            string s = "0123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ";
+            string value = "";
+            Random rdm = new Random(int.Parse(DateTime.Now.ToString("HHmmssfff")).GetHashCode());//保证不重复
+            while (value.Length < n)
+            {
+                string s1 = s[rdm.Next(0, s.Length)].ToString();
+                value += s1;
+            }
+            return value;
+        }
     }
 }
