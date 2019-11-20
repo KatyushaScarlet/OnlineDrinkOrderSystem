@@ -32,7 +32,21 @@ namespace OnlineDrinkOrderSystem.DAL
 
         //添加类别
 
-        //获取商品
+        //获取商品（单个）
+        public static Item GetItem(int id)
+        {
+            Item item = null;
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Item where Item_ID='{0}'", id));
+            if (dataSet.Tables[0].Rows.Count != 0)
+            {
+                DataRow dataRow = dataSet.Tables[0].Rows[0];
+                item = Tool.DataRow2Entity<Item>(dataRow);
+            }
+            return item;
+        }
+
+
+        //获取商品（列表）
         //页数，每页大小
         //搜索 关键词
         //根据销量/价格（从低到高/从高到低）/新品 排序

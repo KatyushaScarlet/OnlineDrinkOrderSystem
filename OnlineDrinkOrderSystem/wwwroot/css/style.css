@@ -1856,7 +1856,7 @@ body {
 /*----------------------------------------*/ /*  7. Banner static area/*----------------------------------------*/
 
 .banner-static-area {
-    background: rgba(0, 0, 0, 0) url("img/banner/7.jpg") repeat scroll center center;
+    background: rgba(0, 0, 0, 0) url("/img/banner/7.jpg") repeat scroll center center;
 }
 /*----------------------------------------*/ /*  8. Most product area/*----------------------------------------*/
 
@@ -1960,7 +1960,7 @@ body {
 }
 
 .block-newsletter {
-    background: #f07c29 url("img/banner/10.jpg") no-repeat scroll center top;
+    background: #f07c29 url("/img/banner/10.jpg") no-repeat scroll center top;
     padding: 45px 25px 25px;
     position: relative;
     text-align: center;
@@ -2062,7 +2062,7 @@ body {
 /*----------------------------------------*/ /*  9. Testimonial area/*----------------------------------------*/
 
 .testimonial-area {
-    background: rgba(0, 0, 0, 0) url("img/banner/11.jpg") no-repeat scroll center center;
+    background: rgba(0, 0, 0, 0) url("/img/banner/11.jpg") no-repeat scroll center center;
 }
 
 .testimonial-img a {
@@ -2566,7 +2566,7 @@ a#scrollUp {
         -moz-border-right-colors: none;
         -moz-border-top-colors: none;
         -moz-user-select: none;
-        background: white url("img/icon-img/select-2.png") no-repeat scroll 90% 50%;
+        background: white url("/img/icon-img/select-2.png") no-repeat scroll 90% 50%;
         border-color: -moz-use-text-color #e5e5e5 -moz-use-text-color -moz-use-text-color;
         border-image: none;
         border-radius: 15px 0 0 15px;
@@ -2984,7 +2984,7 @@ a#scrollUp {
 }
 
 .home-3 {
-    background: #ffffff url("img/banner/13.jpg") no-repeat scroll center top;
+    background: #ffffff url("/img/banner/13.jpg") no-repeat scroll center top;
 }
 
     .home-3 .header-top-area, .home-3 .header-mid-area, .banner-area-4 {
@@ -3114,7 +3114,7 @@ a#scrollUp {
 }
 
 .home-3 .block-newsletter {
-    background: #22aeac url("img/banner/19.jpg") no-repeat scroll center top;
+    background: #22aeac url("/img/banner/19.jpg") no-repeat scroll center top;
 }
 
 .home-3 .tab-active.owl-carousel.owl-theme .owl-controls .owl-nav div:hover, .home-3 .post-active.owl-carousel.owl-theme .owl-controls .owl-nav div:hover {
@@ -3371,7 +3371,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .home-4 .block-newsletter {
-    background: #00abe0 url("img/banner/22.jpg") no-repeat scroll center top;
+    background: #00abe0 url("/img/banner/22.jpg") no-repeat scroll center top;
     margin-top: 0;
 }
 
@@ -3651,7 +3651,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .home-5 .block-newsletter {
-    background: #22aeac url("img/banner/25.jpg") no-repeat scroll center top;
+    background: #22aeac url("/img/banner/25.jpg") no-repeat scroll center top;
 }
 
     .home-5 .block-newsletter::before {
@@ -3663,7 +3663,7 @@ nav.menu .cr-dropdown ul {
     }
 
 .home-5 .testimonial-area {
-    background: rgba(0, 0, 0, 0) url("img/banner/26.jpg") no-repeat center center;
+    background: rgba(0, 0, 0, 0) url("/img/banner/26.jpg") no-repeat center center;
 }
 
 .home-5 .testimonial-img a {
@@ -3735,7 +3735,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .home-6 .header-mid-area {
-    background: #ffffff url("img/banner/27.jpg") repeat scroll 0 0;
+    background: #ffffff url("/img/banner/27.jpg") repeat scroll 0 0;
 }
 
 .home-6 .header-top-area {
@@ -5748,7 +5748,7 @@ nav.menu .cr-dropdown ul {
         }
 
 .counter-area {
-    background: rgba(0, 0, 0, 0) url("img/banner/38.jpg") repeat scroll center center;
+    background: rgba(0, 0, 0, 0) url("/img/banner/38.jpg") repeat scroll center center;
 }
 
 .single-counter h2 {
@@ -6925,7 +6925,7 @@ p.checkout-coupon input[type="submit"] {
     height: 39px;
     padding: 0 35px 0 5px;
     width: auto;
-    background: rgba(0, 0, 0, 0) url("img/icon-img/select.png") no-repeat scroll right 0.5rem center / 2.25rem 2.25rem;
+    background: rgba(0, 0, 0, 0) url("/img/icon-img/select.png") no-repeat scroll right 0.5rem center / 2.25rem 2.25rem;
 }
 
 .select-option-part > label, .quickview-color-wrap > label {

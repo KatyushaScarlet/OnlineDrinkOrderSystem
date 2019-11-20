@@ -38,9 +38,6 @@ namespace OnlineDrinkOrderSystem.DAL
                 (user.Admin == true ? 1 : 0)//转换为tinyint
                 )) == 1;
         }
-
-        //获取用户信息
-
         //修改用户信息
 
         //删除用户

@@ -334,55 +334,28 @@
                         <div class="col-md-5 col-sm-5 col-xs-12">
                             <div class="modal-tab">
                                 <div class="product-details-large tab-content">
-                                    <div class="tab-pane active" id="image-1">
-                                        <img src="/img/product/quickview-l4.jpg"
-                                             alt="" />
-                                    </div>
-                                    <div class="tab-pane" id="image-2">
-                                        <img src="/img/product/quickview-l2.jpg" alt="" />
-                                    </div>
-                                    <div class="tab-pane" id="image-3">
-                                        <img src="/img/product/quickview-l3.jpg" alt="" />
-                                    </div>
-                                    <div class="tab-pane" id="image-4">
-                                        <img src="/img/product/quickview-l5.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div class="product-details-small quickview-active owl-carousel">
-                                    <a class="active"
-                                       href="#image-1"><img src="/img/product/quickview-s4.jpg" alt="" /></a><a href="#image-2"><img src="/img/product/quickview-s2.jpg" alt="" /></a><a href="#image-3"><img src="/img/product/quickview-s3.jpg" alt="" /></a><a href="#image-4"><img src="/img/product/quickview-s5.jpg" alt="" /></a>
+                                    <img src="" id="item-img"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-7 col-sm-7 col-xs-12">
                             <div class="modal-pro-content">
-                                <h3>Chaz Kangeroo Hoodie3</h3>
-                                <div class="price"><span>$70.00</span></div>
-                                <p>
-                                    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                                    egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet.
-                                </p>
+                                <h3 id="item-name">名称</h3>
+                                <div class="price"><span id="item-price">NTD$ 价格</span></div>
+                                <p id="item-time">上架时间：</p>
+                                <p id="item-sold">销量：</p>
+                                <p id="item-click">热度：</p>
+                                <p id="item-discription">描述：</p>
                                 <div class="quick-view-select">
-                                    <div class="select-option-part">
-                                        <label>Size*</label><select class="select">
-                                            <option value="">S</option>
-                                            <option value="">M</option>
-                                            <option value="">L</option>
-                                        </select>
-                                    </div>
-                                    <div class="quickview-color-wrap">
-                                        <label>Color*</label>
-                                        <div class="quickview-color">
-                                            <ul>
-                                                <li class="blue">b</li>
-                                                <li class="red">r</li>
-                                                <li class="pink">p</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <!--保留格式-->
                                 </div>
-                                <form action="#"><input type="number" value="1" /><button>Add to cart</button></form>
-                                <span><i class="fa fa-check"></i>In stock</span>
+                                <form id="form-item-detail" onsubmit="return addToCart();">
+                                    <input type="number" value="1" name="count"/>
+                                    <input type="text" value="" name="id" id="item-id" style="display:none"/>
+                                    <button id="btn-add-cart">添加到购物车</button>
+                                </form>
+                                <span><i class="fa fa-check" id="item-stock-icon"></i><span id="item-stock">有库存：XXX件</span></span>
+                                @*<span><i class="fa fa-remove"></i>无库存</span>*@
                             </div>
                         </div>
                     </div>
@@ -406,8 +379,59 @@
     <script src="/js/plugins.js"></script><!-- main js -->
     <script src="/js/main.js"></script>
     <script>
+        var itemInfo = null;
+        var itemId = 0;
+
+        //登出
         function signOut() {
             location.href = "@Url.ActionLink("SignOut","User")";
+        }
+
+        //获取商品信息并显示在Modal上
+        function openModalForItem(id) {
+            //alert("Id:" + id);
+            //获取商品信息
+            $.get("@Url.ActionLink("GetItem","Item")", {
+                id:id
+            }, function (data) {
+                    console.log(data);
+                    if (data!=null) {
+                        itemInfo = JSON.parse(data);
+                        //更改Modal内信息
+                        document.getElementById("item-img").src = itemInfo.Image_Url;//图片
+                        document.getElementById("item-name").innerText = itemInfo.Item_Name;//名称
+                        document.getElementById("item-price").innerText = "NTD$ " + itemInfo.Item_Price;//价格
+                        document.getElementById("item-discription").innerText = itemInfo.Description;//描述
+                        document.getElementById("item-id").value = itemInfo.Item_ID;//id
+                        //折扣
+                        document.getElementById("item-click").innerText = "热度："+itemInfo.Click_Counts;//点击量
+                        document.getElementById("item-sold").innerText = "销量："+itemInfo.Sold;//销量
+                        document.getElementById("item-time").innerText = "上架时间：" + itemInfo.Date_added;//上架日期
+                        var stock = itemInfo.Stock;//库存
+                        if (stock > 0) {
+                            document.getElementById("item-stock-icon").className = "fa fa-check";
+                            document.getElementById("item-stock").innerText = "有库存：" + itemInfo.Stock + "件";
+                        } else {
+                            document.getElementById("item-stock-icon").className = "fa fa-remove";
+                            document.getElementById("item-stock").innerText = "无库存";
+                        }
+                    }
+            });
+        }
+
+        //添加到购物车
+        function addToCart(id, count) {
+            if (id == null || count == null) {
+                //点击来自详情页
+                //alert("click from detail");
+                var item = $("#form-item-detail").serialize();
+                console.log(item);
+                
+            } else {
+                //点击来自菜单
+                alert("add " + id + "x" + count + " to cart");
+            }
+            return false
         }
     </script>
 </body>
