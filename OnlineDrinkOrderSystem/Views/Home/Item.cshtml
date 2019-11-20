@@ -14,36 +14,6 @@
 }
 
 <!-- shop-main-area-start -->
-<script>
-    var totalPages = "@totalPages";
-    var page = "@nowPage";
-    var pageSize = "@nowPageSize";
-    var keyWord = "@nowKeyWord";
-    var category_ID = "@nowCategory_ID";
-    var itemOrder = "@nowItemOrder";
-    /*
-    * url 目标url
-    * arg 需要替换的参数名称
-    * arg_val 替换后的参数的值
-    * return url 参数替换后的url
-    */
-    function changeURLArg(url,arg,arg_val){
-        var pattern=arg+'=([^&]*)';
-        var replaceText=arg+'='+arg_val;
-        if(url.match(pattern)){
-            var tmp='/('+ arg+'=)([^&]*)/gi';
-            tmp=url.replace(eval(tmp),replaceText);
-            return tmp;
-        }else{
-            if(url.match('[\?]')){
-                return url+'&'+replaceText;
-            }else{
-                return url+'?'+replaceText;
-            }
-        }
-        return url+'\n'+arg+'\n'+arg_val;
-    }
-</script>
 <div class="shop-main-area mb-70 main-area">
     <div class="container">
         <div class="row">
@@ -54,9 +24,15 @@
                     <div class="category-menu">
                         <nav class="menu">
                             <ul>
+                                @*<li><a href="@Url.ActionLink("Item","Home",new {category_ID=0})">所有商品</a></li>
+                                    @foreach (var item in categories)
+                                    {
+                                        <li><a href="@Url.ActionLink("Item","Home",new {category_ID=item.Category_ID})">@item.Category_Name</a></li>
+                                    }*@
+                                <li><a href="#" onclick="selectCategory(0);">所有商品</a></li>
                                 @foreach (var item in categories)
                                 {
-                                    <li><a href="#@item.Category_ID">@item.Category_Name</a></li>
+                                    <li><a href="#" onclick="selectCategory(@item.Category_ID);">@item.Category_Name</a></li>
                                 }
                             </ul>
                         </nav>
@@ -75,14 +51,15 @@
                 <div class="toolbar mb-30">
                     <div class="shop-tab">
                         <div class="list-page">
-                            <p>当前在第 @(nowPage + 1) 页，共有 @totalPages 页</p>
+                            <p>当前在第 @(nowPage) 页，共有 @totalPages 页</p>
                         </div>
                     </div>
 
                     <div class="toolbar-sorter">
                         <span>排序</span>
-                        <select id="sorter" class="sorter-options" data-role="sorter">
-                            <option selected="selected" value="0">默认排序</option>
+                        <select id="sorter" class="sorter-options" data-role="sorter" onchange="changeOrder();">
+                            <!--TODO 根据条件更改默认选中的项目-->
+                            <option value="0">默认排序</option>
                             <option value="1">销量最高</option>
                             <option value="2">最新上架</option>
                             <option value="3">价格从低到高</option>
@@ -145,16 +122,58 @@
                 <!-- pagination-area-start -->
                 <div class="pagination-area mt-50">
                     <div class="list-page-2">
-                        <p>当前在第 @(nowPage + 1) 页，共有 @totalPages 页</p>
+                        <p>当前在第 @(nowPage) 页，共有 @totalPages 页</p>
                     </div>
                     <div class="page-number">
                         <ul>
-                            <li><a href="#" class="active">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
+                            @{
+                                if (nowPage == 1)
+                                {
+                                    //如果当前在首页，则禁止向前翻页
+                                    <li class="disabled"><a >&laquo;</a></li>
+                                    <li class="disabled"><a >&lt;</a></li>
+                                }
+                                else
+                                {
+                                    //转到第一页/向前一页
+                                    <li><a href="#" onclick="selectPage(1);">&laquo;</a></li>
+                                    <li><a href="#" onclick="selectPage(page - 1);">&lt;</a></li>
+                                }
+
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if ((nowPage + i) <= totalPages)
+                                    {
+                                        <li><a href="#" onclick="selectPage(page+@i)">@(nowPage + i)</a></li>
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+
+                                }
+
+                                if (ViewBag.page == ViewBag.pages)
+                                {
+                                    //如果当前在末尾页，则禁止向后翻页
+                                    <li class="disabled"><a >&gt;</a></li>
+                                    <li class="disabled"><a>&raquo;</a></li>
+                                }
+                                else
+                                {
+                                    //向后一页/转到最后一页
+                                    <li><a href="#" onclick="selectPage(page + 1);">&gt;</a></li>
+                                    <li><a href="#" onclick="selectPage(@totalPages);">&raquo;</a></li>
+                                }
+                            }
                         </ul>
+                        @*<ul>
+            <li><a href="#" class="active">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
+        </ul>*@
                     </div>
                 </div>
                 <!-- pagination-area-end -->
@@ -162,4 +181,71 @@
         </div>
     </div>
 </div>
+<script>
+    var pages = @totalPages;
+    var page = @nowPage;
+    var pageSize = @nowPageSize;
+    var keyWord = "@nowKeyWord";
+    var category_ID = @nowCategory_ID;
+    var itemOrder = @nowItemOrder;
+    //操作逻辑：
+
+    //新关键词：回到第一页，排序条件清空，分类清空（默认）
+    //点击分类：回到第一页，排序条件清空，关键词清空（id=0查询所有商品）
+    //点击翻页：更改页数，排序条件不变，关键词不变
+    //点击排序：回到第一页，关键词不变，分类不变
+
+    //根据url参数修改排序选中项
+    var sorter = document.getElementById("sorter");
+    sorter.options.selectedIndex = itemOrder;
+
+    function selectCategory(i) {
+        category_ID = i;
+        page = 1;
+        itemOrder = 0;
+        keyWord = "";
+
+        redirectUrl();
+    }
+
+    function selectPage(p) {
+        page = p;
+
+        redirectUrl();
+    }
+
+    function changeOrder() {
+        itemOrder = sorter.options.selectedIndex;
+        page = 1;
+
+        redirectUrl();
+    }
+
+    function redirectUrl() {
+        location.href = "@Url.ActionLink("Item","Home")?page=" + page + "&pageSize=" + pageSize + "&keyWord=" + keyWord + "&category_ID=" + category_ID + "&itemOrder=" + itemOrder;
+    }
+
+    /*
+    * url 目标url
+    * arg 需要替换的参数名称
+    * arg_val 替换后的参数的值
+    * return url 参数替换后的url
+    */
+    //function changeURLArg(url,arg,arg_val){
+    //    var pattern=arg+'=([^&]*)';
+    //    var replaceText=arg+'='+arg_val;
+    //    if(url.match(pattern)){
+    //        var tmp='/('+ arg+'=)([^&]*)/gi';
+    //        tmp=url.replace(eval(tmp),replaceText);
+    //        return tmp;
+    //    }else{
+    //        if(url.match('[\?]')){
+    //            return url+'&'+replaceText;
+    //        }else{
+    //            return url+'?'+replaceText;
+    //        }
+    //    }
+    //    return url+'\n'+arg+'\n'+arg_val;
+    //}
+</script>
 <!-- shop-main-area-end -->

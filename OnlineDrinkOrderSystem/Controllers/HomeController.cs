@@ -31,15 +31,17 @@ namespace OnlineDrinkOrderSystem.Controllers
 
             return View();
         }
-        public IActionResult Item(int page = 0, int pageSize = 16, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
+        public IActionResult Item(int page = 1, int pageSize = 16, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
             //商品浏览
+            //页数必须大于0
+            page = (page < 1) ? 1 : page;
             //获取商品类别
             List<Category> categories = ItemManager.GetCategoryList();
             ViewData["categories"] = categories;
             //获取商品
             int totalPages = 0;
-            List<Item> items = ItemManager.GetItemList(out totalPages,page, pageSize, keyWord, category_ID, itemOrder);
+            List<Item> items = ItemManager.GetItemList(out totalPages, page - 1, pageSize, keyWord, category_ID, itemOrder);
             ViewData["items"] = items;
             ViewData["pages"] = totalPages;
             //url参数

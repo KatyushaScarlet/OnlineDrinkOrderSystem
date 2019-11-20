@@ -92,9 +92,10 @@
                     <div class="category-menu">
                         <nav class="menu">
                             <ul>
+                                <li><a href="@Url.ActionLink("Item","Home",new {category_ID=0})">所有商品</a></li>
                                 @foreach (var item in categories)
                                 {
-                                    <li><a href="#@item.Category_ID">@item.Category_Name</a></li>
+                                    <li><a href="@Url.ActionLink("Item","Home",new {category_ID=item.Category_ID})">@item.Category_Name</a></li>
                                 }
                             </ul>
                         </nav>
