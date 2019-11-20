@@ -20,6 +20,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             //清空Session
             HttpContext.Session.SetString("user_id", "");
+            HttpContext.Session.SetString("is_admin", false.ToString());
             //跳转回首页
             return RedirectToAction("Index", "Home", new { errorMessage = "您已成功登出" });
 

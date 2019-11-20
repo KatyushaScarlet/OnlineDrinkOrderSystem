@@ -8,9 +8,11 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class CartController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //添加购物车
+        //[HttpGet]
+        //public string AddToCart(int id = 0, int count = 0)
+        //{
+
+        //}
     }
 }

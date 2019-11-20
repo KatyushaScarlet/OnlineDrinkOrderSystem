@@ -11,6 +11,7 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class ItemController : Controller
     {
+        //获取单个商品信息
         [HttpGet]
         public string GetItem(int id = 0)
         {
@@ -22,11 +23,5 @@ namespace OnlineDrinkOrderSystem.Controllers
 
             return JsonConvert.SerializeObject(item);
         }
-
-        [HttpGet]
-        //public string AddToCart(int id = 0, int count = 0)
-        //{
-
-        //}
     }
 }

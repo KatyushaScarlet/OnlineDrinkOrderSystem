@@ -25,9 +25,14 @@ namespace OnlineDrinkOrderSystem.Controllers
                 ViewBag.errorMessage = errorMessage;
             }
 
-            //输出首页分类菜单
+            //获取商品类别
             List<Category> categories = ItemManager.GetCategoryList();
             ViewData["categories"] = categories;
+            //获取首页展示（最新上架）
+            int totalPages = 0;
+            //获取最新的X个商品
+            List<Item> items = ItemManager.GetItemList(out totalPages, 0, 10, "", 0, ItemOrder.lastest);
+            ViewData["items"] = items;
 
             return View();
         }

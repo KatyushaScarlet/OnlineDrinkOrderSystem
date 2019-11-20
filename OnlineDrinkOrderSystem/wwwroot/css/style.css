@@ -464,7 +464,7 @@ body {
 }
 
 .account-area ul li a:hover, .language-area ul li a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 
 .account-area ul li .header-sub ul li::before {
@@ -495,7 +495,7 @@ body {
         }
 
         .header-search form a {
-            background: #f07c29 none repeat scroll 0 0;
+            background: #00ABE0 none repeat scroll 0 0;
             color: #fff;
             display: inline-block;
             font-size: 18px;
@@ -533,7 +533,7 @@ body {
         }
 
         .header-mid-area .mini-cart ul li a:hover {
-            color: #f07c29;
+            color: #00ABE0;
         }
 
 .header-mid-area .my-cart {
@@ -559,7 +559,7 @@ body {
     }
 
     .header-mid-area .my-cart ul > li:hover a {
-        color: #f07c29;
+        color: #00ABE0;
     }
 
     .header-mid-area .my-cart ul li > a > i {
@@ -568,7 +568,7 @@ body {
     }
 
     .header-mid-area .my-cart ul li > span {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         border-radius: 50%;
         bottom: 0;
         color: #fff;
@@ -639,7 +639,7 @@ body {
     }
 
     .cart-icon a:hover i {
-        color: #f07c29;
+        color: #00ABE0;
     }
 
 .cart-product .single-cart .cart-info h5 {
@@ -657,7 +657,7 @@ body {
 }
 
     .header-mid-area .my-cart ul > li .cart-product .single-cart .cart-info h5 a:hover, .header-mid-area .my-cart ul > li .cart-bottom a:hover {
-        color: #f07c29;
+        color: #00ABE0;
     }
 
 .cart-product .single-cart .cart-info p {
@@ -734,19 +734,19 @@ body {
 }
 
 .home-3 .header-mid-area .my-cart ul > li .mini-cart-sub .cart-bottom a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 
 .home-4 .header-mid-area .my-cart ul > li .mini-cart-sub .cart-bottom a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 
 .home-5 .header-mid-area .my-cart ul > li .mini-cart-sub .cart-bottom a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 
 .home-6 .header-mid-area .my-cart ul > li .mini-cart-sub .cart-bottom a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 /*----------------------------------------*/ /*  2.3 Main menu area/*----------------------------------------*/
 
@@ -791,7 +791,7 @@ body {
         }
 
         .menu-area ul li:before, .safe-area:before {
-            background: #f07c29 none repeat scroll 0 0;
+            background: #00ABE0 none repeat scroll 0 0;
             bottom: 0;
             content: "";
             left: 0;
@@ -808,7 +808,7 @@ body {
         }
 
         .menu-area ul li a:before {
-            background: #f07c29 none repeat scroll 0 0;
+            background: #00ABE0 none repeat scroll 0 0;
             bottom: 0;
             content: "";
             height: 3px;
@@ -899,7 +899,7 @@ body {
     }
 
         .menu-area ul li .mega-menu span a:hover, .menu-area ul li .sub-menu ul li a:hover {
-            color: #f07c29;
+            color: #00ABE0;
         }
 
         .menu-area ul li .mega-menu span a:before {
@@ -1132,7 +1132,7 @@ body {
 }
 
 .slider-content a {
-    background: #f07c29 none repeat scroll 0 0;
+    background: #00ABE0 none repeat scroll 0 0;
     border: 2px solid #d6681b;
     border-radius: 4px;
     color: #fff;
@@ -1205,7 +1205,7 @@ body {
 }
 
     .slider-active.owl-carousel .owl-nav .owl-prev:hover, .slider-active.owl-carousel .owl-nav .owl-next:hover {
-        color: #f07c29;
+        color: #00ABE0;
     }
 
 .slider-active.owl-carousel .owl-dots .owl-dot span {
@@ -1220,7 +1220,7 @@ body {
 }
 
 .slider-active.owl-carousel .owl-dots .owl-dot.active span {
-    background: #f07c29 none repeat scroll 0 0;
+    background: #00ABE0 none repeat scroll 0 0;
     width: 32px;
 }
 
@@ -1335,7 +1335,7 @@ body {
     }
 
         .tab-menu ul li a:before {
-            background: #f07c29 none repeat scroll 0 0;
+            background: #00ABE0 none repeat scroll 0 0;
             bottom: -10px;
             content: "";
             height: 2px;
@@ -1402,7 +1402,7 @@ body {
 }
 
 .quick-view a {
-    background-color: #f07c29;
+    background-color: #00ABE0;
     border-radius: 50px;
     color: #fff;
     display: inline-block;
@@ -1423,7 +1423,7 @@ body {
 }
 
     .product-rating ul li a {
-        color: #f07c29;
+        color: #00ABE0;
         font-size: 12px;
     }
 
@@ -1446,12 +1446,12 @@ body {
     }
 
         .product-details h4 a:hover, .product-link .product-button a:hover, .product-link .add-to-link ul li a:hover {
-            color: #f07c29;
+            color: #00ABE0;
         }
 
 .product-price ul li {
     display: inline-block;
-    color: #f07c29;
+    color: #00ABE0;
     font-size: 20px;
     font-weight: 600;
     font-family: 'Rufina', serif;
@@ -1591,7 +1591,7 @@ body {
     }
 
     .product-flag ul li > span {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         color: #fff;
         font-size: 12px;
         font-weight: 400;
@@ -1610,7 +1610,7 @@ body {
         }
 
         .product-flag ul li > span:before {
-            border-color: #f07c29 transparent transparent #f07c29;
+            border-color: #00ABE0 transparent transparent #00ABE0;
             border-style: solid;
             border-width: 4.5px 3px;
             content: "";
@@ -1620,7 +1620,7 @@ body {
         }
 
         .product-flag ul li > span:after {
-            border-color: transparent transparent #f07c29 #f07c29;
+            border-color: transparent transparent #00ABE0 #00ABE0;
             border-style: solid;
             border-width: 4.5px 3px;
             bottom: 0;
@@ -1678,7 +1678,7 @@ body {
     }
 
     .tab-active.owl-carousel .owl-nav button:hover, .post-active.owl-carousel .owl-nav button:hover, .bestseller-active.owl-carousel .owl-nav button:hover {
-        background: #F07C29;
+        background: #00ABE0;
         color: #fff;
     }
 
@@ -1737,7 +1737,7 @@ body {
 }
 
 .bestseller-content h2 {
-    color: #f07c29;
+    color: #00ABE0;
     font-size: 70px;
     font-weight: 700;
     line-height: 1.1;
@@ -1793,7 +1793,7 @@ body {
         }
 
             .bestseller-content .social-author ul li a:hover {
-                background: #f07c29 none repeat scroll 0 0;
+                background: #00ABE0 none repeat scroll 0 0;
             }
 
 .bestseller-img {
@@ -1841,7 +1841,7 @@ body {
     }
 
         .single-bestseller .bestseller-text .price ul li span.new-price {
-            color: #f07c29;
+            color: #00ABE0;
             font-size: 18px;
         }
 
@@ -1851,7 +1851,7 @@ body {
         }
 
 .single-bestseller .bestseller-text h3 a:hover, .most-product-content h4 a:hover, .block-newsletter a:hover, .post-content h3 a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 /*----------------------------------------*/ /*  7. Banner static area/*----------------------------------------*/
 
@@ -1893,7 +1893,7 @@ body {
     }
 
     .product-active-2.owl-carousel .owl-nav button:hover {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         color: #fff;
     }
 
@@ -1960,7 +1960,7 @@ body {
 }
 
 .block-newsletter {
-    background: #f07c29 url("/img/banner/10.jpg") no-repeat scroll center top;
+    background: #00ABE0 url("/img/banner/10.jpg") no-repeat scroll center top;
     padding: 45px 25px 25px;
     position: relative;
     text-align: center;
@@ -1968,7 +1968,7 @@ body {
 }
 
     .block-newsletter:before {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         border-radius: 100%;
         content: "";
         height: 13px;
@@ -1983,7 +1983,7 @@ body {
 
     .block-newsletter:after {
         background: #fff none repeat scroll 0 0;
-        border: 2px solid #f07c29;
+        border: 2px solid #00ABE0;
         content: "";
         height: 53px;
         left: 0;
@@ -2094,7 +2094,7 @@ body {
 }
 
     .testimonial-text a span {
-        color: #f07c29;
+        color: #00ABE0;
         font-size: 16px;
         text-transform: uppercase;
     }
@@ -2109,7 +2109,7 @@ body {
 }
 
 .testimonial-active .owl-dots .owl-dot.active span {
-    background: #f07c29 none repeat scroll 0 0;
+    background: #00ABE0 none repeat scroll 0 0;
     transition: all 300ms ease-in 0s;
 }
 
@@ -2239,7 +2239,7 @@ body {
 }
 
     .twitter-content .twitter-icon a {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         border-radius: 100%;
         color: #fff;
         font-size: 24px;
@@ -2266,7 +2266,7 @@ body {
 }
 
 .twitter-text a {
-    color: #f07c29;
+    color: #00ABE0;
     font-family: "Rufina", serif;
     font-size: 16px;
     font-style: italic;
@@ -2278,7 +2278,7 @@ body {
     }
 
 .twitter-content .twitter-text p.link a:hover, .twitter-content .twitter-text p > a:hover, .footer-top-menu ul li a:hover {
-    color: #f07c29;
+    color: #00ABE0;
 }
 
 .link-follow ul li {
@@ -2376,7 +2376,7 @@ footer {
 }
 
     .footer-mid-menu ul li a:hover {
-        color: #f07c29;
+        color: #00ABE0;
     }
 
 .br-2 {
@@ -2446,8 +2446,8 @@ a#scrollUp {
 }
 
     a#scrollUp:hover {
-        background: #f07c29 none repeat scroll 0 0;
-        border-color: #f07c29;
+        background: #00ABE0 none repeat scroll 0 0;
+        border-color: #00ABE0;
     }
 /*----------------------------------------*/ /*  13. Home 2/*----------------------------------------*/
 
@@ -2472,7 +2472,7 @@ a#scrollUp {
 }
 
     .home-2 .language-area ul li .header-sub ul li a:hover, .home-2 .account-area ul li .header-sub ul li a:hover {
-        color: #f07c29;
+        color: #00ABE0;
     }
 
 .home-2 .main-menu ul li {
@@ -2534,7 +2534,7 @@ a#scrollUp {
         }
 
             .home-2 .main-menu ul li:hover a, .home-2 .main-menu ul li.active a, .home-2 .main-menu ul li .sub-menu ul li a:hover {
-                color: #f07c29;
+                color: #00ABE0;
             }
 
 .header-bottom-area {
@@ -2710,7 +2710,7 @@ a#scrollUp {
                 }
 
         .category-menu ul li:hover > a {
-            color: #f07c29;
+            color: #00ABE0;
         }
 
         .category-menu ul li .left-menu {
@@ -2766,7 +2766,7 @@ a#scrollUp {
             }
 
                 .category-menu ul li .left-menu span a:hover {
-                    color: #f07c29;
+                    color: #00ABE0;
                 }
 
 .total-slider {
@@ -2809,7 +2809,7 @@ a#scrollUp {
     }
 
     .slider-content-3 p span.sale2 {
-        color: #f07c29;
+        color: #00ABE0;
         display: inline-block;
         font-size: 34px;
         font-weight: 400;
@@ -2877,7 +2877,7 @@ a#scrollUp {
         }
 
             .deal-off-day h2 a:hover {
-                color: #f07c29;
+                color: #00ABE0;
             }
 
     .deal-off-day .sale-area {
@@ -2902,7 +2902,7 @@ a#scrollUp {
         }
 
             .deal-off-day .sale-area .price-box span.new-sale {
-                color: #f07c29;
+                color: #00ABE0;
                 display: block;
                 font-family: Rufina;
                 font-size: 28px;
@@ -3118,7 +3118,7 @@ a#scrollUp {
 }
 
 .home-3 .tab-active.owl-carousel.owl-theme .owl-controls .owl-nav div:hover, .home-3 .post-active.owl-carousel.owl-theme .owl-controls .owl-nav div:hover {
-    background: #f07c29 none repeat scroll 0 0;
+    background: #00ABE0 none repeat scroll 0 0;
 }
 
 .home-3 .footer-top-menu ul li a:hover, .home-3 .footer-mid-menu ul li a:hover {
@@ -3576,7 +3576,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .home-5 .slider-content a {
-    background: #f07c29 none repeat scroll 0 0;
+    background: #00ABE0 none repeat scroll 0 0;
     border-radius: 4px;
     color: fff;
     display: inline-block;
@@ -3976,7 +3976,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .breadcrumbs-menu ul li a.active {
-            color: #f07c29;
+            color: #00ABE0;
         }
 
     .breadcrumbs-menu ul li::before {
@@ -4007,7 +4007,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .section-title-5 h2:before {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         bottom: 0;
         content: "";
         height: 2px;
@@ -4050,7 +4050,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .left-menu ul li a:hover {
-            color: #f07c29;
+            color: #00ABE0;
         }
 
         .left-menu ul li a:before {
@@ -4189,7 +4189,7 @@ nav.menu .cr-dropdown ul {
             }
 
             .tab-3 ul li.active a, .tab-3 ul li a:hover {
-                color: #F07C29;
+                color: #00ABE0;
             }
 
 .list-page {
@@ -4322,7 +4322,7 @@ nav.menu .cr-dropdown ul {
             }
 
                 .pagination-area .page-number ul li a.active {
-                    color: #f07c29;
+                    color: #00ABE0;
                     font-size: 14px;
                 }
 
@@ -4421,7 +4421,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .product-info-area .nav > li.active > a {
-    background-color: #F07C29;
+    background-color: #00ABE0;
     color: #fff;
 }
 
@@ -4489,7 +4489,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .rating-result > a {
-        color: #f07c29;
+        color: #00ABE0;
         line-height: 30px;
         position: relative;
         top: -8px;
@@ -4617,7 +4617,7 @@ nav.menu .cr-dropdown ul {
             }
 
                 .review-field-ratings .single-control .review-control-vote a:hover {
-                    color: #f07c29;
+                    color: #00ABE0;
                 }
 
 .review-form {
@@ -4733,7 +4733,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .rating-summary > a {
-        color: #F07C29;
+        color: #00ABE0;
     }
 
 .reviews-actions a.view {
@@ -4757,7 +4757,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .product-info-price .price-final {
-        color: #f07c29;
+        color: #00ABE0;
         font-size: 25px;
         font-weight: 400;
         font-family: 'Rufina', serif;
@@ -4830,7 +4830,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .product-addto-links a:hover, .product-add-form form a:hover {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
     }
 
 .product-addto-links-text p {
@@ -4864,7 +4864,7 @@ nav.menu .cr-dropdown ul {
         }
 
             .blog-comment-readmore .blog-readmore a:hover {
-                color: #F07C29;
+                color: #00ABE0;
             }
 
             .blog-comment-readmore .blog-readmore a i {
@@ -4978,7 +4978,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .blog-side-menu ul li a:hover, .catagory-menu ul li a:hover {
-            color: #F07C29;
+            color: #00ABE0;
         }
 
     .blog-side-menu ul li:first-child {
@@ -5046,8 +5046,8 @@ nav.menu .cr-dropdown ul {
     }
 
         .blog-tag ul li a:hover {
-            background: #F07C29 none repeat scroll 0 0;
-            border: 1px solid #F07C29;
+            background: #00ABE0 none repeat scroll 0 0;
+            border: 1px solid #00ABE0;
             color: #fff;
         }
 
@@ -5133,7 +5133,7 @@ nav.menu .cr-dropdown ul {
                 }
 
                     .author-destils .author-right ul li a:hover {
-                        color: #F07C29;
+                        color: #00ABE0;
                     }
 
 .single-blog-content .single-blog-title h3 a, .single-blog-content .single-blog-title h3 {
@@ -5147,7 +5147,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .single-blog-content .single-blog-title h3 a:hover {
-        color: #F07C29;
+        color: #00ABE0;
     }
 
 .single-blog-content .blog-single-content p {
@@ -5159,7 +5159,7 @@ nav.menu .cr-dropdown ul {
 
 .single-blog-content .blog-single-content blockquote {
     background: rgba(102, 102, 102, 0.05) none repeat scroll 0 0;
-    border-color: #F07C29;
+    border-color: #00ABE0;
     font-family: Yanone Kaffeesatz;
     font-size: 20px;
     font-style: italic;
@@ -5227,7 +5227,7 @@ nav.menu .cr-dropdown ul {
             }
 
                 .sharing-post .share-icon ul li a:hover {
-                    color: #F07C29;
+                    color: #00ABE0;
                 }
 
 .comment-title-wrap {
@@ -5237,7 +5237,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .comment-title-wrap:before {
-        background: #F07C29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
         bottom: -2px;
         content: "";
         height: 2px;
@@ -5315,7 +5315,7 @@ nav.menu .cr-dropdown ul {
             }
 
                 .comment-reply-wrap ul li .public-comment .public-text .single-comm-top p a:hover {
-                    color: #F07C29;
+                    color: #00ABE0;
                 }
 
         .comment-reply-wrap ul li .public-comment .public-text p {
@@ -5368,8 +5368,8 @@ nav.menu .cr-dropdown ul {
 }
 
     .single-post-button a:hover {
-        background: #F07C29 none repeat scroll 0 0;
-        border: 1px solid #F07C29;
+        background: #00ABE0 none repeat scroll 0 0;
+        border: 1px solid #00ABE0;
     }
 /*----------------------------------------*/ /*  22. Login/*----------------------------------------*/
 
@@ -5446,9 +5446,9 @@ nav.menu .cr-dropdown ul {
         }
 
             .login-form .single-login a:hover {
-                background: #F07C29;
+                background: #00ABE0;
                 color: #fff;
-                border: 1px solid #F07C29;
+                border: 1px solid #00ABE0;
             }
 
 .single-login input#rememberme {
@@ -5470,7 +5470,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .login-form > a {
-    color: #F07C29;
+    color: #00ABE0;
     line-height: 24px;
     margin-bottom: 15px;
     font-size: 14px;
@@ -5542,7 +5542,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .single-register-3 label a {
-        color: #F07C29;
+        color: #00ABE0;
         font-size: 14px;
         text-decoration: none;
         font-family: 'Rufina', serif;
@@ -5565,9 +5565,9 @@ nav.menu .cr-dropdown ul {
 }
 
     .single-register > a:hover {
-        background-color: #F07C29;
+        background-color: #00ABE0;
         color: #fff;
-        border: 1px solid #F07C29;
+        border: 1px solid #00ABE0;
     }
 /*----------------------------------------*/ /*  24. Contact/*----------------------------------------*/
 
@@ -5626,7 +5626,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .contact-info ul li a:hover {
-            color: #F07C29;
+            color: #00ABE0;
         }
 
 .contact-form h3 i {
@@ -5677,7 +5677,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .contact-form form .single-form-3 button:hover {
-        background: #F07C29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
     }
 /*----------------------------------------*/ /*  25. About/*----------------------------------------*/
 
@@ -5738,7 +5738,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .about-content ul li a:hover {
-            color: #F07C29;
+            color: #00ABE0;
         }
 
         .about-content ul li a i {
@@ -5863,7 +5863,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .team-link ul li a:hover {
-            color: #F07C29
+            color: #00ABE0
         }
 
 .skill-content h3 {
@@ -5901,8 +5901,8 @@ nav.menu .cr-dropdown ul {
 }
 
     .skill-content a:hover {
-        color: #F07C29;
-        border-bottom: 1px solid #F07C29;
+        color: #00ABE0;
+        border-bottom: 1px solid #00ABE0;
     }
 
     .skill-content a i {
@@ -6091,7 +6091,7 @@ nav.menu .cr-dropdown ul {
     }
 
         .buttons-cart ul li a:hover, .coupon form a:hover {
-            background: #F07C29 none repeat scroll 0 0;
+            background: #00ABE0 none repeat scroll 0 0;
             color: #fff;
         }
 
@@ -6233,7 +6233,7 @@ nav.menu .cr-dropdown ul {
 }
 
 .wc-proceed-to-checkout a {
-    background: #F07C29 none repeat scroll 0 0;
+    background: #00ABE0 none repeat scroll 0 0;
     color: #fff;
     display: inline-block;
     font-size: 13px;
@@ -6259,7 +6259,7 @@ nav.menu .cr-dropdown ul {
 
 .coupon-accordion h3 {
     background-color: #f7f6f7;
-    border-top: 3px solid #f07c29;
+    border-top: 3px solid #00ABE0;
     color: #333;
     font-family: "Rufina", serif;
     font-size: 14px;
@@ -6289,7 +6289,7 @@ nav.menu .cr-dropdown ul {
 }
 
     .coupon-accordion span:hover, p.lost-password a:hover {
-        color: #F07C29;
+        color: #00ABE0;
     }
 
 .coupon-content {
@@ -6403,11 +6403,11 @@ p.checkout-coupon input[type="submit"] {
 }
 
     .coupon-info p.form-row input[type="submit"]:hover, p.checkout-coupon input[type="submit"]:hover {
-        background: #F07C29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
     }
 
 .coupon-accordion span:hover, p.lost-password a:hover {
-    color: #F07C29;
+    color: #00ABE0;
 }
 
 .checkbox-form h3 {
@@ -6733,7 +6733,7 @@ p.checkout-coupon input[type="submit"] {
         }
 
             .wishlist-table table .product-remove > a:hover {
-                color: #F07C29;
+                color: #00ABE0;
             }
 
     .wishlist-table table .product-thumbnail {
@@ -6748,7 +6748,7 @@ p.checkout-coupon input[type="submit"] {
 }
 
     .product-name a:hover {
-        color: #F07C29;
+        color: #00ABE0;
     }
 
 .wishlist-table table td.product-price .amount {
@@ -6776,7 +6776,7 @@ p.checkout-coupon input[type="submit"] {
     }
 
         .wishlist-table table .product-add-to-cart > a:hover {
-            background: #F07C29 none repeat scroll 0 0;
+            background: #00ABE0 none repeat scroll 0 0;
         }
 
 .wishlist-share {
@@ -6806,7 +6806,7 @@ p.checkout-coupon input[type="submit"] {
     }
 
         .wishlist-share ul li a:hover {
-            color: #F07C29;
+            color: #00ABE0;
         }
 /*----------------------------------------*/ /*  29. 404 page/*----------------------------------------*/
 
@@ -6842,8 +6842,8 @@ p.checkout-coupon input[type="submit"] {
 }
 
     .page .entry-content a:hover {
-        background: #F07C29 none repeat scroll 0 0;
-        border-color: #F07C29;
+        background: #00ABE0 none repeat scroll 0 0;
+        border-color: #00ABE0;
         color: #fff;
     }
 
@@ -6876,7 +6876,7 @@ p.checkout-coupon input[type="submit"] {
 }
 
     .modal-pro-content .price > span {
-        color: #f07c29;
+        color: #00ABE0;
         font-family: "Rufina", serif;
         font-size: 28px;
         font-style: italic;
@@ -6952,7 +6952,7 @@ p.checkout-coupon input[type="submit"] {
 }
 
     .modal-pro-content form button:hover {
-        background: #f07c29 none repeat scroll 0 0;
+        background: #00ABE0 none repeat scroll 0 0;
     }
 
 .quickview-color-wrap {
@@ -7008,7 +7008,7 @@ p.checkout-coupon input[type="submit"] {
 }
 
     .quickview-active.owl-carousel .owl-nav button:hover {
-        background-color: #f07c29;
+        background-color: #00ABE0;
         color: #fff;
     }
 
