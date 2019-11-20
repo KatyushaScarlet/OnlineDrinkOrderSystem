@@ -130,8 +130,8 @@
                                 if (nowPage == 1)
                                 {
                                     //如果当前在首页，则禁止向前翻页
-                                    <li class="disabled"><a >&laquo;</a></li>
-                                    <li class="disabled"><a >&lt;</a></li>
+                                    <li class="disabled"><a>&laquo;</a></li>
+                                    <li class="disabled"><a>&lt;</a></li>
                                 }
                                 else
                                 {
@@ -139,24 +139,39 @@
                                     <li><a href="#" onclick="selectPage(1);">&laquo;</a></li>
                                     <li><a href="#" onclick="selectPage(page - 1);">&lt;</a></li>
                                 }
+                                //当前页的前四页
+                                for (int i = 4; i > 0; i--)
+                                {
+                                    if ((nowPage - i) >0)
+                                    {
+                                        <li><a href="#" onclick="selectPage(page - @i);">@(nowPage - i)</a></li>
+                                    }
+                                    //else
+                                    //{
+                                    //    break;
+                                    //}
 
-                                for (int i = 0; i < 5; i++)
+                                }
+                                //当前页
+                                <li><a href="#" onclick="selectPage(page);">@nowPage</a></li>
+                                //当前页的后四页
+                                for (int i = 1; i <= 4; i++)
                                 {
                                     if ((nowPage + i) <= totalPages)
                                     {
-                                        <li><a href="#" onclick="selectPage(page+@i)">@(nowPage + i)</a></li>
+                                        <li><a href="#" onclick="selectPage(page + @i);">@(nowPage + i)</a></li>
                                     }
-                                    else
-                                    {
-                                        break;
-                                    }
+                                    //else
+                                    //{
+                                    //    break;
+                                    //}
 
                                 }
 
                                 if (ViewBag.page == ViewBag.pages)
                                 {
                                     //如果当前在末尾页，则禁止向后翻页
-                                    <li class="disabled"><a >&gt;</a></li>
+                                    <li class="disabled"><a>&gt;</a></li>
                                     <li class="disabled"><a>&raquo;</a></li>
                                 }
                                 else
