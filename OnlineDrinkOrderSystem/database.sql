@@ -39,6 +39,7 @@ User_Name VARCHAR(255) NOT NULL,-- 姓名
 User_Avater VARCHAR(255) NOT NULL,-- 头像（URL）
 Given_Name VARCHAR(255) NOT NULL,-- 名
 Family_Name VARCHAR(255) NOT NULL,-- 姓
+Email VARCHAR(255),--邮箱
 Address VARCHAR(255),-- 用户地址
 Admin BOOLEAN,-- 用户是否为管理员
 UNIQUE(Google_ID),-- Google ID 唯一

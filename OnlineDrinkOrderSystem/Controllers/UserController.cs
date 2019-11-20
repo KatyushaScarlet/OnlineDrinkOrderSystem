@@ -93,5 +93,60 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
             return JsonConvert.SerializeObject(result);
         }
+
+        [HttpPost]
+        //修改用户信息
+        public string ChangeUserInfo(int User_ID = 0,  string Given_Name = "", string Family_Name = "", string Email="",string Address="", bool Admin = false)
+        {
+            //given name
+            //family name
+            //address
+            //email
+            //admin（管理员有权限修改）
+
+            //判断是否已登录
+            ResultResponse result = new ResultResponse();
+            result.status = false;
+
+            string userId = HttpContext.Session.GetString("user_id");
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("is_admin"));
+            if (!string.IsNullOrEmpty(userId))
+            {
+                if ((User_ID.ToString() == userId) || (isadmin == true))
+                {
+                    User user = UserManage.GetUserInfo(User_ID.ToString());
+                    user.Family_Name = Family_Name;
+                    user.Given_Name = Given_Name;
+                    user.Email = Email;
+                    user.Address = Address;
+                    if (isadmin)
+                    {
+                        //管理员才能修改用户的权限
+                        user.Admin = Admin;
+                    }
+                    //修改资料
+                    bool status = UserManage.AlterUserInfo(user);
+
+                    if (status)
+                    {
+                        result.message = "修改成功";
+                    }
+                    else
+                    {
+                        result.message = "修改失败";
+                    }
+                }
+                else
+                {
+                    result.message = "没有权限";
+                }
+            }
+            else
+            {
+                result.message = "请先登录";
+            }
+
+            return JsonConvert.SerializeObject(result);
+        }
     }
 }

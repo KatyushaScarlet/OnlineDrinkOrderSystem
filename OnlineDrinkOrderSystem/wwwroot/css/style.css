@@ -5475,83 +5475,80 @@ nav.menu .cr-dropdown ul {
     margin-bottom: 15px;
     font-size: 14px;
 }
-/*----------------------------------------*/ /*  23. Register/*----------------------------------------*/
+/*----------------------------------------*/
+/*  23. Register
+/*----------------------------------------*/
 
-.single-register {
+.single-form-item {
     margin-bottom: 15px;
     overflow: hidden;
 }
-
-    .single-register form {
-    }
-
-        .single-register form label, .single-register label {
-            color: #333;
-            display: block;
-            font-size: 16px;
-            font-weight: 400;
-            margin-top: 7px;
-            font-family: 'Rufina', serif;
-            font-weight: 400;
-        }
-
-        .single-register form input {
-            background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-            border: 1px solid #eceff8;
-            box-shadow: none;
-            color: #333;
-            font-size: 14px;
-            height: 45px;
-            padding-left: 10px;
-            width: 100%;
-            font-family: 'Rufina', serif;
-            font-weight: 400;
-        }
-
-    .single-register .chosen-select {
-        height: 45px;
-        background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-        border: 1px solid #eceff8;
-        color: #626262;
-        font-size: 14px;
-        height: 45px;
-        padding-left: 10px;
-        box-shadow: none;
-        text-align: left;
-        font-family: 'Rufina', serif;
-        font-weight: 400;
-    }
-
-    .single-register input#billing_address_2 {
-        margin-top: 15px;
-    }
-
-.single-register-3 #rememberme {
+.single-form-item-3 {
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+.single-form-item form {}
+.single-form-item form label,
+.single-form-item label {
+    color: #333;
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 7px;
+    font-family: 'Rufina', serif;
+    font-weight: 400;
+}
+.single-form-item  input {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 1px solid #00abe0;
+    box-shadow: none;
+    color: #333;
+    font-size: 14px;
+    height: 45px;
+    padding-left: 10px;
+    width: 100%;
+    font-family: 'Rufina', serif;
+    font-weight: 600;
+}
+.single-form-item .chosen-select {
+    height: 45px;
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 1px solid #00abe0;
+    color: #626262;
+    font-size: 14px;
+    height: 45px;
+    padding-left: 10px;
+    box-shadow: none;
+    text-align: left;
+    font-family: 'Rufina', serif;
+    font-weight: 600;
+}
+.single-form-item input#billing_address_2 {
+    margin-top: 15px;
+}
+.single-form-item-3 #rememberme {
     display: inline-block;
     float: left;
 }
-
-.single-register-3 label {
+.single-form-item-3 label {
     display: inline-block;
     float: left;
     margin-top: 0;
     padding-left: 10px;
     font-size: 13px;
     font-family: 'Rufina', serif;
-    font-weight: 400;
+    font-weight: 600;
 }
-
-    .single-register-3 label a {
-        color: #00ABE0;
-        font-size: 14px;
-        text-decoration: none;
-        font-family: 'Rufina', serif;
-        font-weight: 400;
-    }
-
-.single-register > a {
+.single-form-item-3 label a {
+    color: #00ABE0;
+    font-size: 14px;
+    text-decoration: none;
+    font-family: 'Rufina', serif;
+    font-weight: 600;
+}
+.single-form-item > a {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: 1px solid #eceff8;
+    border: 1px solid #00abe0;
     box-shadow: none;
     color: #626262;
     display: inline-block;
@@ -5561,14 +5558,29 @@ nav.menu .cr-dropdown ul {
     text-decoration: none;
     transition: .3s;
     font-family: 'Rufina', serif;
-    font-weight: 400;
+    font-weight: 600;
 }
 
-    .single-register > a:hover {
-        background-color: #00ABE0;
-        color: #fff;
-        border: 1px solid #00ABE0;
-    }
+.single-form-item input#submit {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 1px solid #00abe0;
+    box-shadow: none;
+    color: #626262;
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 6px;
+    padding: 12px 48px;
+    text-decoration: none;
+    transition: .3s;
+    font-family: 'Rufina', serif;
+    font-weight: 600;
+}
+
+.single-form-item > a:hover {
+    background-color: #00ABE0;
+    color: #fff;
+    border: 1px solid #00ABE0;
+}
 /*----------------------------------------*/ /*  24. Contact/*----------------------------------------*/
 
 .contact-area, .map-area {

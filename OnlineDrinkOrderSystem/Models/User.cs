@@ -13,6 +13,7 @@ namespace OnlineDrinkOrderSystem.Models
         public string User_Avater{ get; set; }
         public string Given_Name{ get; set; }
         public string Family_Name{ get; set; }
+        public string Email { get; set; }
         public string Address{ get; set; }
         public bool Admin{ get; set; }
     }

@@ -114,6 +114,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             string userId = HttpContext.Session.GetString("user_id");
             if (!string.IsNullOrEmpty(userId))
             {
+                User user = UserManage.GetUserInfo(userId);
+                ViewData["user"] = user;
+
                 return View();
             }
             else

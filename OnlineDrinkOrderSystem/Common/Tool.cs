@@ -95,6 +95,7 @@ namespace OnlineDrinkOrderSystem.Common
             user.User_Avater = jwt.jwtPayload.picture;
             user.Given_Name = jwt.jwtPayload.given_name;
             user.Family_Name = jwt.jwtPayload.family_name;
+            user.Email = jwt.jwtPayload.email;
             user.Address = "";
             user.Admin = false;
             return user;

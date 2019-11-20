@@ -417,12 +417,13 @@
         function addToCart(id, count) {
             if (id == null || count == null) {
                 //点击来自详情页
-                //alert("click from detail");
-                var item = $("#form-item-detail").serialize();
+                alert("click from detail");
+                var item = $("#form-item-detail").serialize();//用于get提交
                 console.log(item);
                 
             } else {
                 //点击来自菜单
+                alert("click from menu");
                 alert("add " + id + "x" + count + " to cart");
             }
             return false
