@@ -68,7 +68,7 @@
                                 {
                                     <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
                                     <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
-                                    <li><a href="#" onclick="signOut();">登出</a></li>
+                                    <li><a href=@Url.ActionLink("SignOut","Home")>登出</a></li>
                                 }
                             </ul>
                         </div>
@@ -375,11 +375,6 @@
     <script>
         var itemInfo = null;
         var itemId = 0;
-
-        //登出
-        function signOut() {
-            location.href = "@Url.ActionLink("SignOut","User")";
-        }
 
         //获取商品信息并显示在Modal上
         function openModalForItem(id) {

@@ -19,9 +19,13 @@ namespace OnlineDrinkOrderSystem.DAL
         //根据id获取用户信息
         public static User GetUserInfo(string userId)
         {
+            User user = new User();
             DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from User where User_ID='{0}'", userId));
-            DataRow dataRow = dataSet.Tables[0].Rows[0];
-            User user = Tool.DataRow2Entity<User>(dataRow);
+            if (dataSet.Tables[0].Rows.Count!=0)
+            {
+                DataRow dataRow = dataSet.Tables[0].Rows[0];
+                user = Tool.DataRow2Entity<User>(dataRow);
+            }
             return user;
         }
 

@@ -91,6 +91,27 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
 
+        public IActionResult SignOut()
+        {
+            //用户登出
+            //判断是否已登录
+            string userId = HttpContext.Session.GetString("user_id");
+            if (!string.IsNullOrEmpty(userId))
+            {
+                //清空Session
+                HttpContext.Session.SetString("user_id", "");
+                HttpContext.Session.SetString("is_admin", false.ToString());
+                //跳转至登陆页
+                ViewData["sign_out"] = true.ToString();
+                return View("Login")
+;            }
+            else
+            {
+                //已登录则重定向至首页
+                return RedirectToAction("Index", "Home", new { errorMessage = "请先登录" });
+            }
+        }
+
         public IActionResult Trace()
         {
             //追踪清单
@@ -107,14 +128,26 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
 
-        public IActionResult Account()
+        public IActionResult Account(int id = 0)
         {
             //我的账户
-            //判断是否已登录
+
+            //是否已登录
             string userId = HttpContext.Session.GetString("user_id");
+            //是否有管理权限
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("is_admin"));
+            //若id为空则默认为当前用户id
+            string nowUserId = id == 0 ? userId : id.ToString();
+
             if (!string.IsNullOrEmpty(userId))
             {
-                User user = UserManage.GetUserInfo(userId);
+                //要修改的用户信息不是当前用户，但没有管理员权限
+                if ((userId != nowUserId) && (isadmin = false))
+                {
+                    //重定向至登陆页面
+                    return RedirectToAction("Login", "Home", new { errorMessage = "没有权限" });
+                }
+                User user = UserManage.GetUserInfo(nowUserId);
                 ViewData["user"] = user;
 
                 return View();

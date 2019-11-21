@@ -14,17 +14,17 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class UserController : Controller
     {
-        //用户登出
-        [HttpGet]
-        public IActionResult SignOut()
-        {
-            //清空Session
-            HttpContext.Session.SetString("user_id", "");
-            HttpContext.Session.SetString("is_admin", false.ToString());
-            //跳转回首页
-            return RedirectToAction("Index", "Home", new { errorMessage = "您已成功登出" });
+        ////用户登出
+        //[HttpGet]
+        //public IActionResult SignOut()
+        //{
+        //    //清空Session
+        //    HttpContext.Session.SetString("user_id", "");
+        //    HttpContext.Session.SetString("is_admin", false.ToString());
+        //    //跳转回首页
+        //    return RedirectToAction("Index", "Home", new { errorMessage = "您已成功登出" });
 
-        }
+        //}
 
         //用户登录
         [HttpPost]
@@ -96,7 +96,7 @@ namespace OnlineDrinkOrderSystem.Controllers
 
         [HttpPost]
         //修改用户信息
-        public string ChangeUserInfo(int User_ID = 0,  string Given_Name = "", string Family_Name = "", string Email="",string Address="", bool Admin = false)
+        public IActionResult ChangeUserInfo(int User_ID = 0,  string Given_Name = "", string Family_Name = "", string Email="",string Address="", bool Admin = false)
         {
             //given name
             //family name
@@ -105,15 +105,19 @@ namespace OnlineDrinkOrderSystem.Controllers
             //admin（管理员有权限修改）
 
             //判断是否已登录
-            ResultResponse result = new ResultResponse();
-            result.status = false;
+            //ResultResponse result = new ResultResponse();
+            //result.status = false;
+            string result;
 
             string userId = HttpContext.Session.GetString("user_id");
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("is_admin"));
+
             if (!string.IsNullOrEmpty(userId))
             {
+                //如果当前用户id有效
                 if ((User_ID.ToString() == userId) || (isadmin == true))
                 {
+                    //如果要修改的用户id等于当前用户id，或有管理员权限
                     User user = UserManage.GetUserInfo(User_ID.ToString());
                     user.Family_Name = Family_Name;
                     user.Given_Name = Given_Name;
@@ -129,24 +133,24 @@ namespace OnlineDrinkOrderSystem.Controllers
 
                     if (status)
                     {
-                        result.message = "修改成功";
+                        result = "修改成功";
                     }
                     else
                     {
-                        result.message = "修改失败";
+                        result = "修改失败";
                     }
                 }
                 else
                 {
-                    result.message = "没有权限";
+                    result = "没有权限";
                 }
             }
             else
             {
-                result.message = "请先登录";
+                result = "请先登录";
             }
 
-            return JsonConvert.SerializeObject(result);
+            return RedirectToAction("Index", "Home", new { errorMessage = result });
         }
     }
 }
