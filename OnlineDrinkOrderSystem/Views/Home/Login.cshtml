@@ -1,9 +1,8 @@
-﻿@using Microsoft.AspNetCore.Http
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
 <!-- user-login-area-start -->
-<div class="user-login-area mb-70 main-area">
+<div class="user-login-area main-area mb-70">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -11,11 +10,24 @@
                     <h2>登录</h2>
                 </div>
             </div>
-            <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                <div class="login-form" align="center">
-                    <div id="my-signin2" class="g-signin2" data-onsuccess="onSignIn"></div>
+            <form action="@Url.ActionLink("LoginIn","User")" method="post">
+                <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                    <div class="login-form">
+                        <div class="single-login">
+                            <label>用户名<span>*</span></label>
+                            <input type="text" placeholder="请输入用户名" name="name" required/>
+                        </div>
+                        <div class="single-login">
+                            <label>密码<span>*</span></label>
+                            <input type="password" placeholder="请输入密码" name="password" required/>
+                        </div>
+                        <div class="single-login single-login-2">
+                            <a href="#" onclick="$('#submit').click();">登录</a>
+                            <input type="submit" id="submit" style="display:none" />
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

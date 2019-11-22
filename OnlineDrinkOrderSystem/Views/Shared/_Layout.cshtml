@@ -2,7 +2,8 @@
 @using Microsoft.AspNetCore.Http
 @{
     //获取提示信息
-    string tipMessage = ViewBag.tipMessage;
+    string tipMessage = Context.Session.GetString("tip");
+    Context.Session.SetString("tip", "");
     //获取当前用户id
     int userId = Convert.ToInt32(Context.Session.GetInt32("id"));
     //获取当前用户权限
@@ -62,7 +63,7 @@
                                 {
                                     <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
                                     <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
-                                    <li><a href=@Url.ActionLink("SignOut","Home")>登出</a></li>
+                                    <li><a href=@Url.ActionLink("SignOut","User")>登出</a></li>
                                 }
                                 else
                                 {

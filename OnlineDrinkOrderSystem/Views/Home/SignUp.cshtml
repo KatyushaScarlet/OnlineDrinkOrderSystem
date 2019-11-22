@@ -1,5 +1,77 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "SignUp";
 }
+<!-- user-login-area-start -->
+<div class="user-login-area main-area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="login-title text-center mb-30">
+                    <h2>注册</h2>
+                    <p>创建一个新用户</p>
+                </div>
+            </div>
+            <form action="@Url.ActionLink("SignUp","User")" method="post">
+                <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+                    <div class="billing-fields">
+                        <div class="single-form-item">
+                            <label>用户名<span>*</span></label>
+                            <input type="text" placeholder="请输入用户名" name="name" required/>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>姓<span>*</span></label>
+                                    <input type="text" placeholder="" name="lastName" required/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>名<span>*</span></label>
+                                    <input type="text" placeholder="" name="firstName" required/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single-form-item">
+                            <label>收货地址<span>*</span></label>
+                            <input type="text" placeholder="请输入收货地址" name="address" required/>
+                        </div>
+
+                        <div class="single-form-item">
+                            <label>电子邮件<span>*</span></label>
+                            <input type="email" placeholder="请输入电子邮件" name="email" required/>
+                        </div>
+
+                        <div class="single-form-item">
+                            <label>密码<span>*</span></label>
+                            <input type="password" placeholder="" required oninput="checkPassword()" id="tbx-password"/>
+                        </div>
+                        <div class="single-form-item">
+                            <label>确认密码<span>*</span></label>
+                            <input type="password" placeholder="" name="password" required oninput="checkPassword()" id="tbx-repassword"/>
+                        </div>
+                        <div class="single-form-item">
+                            <a href="#" onclick="$('#submit').click();">注册</a>
+                            <input type="submit" id="submit" style="display:none" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function checkPassword() {
+        var password = document.getElementById("tbx-password");
+        var re_password = document.getElementById("tbx-repassword");
+        if (password.value === re_password.value) {
+            re_password.setCustomValidity('');
+        } else {
+            re_password.setCustomValidity('两次输入的密码不相同');
+        }
+    }
+    
+</script>
+<!-- user-login-area-end -->

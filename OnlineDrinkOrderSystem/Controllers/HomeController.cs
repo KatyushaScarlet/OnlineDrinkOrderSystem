@@ -16,15 +16,9 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(string tipMessage = "")
+        public IActionResult Index()
         {
             //商店首页
-            //如果存在错误信息
-            if (tipMessage != null)
-            {
-                ViewBag.tipMessage = tipMessage;
-            }
-
             //获取商品类别
             List<Category> categories = ItemManager.GetCategoryList();
             ViewData["categories"] = categories;
@@ -71,7 +65,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { tipMessage = "请先登录" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -83,7 +79,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0)
             {
                 //已登录则重定向至首页
-                return RedirectToAction("Index", "Home", new { tipMessage = "您已登录" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "您已登录");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -99,7 +97,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0)
             {
                 //已登录则重定向至首页
-                return RedirectToAction("Index", "Home", new { tipMessage = "您已登录" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "您已登录");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -115,15 +115,19 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0)
             {
                 //清空Session
-                HttpContext.Session.SetString("id", "");
+                HttpContext.Session.SetInt32("id",0);
                 HttpContext.Session.SetString("admin", false.ToString());
                 //跳转至登陆页
-                return RedirectToAction("Index", "Home", new { tipMessage = "已成功登出" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "已成功登出");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
-                //已登录则重定向至首页
-                return RedirectToAction("Index", "Home", new { tipMessage = "请先登录" });
+                //未登录则重定向至首页
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -139,7 +143,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { tipMessage = "请先登录" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -154,13 +160,15 @@ namespace OnlineDrinkOrderSystem.Controllers
             //若要修改的用户id为0则默认为当前用户id
             int nowUserId = (id == 0) ? userId : id;
 
-            if (id != 0)
+            if (userId != 0)
             {
                 //要修改的用户信息不是当前用户，但没有管理员权限
                 if (( nowUserId != userId) && (isadmin = false))
                 {
-                    //重定向至登陆页面
-                    return RedirectToAction("Login", "Home", new { tipMessage = "没有权限" });
+                    //重定向至首页
+                    //提示信息
+                    HttpContext.Session.SetString("tip", "没有权限");
+                    return RedirectToAction("Index", "Home");
                 }
                 User user = UserManage.GetUserInfo(nowUserId);
                 ViewData["user"] = user;
@@ -170,7 +178,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { tipMessage = "请先登录" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -186,7 +196,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { tipMessage = "请先登录" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -206,13 +218,17 @@ namespace OnlineDrinkOrderSystem.Controllers
                 else
                 {
                     //重定向至首页
-                    return RedirectToAction("Index", "Home", new { tipMessage = "无访问权限" });
+                    //提示信息
+                    HttpContext.Session.SetString("tip", "无访问权限");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Index", "Home", new { tipMessage = "无访问权限" });
+                //提示信息
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Index", "Home");
             }
         }
 

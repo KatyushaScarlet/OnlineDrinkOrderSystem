@@ -16,94 +16,142 @@ namespace OnlineDrinkOrderSystem.Controllers
     {
         //用户注册
         [HttpPost]
-        public IActionResult SignUp()
+        public IActionResult SignUp(string name = "", string password = "", string firstName = "", string lastName = "",string email="", string address = "")
         {
-
+            if (name != "" && password != "" && firstName != "" && email != "" && lastName != "" && address != "")
+            {
+                bool exist = UserManage.CheckNameExist(name);
+                if (!exist)
+                {
+                    User user = new User();
+                    user.User_Name = name;
+                    user.User_Password = password;
+                    user.First_Name = firstName;
+                    user.Last_Name = lastName;
+                    user.Email = email;
+                    user.Address = address;
+                    user.Admin = false;
+                    bool result = UserManage.AddUser(user);
+                    if (result)
+                    {
+                        //注册成功
+                        //提示信息
+                        HttpContext.Session.SetString("tip", "注册成功，请重新登录");
+                        return RedirectToAction("Login", "Home");
+                    }
+                    else
+                    {
+                        //注册失败
+                        HttpContext.Session.SetString("tip", "注册失败，请联系管理员");
+                        return RedirectToAction("SignUp", "Home");
+                    }
+                }
+                else
+                {
+                    //注册失败
+                    HttpContext.Session.SetString("tip", "注册失败，用户名已被使用");
+                    return RedirectToAction("SignUp", "Home");
+                }
+            }
+            else
+            {
+                //注册失败
+                HttpContext.Session.SetString("tip", "注册失败，请检查是否有资料未填写");
+                return RedirectToAction("SignUp", "Home");
+            }
         }
+
         //用户登录
         [HttpPost]
-        public IActionResult LoginIn()
+        public IActionResult LoginIn(string name="",string password="")
         {
-
+            int userId = UserManage.CheckPassword(name, password);
+            if (userId!=0)
+            {
+                //登录成功
+                //设置id与权限
+                HttpContext.Session.SetInt32("id", userId);
+                if (UserManage.CheckAdmin(userId))
+                {
+                    HttpContext.Session.SetString("admin", true.ToString());
+                }
+                //提示信息
+                HttpContext.Session.SetString("tip", "登录成功");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                //登录失败
+                HttpContext.Session.SetString("tip", "登录失败，请检查用户名或密码是否正确");
+                return RedirectToAction("Login", "Home");
+            }
         }
 
         //用户登出
+        [HttpGet]
         public IActionResult SignOut()
         {
-
+            //判断是否已登录
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId!=0)
+            {
+                HttpContext.Session.SetInt32("id", 0);
+                HttpContext.Session.SetString("admin", false.ToString());
+                //提示信息
+                HttpContext.Session.SetString("tip", "已成功登出");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                //未登录则重定向至登陆页面
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
+            }
         }
-
-
-
-        //public string VerifyToken(string token)
-        //{
-        //    Response result = new Response();
-        //    result.status = false;
-
-        //    if (!string.IsNullOrEmpty(token))
-        //    {
-        //        //验证token
-        //        if (GoogleOauth.GoogleTokenVerify(token))
-        //        {
-        //            //从Google获取用户信息
-        //            var googleJwt = Tool.GoogleToken2Jwt(token);
-        //            var userInfo = Tool.GoogleJwt2User(googleJwt);
-        //            var userId = UserManage.GetUserId(userInfo.Google_ID);
-        //            if (string.IsNullOrEmpty(userId))
-        //            {
-        //                //用户不存在，根据google信息创建新用户
-        //                //默认非管理员
-        //                userInfo.Admin = false;
-        //                var status = UserManage.AddUser(userInfo);
-        //                if (status)
-        //                {
-        //                    //创建成功
-        //                    //重新读取创建的用户id
-        //                    var newId = UserManage.GetUserId(userInfo.Google_ID);
-        //                    //设置id到session
-        //                    HttpContext.Session.SetString("user_id", newId);
-        //                    HttpContext.Session.SetString("is_admin", false.ToString());
-
-        //                    result.status = true;
-        //                    result.message = "新用户 " + userInfo.User_Name + "，欢迎你！";
-        //                }
-        //                else
-        //                {
-        //                    //创建失败
-        //                    result.message = "创建用户失败";
-        //                }
-        //            }
-        //            else
-        //            {
-        //                //用户已存在,登录成功
-        //                //重新获取信息（权限）
-        //                userInfo = UserManage.GetUserInfo(userId);
-        //                //设置id到session
-        //                HttpContext.Session.SetString("user_id", userId);
-        //                HttpContext.Session.SetString("is_admin", userInfo.Admin.ToString());
-
-        //                result.status = true;
-        //                result.message = userInfo.User_Name + "，欢迎回来";
-        //            }
-
-        //        }
-        //        else
-        //        {
-        //            //token验证失败
-        //            result.message = "登录失败";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        //token为空
-        //        result.message = "登录失败";
-        //    }
-        //    return JsonConvert.SerializeObject(result);
-        //}  
 
         [HttpPost]
         //修改用户信息
-        public IActionResult ChangeUserInfo()
+        public IActionResult AlterUserInfo(string password = "", string firstName = "", string lastName = "", string email = "", string address = "")
+        {
+            ////提示信息
+            //HttpContext.Session.SetString("tip", "修改成功");
+            //return RedirectToAction("Account", "Home");
+            //判断是否已登录
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId != 0)
+            {
+                User user = new User();
+                user.User_ID = userId;
+                user.User_Password = password;
+                user.First_Name = firstName;
+                user.Last_Name = lastName;
+                user.Email = email;
+                user.Address = address;
+
+                bool result = UserManage.AlterUserInfo(user);
+                if (result)
+                {
+                    //提示信息
+                    HttpContext.Session.SetString("tip", "修改成功");
+                    return RedirectToAction("Account", "Home");
+                }
+                else
+                {
+                    //修改失败
+                    //提示信息
+                    HttpContext.Session.SetString("tip", "修改失败，请联系管理员");
+                    return RedirectToAction("Account", "Home");
+                }
+            }
+            else
+            {
+                //未登录则重定向至登陆页面
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
+            }
+        }
         //public IActionResult ChangeUserInfo(int User_ID = 0,  string Given_Name = "", string Family_Name = "", string Email="",string Address="", bool Admin = false)
         //{
         //    //given name

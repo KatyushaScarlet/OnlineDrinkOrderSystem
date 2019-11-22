@@ -38,9 +38,9 @@ User_Name VARCHAR(255) NOT NULL,-- 用户名
 User_Password VARCHAR(255) NOT NULL,-- 密码
 First_Name VARCHAR(255) NOT NULL,-- 名
 Last_Name VARCHAR(255) NOT NULL,-- 姓
-Email VARCHAR(255),--邮箱
-Address VARCHAR(255),-- 用户地址
-Admin BOOLEAN,-- 用户是否为管理员
+Email VARCHAR(255) NOT NULL,--邮箱
+Address VARCHAR(255 NOT NULL),-- 用户地址
+Admin BOOLEAN NOT NULL,-- 用户是否为管理员
 UNIQUE(User_Name),-- 用户名唯一
 Primary key(User_ID)-- 主键 用户id
 );
@@ -49,8 +49,8 @@ Primary key(User_ID)-- 主键 用户id
 
 CREATE TABLE Review(
 Review_ID INT NOT NULL AUTO_INCREMENT,-- 评论id
-User_ID INT ,-- 用户id
-Item_ID INT ,-- 商品id
+User_ID INT NOT NULL,-- 用户id
+Item_ID INT NOT NULL,-- 商品id
 Content VARCHAR(255) NOT NULL,-- 评论内容
 Recommend BOOLEAN NOT NULL,-- 推荐/不推荐
 Date DATETIME NOT NULL,-- 评价日期
@@ -63,8 +63,8 @@ foreign key(Item_ID) REFERENCES Item(Item_ID)-- 外键 商品id
 
 CREATE TABLE Cart(
 Cart_ID INT NOT NULL AUTO_INCREMENT,-- 购物车id
-User_ID INT ,-- 用户id
-Item_ID INT ,-- 商品id
+User_ID INT NOT NULL,-- 用户id
+Item_ID INT NOT NULL,-- 商品id
 Quantity INT NOT NULL,-- 商品数量
 primary key(Cart_ID),-- 主键 购物车id
 foreign key(User_ID) references User(User_ID),-- 外键 用户id
@@ -75,7 +75,7 @@ foreign key(Item_ID) references Item(Item_ID)-- 外键 商品id
 
 CREATE TABLE Order_Detail(
 Order_ID INT NOT NULL AUTO_INCREMENT,-- 订单id
-User_ID INT ,-- 用户id
+User_ID INT NOT NULL,-- 用户id
 Order_Sum DOUBLE NOT NULL,-- 订单总价
 Payment INT NOT NULL,-- 支付方式（1、货到付款，2、在线支付）
 Delivery INT NOT NULL,-- 运送状态（1、未发货，2、已发货）
@@ -88,8 +88,8 @@ foreign key(User_ID) references User(User_ID)-- 外键 用户id
 -- 订单中商品列表
 
 CREATE TABLE Order_List(
-Order_ID INT ,-- 订单id
-Item_ID INT,-- 商品id
+Order_ID INT NOT NULL,-- 订单id
+Item_ID INT NOT NULL,-- 商品id
 Order_Price DOUBLE NOT NULL,-- 商品价格（下单时价格）
 Quantity INT NOT NULL,-- 商品数量
 foreign key(Order_ID) references Order_Detail(Order_ID),-- 外键 订单id
@@ -99,8 +99,8 @@ foreign key(Item_ID) references Item(Item_ID) --  外键 商品id
 -- 追踪列表
 
 CREATE TABLE Trace_List(
-User_ID INT ,-- 用户id
-Item_ID INT ,-- 商品id
+User_ID INT NOT NULL,-- 用户id
+Item_ID INT NOT NULL,-- 商品id
 Trace_Price DOUBLE NOT NULL,-- 商品价格（追踪时的价格）
 foreign key(User_ID) references User(User_ID),-- 外键 用户id
 foreign key(Item_ID) references Item(Item_ID)--  外键 商品id
