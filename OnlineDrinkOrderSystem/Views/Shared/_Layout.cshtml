@@ -343,9 +343,9 @@
                                 <div class="quick-view-select">
                                     <!--保留格式-->
                                 </div>
-                                <form id="form-item-detail" onsubmit="return addToCart();">
-                                    <input type="number" value="1" name="count"/>
-                                    <input type="text" value="" name="id" id="item-id" style="display:none"/>
+                                <form id="form-item-detail" onsubmit="return false;">
+                                    <input type="number" value="1" id="item-count"/>
+                                    <input type="text" value="" id="item-id" style="display:none"/>
                                     <button id="btn-add-cart">添加到购物车</button>
                                 </form>
                                 <span><i class="fa fa-check" id="item-stock-icon"></i><span id="item-stock">有库存：XXX件</span></span>
@@ -408,18 +408,25 @@
             });
         }
 
+
+        document.getElementById("btn-add-cart").onclick = function () {
+            addToCart();
+        }
+
         //添加到购物车
         function addToCart(id, count) {
             if (id == null || count == null) {
+                //获取商品信息
+                id = document.getElementById("item-id").value;
+                count = document.getElementById("item-count").value;
                 //点击来自详情页
                 alert("click from detail");
-                var item = $("#form-item-detail").serialize();//用于get提交
-                console.log(item);
+                alert("add " + id + "*" + count + " to cart");
                 
             } else {
                 //点击来自菜单
                 alert("click from menu");
-                alert("add " + id + "x" + count + " to cart");
+                alert("add " + id + "*" + count + " to cart");
             }
             return false
         }
