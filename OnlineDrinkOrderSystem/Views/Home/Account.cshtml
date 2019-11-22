@@ -1,0 +1,60 @@
+﻿@using OnlineDrinkOrderSystem.Models;
+@{
+    ViewData["Title"] = "Account";
+    User user = ViewData["user"] as User;
+}
+
+
+<!-- user-login-area-start -->
+<div class="user-login-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="login-title text-center mb-30">
+                    <h2>我的账户</h2>
+                    <p>修改账户资料</p>
+                </div>
+            </div>
+            <form id="formInfo" action="@Url.ActionLink("ChangeUserInfo","User")" method="post" >
+                <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <input type="hidden" value="@user.User_ID" name="User_ID"/>
+                        <input type="hidden" value="@user.Admin" name="Admin"/>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="single-form-item">
+                                <label>姓<span>*</span></label>
+                                <input type="text" value="@user.Family_Name" name="Family_Name" required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="single-form-item">
+                                <label>名<span>*</span></label>
+                                <input type="text" value="@user.Given_Name" name="Given_Name" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="single-form-item">
+                        <label>电子邮件<span>*</span></label>
+                        <input type="email" value="@user.Email" name="Email" required/>
+                    </div>
+                    <div class="single-form-item">
+                        <label>收货地址<span>*</span></label>
+                        <input type="text" value="@user.Address" name="Address" required/>
+                    </div>
+                    <div class="single-form-item">
+                        <a href="#" id="formSubmit" onclick="$('#submit').click();">修改</a>
+                        <input type="submit" id="submit" style="display:none" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    //function formSubmit() {
+    //    //检查输入是否为空
+    //    var userInfo = $("#formUserInfo").serializeArray();//用于post提交
+    //    console.log(userInfo);
+    //}
+</script>
+<!-- user-login-area-end -->

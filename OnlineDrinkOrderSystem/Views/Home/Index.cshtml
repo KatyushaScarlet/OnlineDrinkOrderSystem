@@ -1,7 +1,210 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    //获取商品列表与分类列表
+    List<Item> items = ViewData["items"] as List<Item>;
+    List<Category> categories = ViewData["categories"] as List<Category>;
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- slider-group-start -->
+<div class="slider-group  mt-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <!-- slider-area-start -->
+                <div class="slider-area">
+                    <div class="slider-active owl-carousel">
+                        <div class="single-slider slider-hm4-1 pt-154 pb-154 bg-img"
+                             style="background-image:url(img/slider/7.jpg);">
+                            <div class="slider-content-4 slider-animated-1 pl-40">
+                                <h1>Sale up to 30% off</h1>
+                                <h2>Books in Store</h2><a href="#">Shopping now!</a>
+                            </div>
+                        </div>
+                        <div class="single-slider pt-154 pb-154 bg-img"
+                             style="background-image:url(img/slider/8.jpg);">
+                            <div class="slider-content-4 slider-animated-1 pl-40">
+                                <h1>Sale up to 30% off</h1>
+                                <h2>Books in Order</h2><a href="#">Shopping now!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- slider-area-end -->
+            </div>
+            <div class="col-lg-3 col-md-3 hidden-sm col-xs-12">
+                <!-- banner-static-2-start -->
+                <div class="banner-static-2">
+                    <div class="banner-img-2"><a href="#"><img src="/img/banner/20.jpg" alt="banner" /></a></div>
+                    <!-- banner-area-3-start -->
+                    <div class="banner-area-3">
+                        <!-- single-banner-2-start -->
+                        <div class="single-banner-2 mt-16">
+                            <div class="single-icon-2">
+                                <a href="#">
+                                    <img class="service-blue-img"
+                                         src="/img/icon-img/service-1.png" alt="banner" /><img class="service-white-img" src="/img/icon-img/service-1-white.png"
+                                                                                              alt="banner" />
+                                </a>
+                            </div>
+                            <div class="single-text-2">
+                                <h2>免运费</h2>
+                                <p>所有订单超过NTD $500</p>
+                            </div>
+                        </div><!-- single-banner-2-end -->
+                        <!-- single-banner-2-start -->
+                        <div class="single-banner-2 mt-16">
+                            <div class="single-icon-2">
+                                <a href="#">
+                                    <img class="service-blue-img"
+                                         src="/img/icon-img/service-2.png" alt="banner" /><img class="service-white-img" src="/img/icon-img/service-2-white.png"
+                                                                                              alt="banner" />
+                                </a>
+                            </div>
+                            <div class="single-text-2">
+                                <h2>时效保证</h2>
+                                <p>30分钟内送达</p>
+                            </div>
+                        </div><!-- single-banner-2-end -->
+                        <!-- single-banner-2-start -->
+                        <div class="single-banner-2 mt-16">
+                            <div class="single-icon-2">
+                                <a href="#">
+                                    <img class="service-blue-img"
+                                         src="/img/icon-img/service-3.png" alt="banner" /><img class="service-white-img" src="/img/icon-img/service-3-white.png"
+                                                                                              alt="banner" />
+                                </a>
+                            </div>
+                            <div class="single-text-2">
+                                <h2>货到付款</h2>
+                                <p>全店支持</p>
+                            </div>
+                        </div><!-- single-banner-2-end -->
+                    </div><!-- banner-area-3-end -->
+                </div><!-- banner-static-2-end -->
+            </div>
+        </div>
+    </div>
+</div><!-- slider-group-end -->
+<!-- home-main-area-start -->
+<div class="home-main-area mt-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                <!-- category-area-start -->
+                <div class="category-area mb-30">
+                    <h3><a href="#">商品类别<i class="fa fa-bars"></i></a></h3>
+                    <div class="category-menu">
+                        <nav class="menu">
+                            <ul>
+                                <li><a href="@Url.ActionLink("Item","Home",new {category_ID=0})">所有商品</a></li>
+                                @foreach (var item in categories)
+                                {
+                                    <li><a href="@Url.ActionLink("Item","Home",new {category_ID=item.Category_ID})">@item.Category_Name</a></li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div><!-- category-area-end -->
+                <!-- banner-area-start -->
+                <div class="banner-area mb-30">
+                    <div class="banner-img-2">
+                        <a href="#"><img src="/img/banner/21.jpg" alt="banner"></a>
+                    </div>
+                </div>
+                <!-- banner-area-end -->
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                <!-- new-book-area-start -->
+                <div class="new-book-area ptb-50">
+                    <div class="section-title-2 mb-30">
+                        <h3>最新上架</h3>
+                    </div>
+                    <div class="tab-active-3 owl-carousel">
+                        @for (int i = 0; i < items.Count; i += 2)
+                        {
+                            <div class="tab-total">
+                                <!-- single-product-start -->
+                                <div class="product-wrapper mb-40">
+                                    <div class="product-img">
+                                        <a href="#">
+                                            <img src="@items[i].Image_Url"
+                                                 class="primary" />
+                                        </a>
+                                        <div class="quick-view">
+                                            <a class="action-view" href="#"
+                                               data-target="#productModal" data-toggle="modal"
+                                               title="快速浏览" onclick="openModalForItem(@items[i].Item_ID);"><i class="fa fa-search-plus"></i></a>
+                                        </div>
+                                        <div class="product-flag">
+                                            <ul>
+                                                @*<li><span class="sale">new</span></li>*@
+                                                @if (items[i].Discount != 0)
+                                                {
+                                                    <li><span class="discount-percentage">-@items[i].Discount%</span></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-details text-center">
+                                        <h4><a href="#">@items[i].Item_Name</a></h4>
+                                        <div class="product-price">
+                                            <ul>
+                                                <li>NTD$ @items[i].Item_Price</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-link">
+                                        <div class="product-button">
+                                            <a href="#" onclick="addToCart(@items[i].Item_ID,1)">
+                                                <i class="fa fa-shopping-cart"></i>添加到购物车
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- single-product-end -->
+                                <!-- single-product-start -->
+                                <div class="product-wrapper mb-40">
+                                    <div class="product-img">
+                                        <a href="#">
+                                            <img src="@items[i+1].Image_Url"
+                                                 class="primary" />
+                                        </a>
+                                        <div class="quick-view">
+                                            <a class="action-view" href="#"
+                                               data-target="#productModal" data-toggle="modal"
+                                               title="快速浏览" onclick="openModalForItem(@items[i+1].Item_ID);"><i class="fa fa-search-plus"></i></a>
+                                        </div>
+                                        <div class="product-flag">
+                                            <ul>
+                                                @*<li><span class="sale">new</span></li>*@
+                                                @if (items[i + 1].Discount != 0)
+                                                {
+                                                    <li><span class="discount-percentage">-@items[i + 1].Discount%</span></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-details text-center">
+                                        <h4><a href="#">@items[i + 1].Item_Name</a></h4>
+                                        <div class="product-price">
+                                            <ul>
+                                                <li>NTD$ @items[i + 1].Item_Price</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-link">
+                                        <div class="product-button">
+                                            <a href="#" onclick="addToCart(@items[i+1].Item_ID,1)">
+                                                <i class="fa fa-shopping-cart"></i>添加到购物车
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- single-product-end -->
+                            </div>
+                        }
+                    </div>
+                </div><!-- new-book-area-end -->
+
+            </div>
+        </div>
+    </div>
+</div><!-- home-main-area-end -->

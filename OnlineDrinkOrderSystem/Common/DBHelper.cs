@@ -10,10 +10,10 @@ namespace OnlineDrinkOrderSystem.Common
     public class DbHelper
     {
         private static string ConnectionString = string.Format("Data Source={0};User={1};Password={2};Database={3}",
-            Models.ConnectionStrings.Server,
-            Models.ConnectionStrings.User,
-            Models.ConnectionStrings.Password,
-            Models.ConnectionStrings.Database);//连接字符串
+            Startup.connectionString.Server,
+            Startup.connectionString.User,
+            Startup.connectionString.Password,
+            Startup.connectionString.Database);//连接字符串
         public static int Action(string Command)//增，删，改
         {
             using (MySqlConnection mysql = new MySqlConnection(ConnectionString))

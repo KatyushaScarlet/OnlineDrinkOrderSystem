@@ -14,6 +14,9 @@ namespace OnlineDrinkOrderSystem
 {
     public class Startup
     {
+        public static Common.AppSettings.ConnectionString connectionString = new AppSettings.ConnectionString();
+        public static Common.AppSettings.GoogleOauthSetting googleOauthSetting = new AppSettings.GoogleOauthSetting();
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,16 +28,16 @@ namespace OnlineDrinkOrderSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            //读入配置
-            Models.ConnectionStrings connectionStrings = new ConnectionStrings();
-            Models.GoogleOauthSettings googleOauthSettings = new GoogleOauthSettings();
-            Configuration.GetSection("ConnectionStrings").Bind(connectionStrings);
-            Configuration.GetSection("GoogleOauthSettings").Bind(googleOauthSettings);
+            //使用View动态编译
+            services.AddMvc().AddRazorRuntimeCompilation();
+            //读取配置
+            Configuration.GetSection("ConnectionStrings").Bind(connectionString);
+            Configuration.GetSection("GoogleOauthSettings").Bind(googleOauthSetting);
             //Session 设置
             services.AddSession(options =>
             {
                 // 设置 Session 过期时间
-                options.IdleTimeout = TimeSpan.FromDays(7);
+                options.IdleTimeout = TimeSpan.FromDays(1);
                 options.Cookie.HttpOnly = true;
             });
         }
@@ -50,14 +53,13 @@ namespace OnlineDrinkOrderSystem
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            //使用 Session
-            app.UseSession();
-
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
