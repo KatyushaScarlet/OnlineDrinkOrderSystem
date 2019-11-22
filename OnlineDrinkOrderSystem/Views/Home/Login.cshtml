@@ -1,10 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Login";
-    ////获取当前用户id
-    //string userid = Context.Session.GetString("user_id");
-    //
-    bool signout = Convert.ToBoolean(ViewData["sign_out"]);
 }
 <!-- user-login-area-start -->
 <div class="user-login-area mb-70 main-area">
@@ -24,75 +20,3 @@
     </div>
 </div>
 <!-- user-login-area-end -->
-@*<div class="g-signin2" data-onsuccess="onSignIn"></div>*@
-
-@if (signout)
-{
-    //需要登出
-    <script>
-        //登出用标识符
-        flagSignOut = true;
-
-        function onSuccess(googleUser) {
-            if (flagSignOut) {
-                var auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut().then(function () {
-                    alert("您已经成功登出！")
-                    //标识符修改为false
-                    flagSignOut = false;
-                });
-            } else {
-                var id_token = googleUser.getAuthResponse().id_token;
-                $.post("@Url.ActionLink("VerifyToken","User")", {
-                    token: id_token
-                }, function (data) {
-                    data = JSON.parse(data);
-                    alert(data.message);
-                    if (data.status) {
-                        //登录成功则跳转
-                        window.location.href = "/";
-                    }
-                });
-            }
-        }
-
-    </script>
-}
-else
-{
-    //需要登入
-    <script>
-    function onSuccess(googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
-        $.post("@Url.ActionLink("VerifyToken","User")", {
-            token: id_token
-        }, function (data) {
-            data = JSON.parse(data);
-            alert(data.message);
-            if (data.status) {
-                //登录成功则跳转
-                window.location.href = "/";
-            }
-        })
-    }
-    </script>
-}
-
-<script>
-    function renderButton() {
-        gapi.signin2.render('my-signin2', {
-            'scope': 'profile email',
-            'width': 240,
-            'height': 50,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onSuccess,
-            'onfailure': onFailure
-        });
-    }
-
-    function onFailure() {
-        alert("登录失败！");
-    }
-
-</script>

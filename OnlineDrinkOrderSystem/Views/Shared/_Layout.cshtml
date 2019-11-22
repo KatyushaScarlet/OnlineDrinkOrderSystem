@@ -1,14 +1,12 @@
 ﻿@using OnlineDrinkOrderSystem.Common;
 @using Microsoft.AspNetCore.Http
 @{
-    //获取错误信息
-    string errorMessage = ViewBag.errorMessage;
-    //清空错误信息
-    ViewBag.errorMessage = "";
+    //获取提示信息
+    string tipMessage = ViewBag.tipMessage;
     //获取当前用户id
-    string userid = Context.Session.GetString("user_id");
+    int userId = Convert.ToInt32(Context.Session.GetInt32("id"));
     //获取当前用户权限
-    bool isadmin = Convert.ToBoolean(Context.Session.GetString("is_admin"));
+    bool isAdmin = Convert.ToBoolean(Context.Session.GetString("admin"));
 }
 <!doctype html>
 <html class="no-js" lang="zh-cn">
@@ -31,8 +29,8 @@
     <link rel="stylesheet" href="/css/responsive.css"><!-- modernizr css -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
     <!--Google OAuth-->
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">
+    @*<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">*@
 </head>
 
 <body class="home-4">
@@ -60,15 +58,16 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="account-area text-right">
                             <ul>
-                                @if (string.IsNullOrEmpty(userid))
-                                {
-                                    <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
-                                }
-                                else
+                                @if (userId != 0)
                                 {
                                     <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
                                     <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
                                     <li><a href=@Url.ActionLink("SignOut","Home")>登出</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
+                                    <li><a href=@Url.ActionLink("SignUp","Home")>注册</a></li>
                                 }
                             </ul>
                         </div>
@@ -126,7 +125,7 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    @if (isadmin)
+                                    @if (isAdmin)
                                     {
                                         <li>
                                             <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
@@ -165,7 +164,7 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    @if (isadmin)
+                                    @if (isAdmin)
                                     {
                                         <li>
                                             <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
@@ -187,8 +186,8 @@
     <script>
         window.onload=function () {
         //输出错误信息
-        var errorMessage = "@Html.Raw(errorMessage)";
-        if (errorMessage != "")alert(errorMessage);
+        var tipMessage = "@Html.Raw(tipMessage)";
+        if (tipMessage != "")alert(tipMessage);
         };
     </script>
     @RenderBody()

@@ -34,15 +34,14 @@ foreign key(Category_ID) REFERENCES Category(Category_ID)-- 外键 类型id
 
 CREATE TABLE User(
 User_ID INT NOT NULL AUTO_INCREMENT,-- 用户id
-Google_ID VARCHAR(255) NOT NULL,-- 关联的google id
-User_Name VARCHAR(255) NOT NULL,-- 姓名
-User_Avater VARCHAR(255) NOT NULL,-- 头像（URL）
-Given_Name VARCHAR(255) NOT NULL,-- 名
-Family_Name VARCHAR(255) NOT NULL,-- 姓
+User_Name VARCHAR(255) NOT NULL,-- 用户名
+User_Password VARCHAR(255) NOT NULL,-- 密码
+First_Name VARCHAR(255) NOT NULL,-- 名
+Last_Name VARCHAR(255) NOT NULL,-- 姓
 Email VARCHAR(255),--邮箱
 Address VARCHAR(255),-- 用户地址
 Admin BOOLEAN,-- 用户是否为管理员
-UNIQUE(Google_ID),-- Google ID 唯一
+UNIQUE(User_Name),-- 用户名唯一
 Primary key(User_ID)-- 主键 用户id
 );
 
