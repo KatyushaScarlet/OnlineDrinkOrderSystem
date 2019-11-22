@@ -114,9 +114,6 @@ namespace OnlineDrinkOrderSystem.Controllers
         //修改用户信息
         public IActionResult AlterUserInfo(string password = "", string firstName = "", string lastName = "", string email = "", string address = "")
         {
-            ////提示信息
-            //HttpContext.Session.SetString("tip", "修改成功");
-            //return RedirectToAction("Account", "Home");
             //判断是否已登录
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
@@ -152,61 +149,5 @@ namespace OnlineDrinkOrderSystem.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
-        //public IActionResult ChangeUserInfo(int User_ID = 0,  string Given_Name = "", string Family_Name = "", string Email="",string Address="", bool Admin = false)
-        //{
-        //    //given name
-        //    //family name
-        //    //address
-        //    //email
-        //    //admin（管理员有权限修改）
-
-        //    //判断是否已登录
-        //    //Response result = new Response();
-        //    //result.status = false;
-        //    string result;
-
-        //    string userId = HttpContext.Session.GetString("user_id");
-        //    bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
-
-        //    if (!string.IsNullOrEmpty(userId))
-        //    {
-        //        //如果当前用户id有效
-        //        if ((User_ID.ToString() == userId) || (isadmin == true))
-        //        {
-        //            //如果要修改的用户id等于当前用户id，或有管理员权限
-        //            User user = UserManage.GetUserInfo(User_ID.ToString());
-        //            user.Family_Name = Family_Name;
-        //            user.Given_Name = Given_Name;
-        //            user.Email = Email;
-        //            user.Address = Address;
-        //            if (isadmin)
-        //            {
-        //                //管理员才能修改用户的权限
-        //                user.Admin = Admin;
-        //            }
-        //            //修改资料
-        //            bool status = UserManage.AlterUserInfo(user);
-
-        //            if (status)
-        //            {
-        //                result = "修改成功";
-        //            }
-        //            else
-        //            {
-        //                result = "修改失败";
-        //            }
-        //        }
-        //        else
-        //        {
-        //            result = "没有权限";
-        //        }
-        //    }
-        //    else
-        //    {
-        //        result = "请先登录";
-        //    }
-
-        //    return RedirectToAction("Index", "Home", new { tipMessage = result });
-        //}
     }
 }
