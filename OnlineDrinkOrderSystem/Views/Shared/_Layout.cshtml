@@ -344,7 +344,7 @@
                                     <!--保留格式-->
                                 </div>
                                 <form id="form-item-detail" onsubmit="return false;">
-                                    <input type="number" value="1" id="item-count"/>
+                                    <input type="number" value="1" min="1" id="item-count"/>
                                     <input type="text" value="" id="item-id" style="display:none"/>
                                     <button id="btn-add-cart">添加到购物车</button>
                                 </form>
@@ -387,12 +387,20 @@
                     if (data!=null) {
                         itemInfo = JSON.parse(data);
                         //更改Modal内信息
+                        document.getElementById("item-count").value = 1;//数量修改回1个
                         document.getElementById("item-img").src = itemInfo.Image_Url;//图片
                         document.getElementById("item-name").innerText = itemInfo.Item_Name;//名称
-                        document.getElementById("item-price").innerText = "NTD$ " + itemInfo.Item_Price;//价格
+                        var price = itemInfo.Item_Price;//价格
+                        var discount = itemInfo.Discount;//折扣
+                        if (discount != 0) {
+                            var discountPrice = price * (1 - discount / 100);
+                            document.getElementById("item-price").innerHTML = "NTD$ <del>" + price + "</del>" + " " + Math.round(discountPrice * 100) / 100;//保留两位小数
+                        } else { 
+                            document.getElementById("item-price").innerText = "NTD$ " + price;
+                        }
                         document.getElementById("item-discription").innerText = itemInfo.Description;//描述
                         document.getElementById("item-id").value = itemInfo.Item_ID;//id
-                        //折扣
+
                         document.getElementById("item-click").innerText = "热度："+itemInfo.Click_Counts;//点击量
                         document.getElementById("item-sold").innerText = "销量："+itemInfo.Sold;//销量
                         document.getElementById("item-time").innerText = "上架时间：" + itemInfo.Date_added;//上架日期
@@ -401,14 +409,14 @@
                             document.getElementById("item-stock-icon").className = "fa fa-check";
                             document.getElementById("item-stock").innerText = "有库存：" + itemInfo.Stock + "件";
                         } else {
-                            document.getElementById("item-stock-icon").className = "fa fa-remove";
+                            document.getElementById("item-stock-icon").className = "fa fa-times";
                             document.getElementById("item-stock").innerText = "无库存";
                         }
                     }
             });
         }
 
-
+        //添加按钮绑定
         document.getElementById("btn-add-cart").onclick = function () {
             addToCart();
         }
@@ -416,19 +424,20 @@
         //添加到购物车
         function addToCart(id, count) {
             if (id == null || count == null) {
-                //获取商品信息
+                //如果点击来自详情页，获取商品信息
                 id = document.getElementById("item-id").value;
                 count = document.getElementById("item-count").value;
-                //点击来自详情页
-                alert("click from detail");
-                alert("add " + id + "*" + count + " to cart");
-                
-            } else {
-                //点击来自菜单
-                alert("click from menu");
-                alert("add " + id + "*" + count + " to cart");
             }
-            return false
+
+            $.get("@Url.ActionLink("AddItemToCart","Item")", {
+                id:id,
+                count:count,
+            }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+            })
+
+            return false;
         }
     </script>
 </body>

@@ -60,6 +60,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
+                //获取购物车信息
+                List<Cart> carts = ItemManager.GetUserCart(userId);
+                ViewData["carts"] = carts;
                 return View();
             }
             else
