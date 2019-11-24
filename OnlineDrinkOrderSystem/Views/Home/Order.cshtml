@@ -3,5 +3,95 @@
     ViewData["Title"] = "Order";
 }
 
-<h2>Order</h2>
+<!-- cart-main-area-start -->
+<div class="cart-main-area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <caption><h4>历史订单</h4></caption>
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>总价</th>
+                                    <th>运费</th>
+                                    <th>付款</th>
+                                    <th>详情</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2018-12-23</td>
+                                    <td><span class="amount">&yen;165.00</span></td>
+                                    <td>&yen;0.00</td>
+                                    <td>&yen;165.00</td>
+                                    <td><a href="#" data-target="#orderDeatilModal" data-toggle="modal"><i class="fa fa-external-link"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2018-12-30</td>
+                                    <td><span class="amount">&yen;125.00</span></td>
+                                    <td>&yen;7.00</td>
+                                    <td>&yen;132.00</td>
+                                    <td><a href="#" data-target="#orderDeatilModal" data-toggle="modal"><i class="fa fa-external-link"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
 
+    </div>
+</div>
+<!-- cart-main-area-end -->
+<!-- Modal -->
+<div class="modal fade" id="orderDeatilModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2 mb-20">时间：</div>
+                        <div class="col-md-4 mb-20">2018-12-24</div>
+                        <div class="col-md-2 mb-20">总价：</div>
+                        <div class="col-md-4 mb-20">&yen;216.0</div>
+
+                        <div class="col-md-2 mb-20">运费：</div>
+                        <div class="col-md-4 mb-20">&yen;7.0</div>
+                        <div class="col-md-2 mb-20">付款：</div>
+                        <div class="col-md-4 mb-20">&yen;223.0</div>
+                    </div>
+                    <div class="col-md-12">
+                        <table width="100%">
+                            <caption><h4>订单细项</h4></caption>
+
+                            <tbody>
+                                <tr align="center">
+                                    <td class="product-thumbnail"><a href="#"><img src="../../img/client/cart/1.jpg" alt="man" width="50" height="50" /></a></td>
+                                    <td class="product-name"><a href="#">Vestibulum suscipit</a></td>
+                                    <td class="product-price"><span class="amount">&yen;165.00</span></td>
+                                    <td class="product-quantity">1</td>
+                                    <td class="product-subtotal">&yen;165.00</td>
+
+                                </tr>
+                                <tr align="center">
+                                    <td class="product-thumbnail"><a href="#"><img src="../../img/client/cart/2.jpg" alt="man" width="50" height="50" /></a></td>
+                                    <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
+                                    <td class="product-price"><span class="amount">&yen;50.00</span></td>
+                                    <td class="product-quantity">1</td>
+                                    <td class="product-subtotal">&yen;50.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal end -->

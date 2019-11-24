@@ -124,11 +124,14 @@ namespace OnlineDrinkOrderSystem.DAL
                 )) == 1;
         }
 
-
-
-
+        //扣除商品库存
+        public static void ReduceStock(int id, int count)
+        {
+            DbHelper.Action(string.Format("update Item set Stock=Stock-'{1}' where Item_ID='{0}'", id, count));
+        }
 
         //修改商品信息
+
 
         //删除商品
         //将该商品评论删除

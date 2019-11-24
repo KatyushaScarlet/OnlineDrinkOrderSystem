@@ -25,7 +25,7 @@ namespace OnlineDrinkOrderSystem.Common
         {
             T t = Activator.CreateInstance<T>(); //创建实例           
             PropertyInfo[] pi = t.GetType().GetProperties();//取类的属性
-            
+
             //属性赋值
             foreach (PropertyInfo p in pi)
             {
@@ -36,6 +36,12 @@ namespace OnlineDrinkOrderSystem.Common
             }
 
             return t; //Return
+        }
+
+        static Random random = new Random(System.Environment.TickCount);
+        public static int GetRandomNumber(int min, int max)
+        {
+            return random.Next(min, max);
         }
     }
 }
