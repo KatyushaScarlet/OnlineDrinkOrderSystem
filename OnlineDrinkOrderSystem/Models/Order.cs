@@ -7,20 +7,22 @@ namespace OnlineDrinkOrderSystem.Models
 {
     public class Order_Detail
     {
-        public int Order_ID;
-        public int User_ID;
-        public double Order_Sum;
-        public int Delivery;
-        public int Shipment;
-        public string Address;
-        public DateTime Order_Date; 
+        public int Order_ID{ get; set; }
+        public int User_ID{ get; set; }
+        public double Order_Sum{ get; set; }
+        public int Delivery{ get; set; }
+        public int Shipment{ get; set; }
+        public string Address{ get; set; }
+        public DateTime Order_Date{ get; set; } 
     }
 
      public class Order_List
     {
-        public int Order_ID;
-        public int Item_ID;
-        public double Order_Price;
-        public int Quantity;
+        public int Order_ID{ get; set; }
+        public int Item_ID{ get; set; }
+        public double Order_Price{ get; set; }
+        public int Quantity{ get; set; }
+        public string Item_Name { get; set; }
+        public string Image_Url { get; set; }
     }
 }

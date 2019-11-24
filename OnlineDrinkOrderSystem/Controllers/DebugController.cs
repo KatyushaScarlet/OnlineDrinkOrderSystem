@@ -59,7 +59,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         //        item.Sold = rdm.Next(100, 1000);
         //        item.Discount = 0;
         //        var result = ItemManager.AddItem(item);
-                
+
         //        //成功计数
         //        if (result) success++;
         //    }
@@ -71,6 +71,30 @@ namespace OnlineDrinkOrderSystem.Controllers
         //public string GetItemList(int page, int pagesize, string keyword, int category_ID, ItemOrder itemOrder)
         //{
         //    var items = ItemManager.GetItemList(page, pagesize, keyword, category_ID, itemOrder);
+        //    var result = JsonConvert.SerializeObject(items);
+        //    return result;
+        //}
+
+        //[HttpGet]
+        //public string GetUserOrders(int userId)
+        //{
+        //    var items = OrderManager.GetUserOrders(userId);
+        //    var result = JsonConvert.SerializeObject(items);
+        //    return result;
+        //}
+
+        //[HttpGet]
+
+        //public string GetOrderDetail(int orderId)
+        //{
+        //    var result = OrderManager.GetOrderDetail(orderId);
+        //    return JsonConvert.SerializeObject(result);
+        //}
+
+        //[HttpGet]
+        //public string GetOrderList(int orderId)
+        //{
+        //    var items = OrderManager.GetOrderList(orderId);
         //    var result = JsonConvert.SerializeObject(items);
         //    return result;
         //}

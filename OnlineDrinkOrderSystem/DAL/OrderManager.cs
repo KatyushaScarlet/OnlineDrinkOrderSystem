@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OnlineDrinkOrderSystem.Models;
 using OnlineDrinkOrderSystem.Common;
+using System.Data;
 
 namespace OnlineDrinkOrderSystem.DAL
 {
@@ -110,14 +111,45 @@ namespace OnlineDrinkOrderSystem.DAL
             return Convert.ToInt32(DbHelper.Read(string.Format("select count(*) from Order_Detail where Order_ID='{0}'", id))) != 0;
         }
 
-        ////获取订单详情
-        //public static Order_Detail GetUserOrderDetail(int userId,int orderId)
+        //获取用户的所有订单
+        public static List<Order_Detail> GetUserOrders(int userId)
+        {
+            List<Order_Detail> order_Details = new List<Order_Detail>();
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail where User_ID='{0}'", userId));
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Order_Detail detail = new Order_Detail();
+                detail = Tool.DataRow2Entity<Order_Detail>(row);
+                order_Details.Add(detail);
+            }
+            return order_Details;
+        }
 
-        ////获取订单内商品列表
-        //public static List<Order_List> GetUserOrderList(int userId, int orderId)
+        //获取单个订单详情
+        public static Order_Detail GetOrderDetail(int orderId)
+        {
+            Order_Detail detail = new Order_Detail();
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail where Order_ID='{0}'", orderId));
+            if (dataSet.Tables[0].Rows.Count != 0)
+            {
+                DataRow dataRow = dataSet.Tables[0].Rows[0];
+                detail = Tool.DataRow2Entity<Order_Detail>(dataRow);
+            }
+            return detail;
+        }
 
-        ////获取用户的所有订单
-        //public static List<Order_Detail> GetUserOrders(int userId)
-
+        //获取单个订单内商品列表
+        public static List<Order_List> GetOrderList(int orderId)
+        {
+            List<Order_List> order_Lists = new List<Order_List>();
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_List left join Item on Order_List.Item_ID=Item.Item_ID where Order_ID='{0}'", orderId));
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Order_List list = new Order_List();
+                list = Tool.DataRow2Entity<Order_List>(row);
+                order_Lists.Add(list);
+            }
+            return order_Lists;
+        }
     }
 }
