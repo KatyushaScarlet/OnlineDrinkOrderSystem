@@ -18,12 +18,22 @@
                                     <th>时间</th>
                                     <th>总价</th>
                                     <th>运费</th>
-                                    <th>付款</th>
+                                    <th>状态</th>
                                     <th>详情</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (Order_Detail item in details)
+                                {
                                 <tr>
+                                    <td>@item.Order_Date</td>
+                                    <td>NTD$ @item.Order_Sum</td>
+                                    <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
+                                    <td>@(item.Shipment == 1 ? "未发货" : "已发货")</td>
+                                    <td><a href="@Url.ActionLink("OrderView", "Home", new { orderId = item.Order_ID })">查看</a></td>
+                                </tr>
+                                }
+                                @*<tr>
                                     <td>2018-12-23</td>
                                     <td><span class="amount">&yen;165.00</span></td>
                                     <td>&yen;0.00</td>
@@ -36,7 +46,7 @@
                                     <td>&yen;7.00</td>
                                     <td>&yen;132.00</td>
                                     <td><a href="#" data-target="#orderDeatilModal" data-toggle="modal"><i class="fa fa-external-link"></i></a></td>
-                                </tr>
+                                </tr>*@
                             </tbody>
                         </table>
                     </div>

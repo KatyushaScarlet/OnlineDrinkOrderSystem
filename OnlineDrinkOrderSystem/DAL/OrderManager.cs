@@ -126,7 +126,7 @@ namespace OnlineDrinkOrderSystem.DAL
         public static List<Order_Detail> GetUserOrders(int userId)
         {
             List<Order_Detail> order_Details = new List<Order_Detail>();
-            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail where User_ID='{0}'", userId));
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail where User_ID='{0}' order by Order_Date desc", userId));
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
                 Order_Detail detail = new Order_Detail();
@@ -149,11 +149,11 @@ namespace OnlineDrinkOrderSystem.DAL
             return detail;
         }
 
-        //获取单个订单内商品列表
+        //获取单个订单内商品列表 TODO 按商品id排序，小的在前
         public static List<Order_List> GetOrderList(int orderId)
         {
             List<Order_List> order_Lists = new List<Order_List>();
-            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_List left join Item on Order_List.Item_ID=Item.Item_ID where Order_ID='{0}'", orderId));
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_List left join Item on Order_List.Item_ID=Item.Item_ID where Order_ID='{0}'  order by Item.Item_ID asc", orderId));
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
                 Order_List list = new Order_List();

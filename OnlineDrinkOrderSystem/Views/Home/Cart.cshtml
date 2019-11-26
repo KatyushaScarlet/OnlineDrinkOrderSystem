@@ -165,7 +165,7 @@
                 data = JSON.parse(data);
                 alert(data.message);
                 if (data.status) {
-                    location.reload();
+                    location.href = "@Url.ActionLink("Order","Home")";
                 }
         })
     }

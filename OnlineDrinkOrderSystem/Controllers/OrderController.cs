@@ -45,6 +45,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                 if (result)
                 {
                     response.message = "下单成功";
+                    response.status = true;
                 }
                 else
                 {

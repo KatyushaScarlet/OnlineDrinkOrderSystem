@@ -209,22 +209,23 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
 
-        public IActionResult OrderView(int id=0)
+        public IActionResult OrderView(int orderId=0)
         {
             //获取订单详情
             //是否已登录
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             //是否有管理权限
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
             if (userId != 0)
             {
-                bool check = OrderManager.CheckUserOwnsOrder(userId, id);
+                bool check = OrderManager.CheckUserOwnsOrder(userId, orderId);
                 if (check || isadmin)
                 {
                     //用户拥有订单，或当前用户有管理员权限
                     //获取订单内详情列表
-                    Order_Detail detail = OrderManager.GetOrderDetail(id);
-                    List<Order_List> list = OrderManager.GetOrderList(id);
+                    Order_Detail detail = OrderManager.GetOrderDetail(orderId);
+                    List<Order_List> list = OrderManager.GetOrderList(orderId);
                     //回传viewdata
                     ViewData["list"] = list;
                     ViewData["detail"] = detail;
