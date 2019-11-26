@@ -98,5 +98,12 @@ namespace OnlineDrinkOrderSystem.Controllers
         //    var result = JsonConvert.SerializeObject(items);
         //    return result;
         //}
+
+        //[HttpGet]
+        //public string CheckUserOwnsOrder(int userId, int orderId)
+        //{
+        //    var temp = OrderManager.CheckUserOwnsOrder(userId, orderId);
+        //    return temp.ToString();
+        //}
     }
 }

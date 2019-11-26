@@ -194,7 +194,50 @@ namespace OnlineDrinkOrderSystem.Controllers
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
+                //获取订单列表
+                List<Order_Detail> order_Details = OrderManager.GetUserOrders(userId);
+                //回传viewdata
+                ViewData["details"] = order_Details;
                 return View();
+            }
+            else
+            {
+                //未登录则重定向至登陆页面
+                //提示信息
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
+        public IActionResult OrderView(int id=0)
+        {
+            //获取订单详情
+            //是否已登录
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            //是否有管理权限
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0)
+            {
+                bool check = OrderManager.CheckUserOwnsOrder(userId, id);
+                if (check || isadmin)
+                {
+                    //用户拥有订单，或当前用户有管理员权限
+                    //获取订单内详情列表
+                    Order_Detail detail = OrderManager.GetOrderDetail(id);
+                    List<Order_List> list = OrderManager.GetOrderList(id);
+                    //回传viewdata
+                    ViewData["list"] = list;
+                    ViewData["detail"] = detail;
+                    return View();
+                }
+                else
+                {
+                    //无访问权限
+                    //提示信息
+                    HttpContext.Session.SetString("tip", "无访问权限");
+                    return RedirectToAction("Index", "Home");
+                }
+
             }
             else
             {

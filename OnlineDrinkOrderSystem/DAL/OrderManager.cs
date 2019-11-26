@@ -48,7 +48,7 @@ namespace OnlineDrinkOrderSystem.DAL
                 double itemPrice = cart.Item_Price;
                 if (cart.Discount != 0)
                 {
-                    //折扣价四舍五入到小数点后两位 bug 折扣价格为0
+                    //折扣价四舍五入到小数点后两位
                     double temp = itemPrice * ((100.0 - cart.Discount) / 100.0);
                     itemPrice = Math.Round(temp, 2);
                 }
@@ -58,8 +58,8 @@ namespace OnlineDrinkOrderSystem.DAL
                 order_List.Item_ID = cart.Item_ID;
                 order_List.Order_Price = itemPrice;//折扣价格
                 order_List.Quantity = cart.Quantity;
-                //加入总价
-                totalPrice += itemPrice;
+                //加入总价（价格*数量）
+                totalPrice += itemPrice * cart.Quantity;
                 //添加到订单列表中
                 list.Add(order_List);
             }
@@ -70,6 +70,9 @@ namespace OnlineDrinkOrderSystem.DAL
             {
                 totalPrice += fee;
             }
+
+            //总价四舍五入到小数点后两位
+            totalPrice = Math.Round(totalPrice, 2);
 
             //创建订单
             Order_Detail detail = new Order_Detail();
@@ -106,9 +109,17 @@ namespace OnlineDrinkOrderSystem.DAL
             return true;
         }
 
+        //判断订单id是否已存在
         public static bool CheckOrderIdExist(int id)
         {
             return Convert.ToInt32(DbHelper.Read(string.Format("select count(*) from Order_Detail where Order_ID='{0}'", id))) != 0;
+        }
+
+        //判断用户是否拥有某个订单
+        public static bool CheckUserOwnsOrder(int userId,int orderId)
+        {
+            var temp = DbHelper.Read(string.Format("select count(*) from Order_Detail where User_ID='{0}' and Order_ID='{1}'", userId, orderId));
+            return Convert.ToInt32(temp) == 1;
         }
 
         //获取用户的所有订单
