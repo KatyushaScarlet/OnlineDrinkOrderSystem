@@ -110,30 +110,6 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
 
-        //public IActionResult SignOut()
-        //{
-        //    //用户登出
-        //    //判断是否已登录
-        //    int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
-        //    if (userId != 0)
-        //    {
-        //        //清空Session
-        //        HttpContext.Session.SetInt32("id", 0);
-        //        HttpContext.Session.SetString("admin", false.ToString());
-        //        //跳转至登陆页
-
-        //        HttpContext.Session.SetString("tip", "已成功登出");
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    else
-        //    {
-        //        //未登录则重定向至首页
-
-        //        HttpContext.Session.SetString("tip", "请先登录");
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
-
         public IActionResult Trace()
         {
             //追踪清单
@@ -173,7 +149,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                     HttpContext.Session.SetString("tip", "没有权限");
                     return RedirectToAction("Index", "Home");
                 }
-                User user = DAL.UserManage.GetUserInfo(nowUserId);
+                User user = UserManager.GetUserInfo(nowUserId);
                 ViewData["user"] = user;
 
                 return View();
@@ -317,6 +293,12 @@ namespace OnlineDrinkOrderSystem.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
+        //商品信息修改/新增商品（id为0则为新增页面）
+        public IActionResult ItemInfoManage(int itemId= 0)
+        {
+            return View();
+        }
+
         //用户管理
         public IActionResult UserManage()
         {
@@ -328,6 +310,10 @@ namespace OnlineDrinkOrderSystem.Controllers
                 //判断是否具有管理员权限
                 if (isadmin == true)
                 {
+                    //获取所有用户
+                    List<User> users = UserManager.GetUsers();
+                    //回传viewdata
+                    ViewData["users"] = users;
                     return View();
                 }
                 else
@@ -343,6 +329,12 @@ namespace OnlineDrinkOrderSystem.Controllers
                 HttpContext.Session.SetString("tip", "无访问权限");
                 return RedirectToAction("Login", "Home");
             }
+        }
+
+        //用户信息修改/新增用户（id为0则为新增页面）
+        public IActionResult UserInfoManage(int userId=0)
+        {
+            return View();
         }
 
         public IActionResult Contact()

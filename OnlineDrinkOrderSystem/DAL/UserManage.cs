@@ -8,7 +8,7 @@ using OnlineDrinkOrderSystem.Common;
 
 namespace OnlineDrinkOrderSystem.DAL
 {
-    public class UserManage
+    public class UserManager
     {
         //查找用户名是否已存在
         public static bool CheckNameExist(string name)
@@ -40,6 +40,21 @@ namespace OnlineDrinkOrderSystem.DAL
                 user = Tool.DataRow2Entity<User>(dataRow);
             }
             return user;
+        }
+
+        //获取所有用户
+        public static List<User> GetUsers()
+        {
+            List<User> users = new List<User>();
+            DataSet dataSet = DbHelper.ReadDataSet("select * from User");
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                User user = new User();
+                user = Tool.DataRow2Entity<User>(row);
+                users.Add(user);
+
+            }
+            return users;
         }
 
         //添加用户
@@ -90,8 +105,19 @@ namespace OnlineDrinkOrderSystem.DAL
             return result == 1;
         }
 
+        //修改用户权限
+        public static bool ChangeUserPrivilege(int userId,bool isAdmin)
+        {
+            return DbHelper.Action(string.Format("update User set Admin={1} where User_ID='{0}'", userId, isAdmin)) == 1;
+        }
+
+
         //删除用户
-        //同时删除：用户订单、购物车、追踪列表
+        //同时删除：购物车、追踪列表
         //FK id更改为0：评论、订单
+        public static bool DeleteUser(int userId)
+        {
+
+        }
     }
 }

@@ -2,13 +2,14 @@
 @{
     ViewData["Title"] = "OrderView";
     List<Order_List> list = ViewData["list"] as List<Order_List>;
-    //Order_Detail detail = ViewData["detail"] as Order_Detail;
+    Order_Detail detail = ViewData["detail"] as Order_Detail;
 }
 <!-- orderview-main-area-start -->
 <div class="cart-main-area mb-70 main-area">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <h2>地址：@detail.Address</h2>
                 <form action="#">
                     <div class="table-content table-responsive">
                         <table>

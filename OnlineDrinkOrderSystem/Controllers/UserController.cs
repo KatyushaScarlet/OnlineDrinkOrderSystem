@@ -20,7 +20,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             if (name != "" && password != "" && firstName != "" && email != "" && lastName != "" && address != "")
             {
-                bool exist = UserManage.CheckNameExist(name);
+                bool exist = UserManager.CheckNameExist(name);
                 if (!exist)
                 {
                     User user = new User();
@@ -31,7 +31,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                     user.Email = email;
                     user.Address = address;
                     user.Admin = false;
-                    bool result = UserManage.AddUser(user);
+                    bool result = UserManager.AddUser(user);
                     if (result)
                     {
                         //注册成功
@@ -65,13 +65,13 @@ namespace OnlineDrinkOrderSystem.Controllers
         [HttpPost]
         public IActionResult LoginIn(string name="",string password="")
         {
-            int userId = UserManage.CheckPassword(name, password);
+            int userId = UserManager.CheckPassword(name, password);
             if (userId!=0)
             {
                 //登录成功
                 //设置id与权限
                 HttpContext.Session.SetInt32("id", userId);
-                if (UserManage.CheckAdmin(userId))
+                if (UserManager.CheckAdmin(userId))
                 {
                     HttpContext.Session.SetString("admin", true.ToString());
                 }
@@ -126,7 +126,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                 user.Email = email;
                 user.Address = address;
 
-                bool result = UserManage.AlterUserInfo(user);
+                bool result = UserManager.AlterUserInfo(user);
                 if (result)
                 {
                     //提示信息
@@ -148,6 +148,35 @@ namespace OnlineDrinkOrderSystem.Controllers
                 HttpContext.Session.SetString("tip", "请先登录");
                 return RedirectToAction("Login", "Home");
             }
+        }
+
+        //设置/取消管理员
+        [HttpGet]
+        public string ChangeUserPrivilege(int userId = 0, bool isAdmin = false)
+        {
+            Response response = new Response();
+            response.status = false;
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                //修改状态
+                bool result = UserManager.ChangeUserPrivilege(userId, isAdmin);
+                if (result)
+                {
+                    response.status = true;
+                    response.message = "操作成功";
+                }
+                else
+                {
+                    response.message = "操作失败";
+                }
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+            return JsonConvert.SerializeObject(response);
         }
     }
 }

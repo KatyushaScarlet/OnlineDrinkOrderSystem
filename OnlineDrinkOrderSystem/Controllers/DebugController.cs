@@ -15,6 +15,12 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             return "debug ok";
         }
+        ////用户权限变更测试
+        //[HttpGet]
+        //public bool ChangeUserPrivilege(int userId,bool isAdmin)
+        //{
+        //    return UserManager.ChangeUserPrivilege(userId, isAdmin);
+        //}
 
         ////商品添加测试
         //[HttpGet]

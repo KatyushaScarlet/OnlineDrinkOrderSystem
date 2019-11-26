@@ -3,7 +3,7 @@
     ViewData["Title"] = "OrderManage";
     List<Order_Detail> details = ViewData["details"] as List<Order_Detail>;
 }
-<!-- order-main-area-start -->
+<!-- ordermanage-main-area-start -->
 <div class="cart-main-area mb-70 main-area">
     <div class="container">
         <div class="row">
@@ -27,7 +27,6 @@
                                         <td>@item.Order_Date</td>
                                         <td>NTD$ @item.Order_Sum</td>
                                         <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
-                                        @*<td>@(item.Shipment == 1 ? "未发货" : "已发货")</td>*@
                                         @if (item.Shipment == 1)
                                         {
                                             <td><a href="#" onclick="setOrderStatus(@item.Order_ID)">点击发货</a></td>
@@ -60,4 +59,4 @@
         });
     }
 </script>
-<!-- order-main-area-end -->
+<!-- ordermanage-main-area-end -->

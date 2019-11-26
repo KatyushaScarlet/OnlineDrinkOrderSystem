@@ -43,7 +43,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                 if (carts.Count!=0)
                 {
                     //开始下单
-                    User user = UserManage.GetUserInfo(userId);
+                    User user = UserManager.GetUserInfo(userId);
                     bool result = OrderManager.NewOrder(user, delivery);
                     if (result)
                     {
