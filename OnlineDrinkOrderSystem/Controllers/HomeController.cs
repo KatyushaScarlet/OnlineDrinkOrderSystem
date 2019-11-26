@@ -68,7 +68,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "请先登录");
                 return RedirectToAction("Login", "Home");
             }
@@ -82,7 +82,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0)
             {
                 //已登录则重定向至首页
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "您已登录");
                 return RedirectToAction("Index", "Home");
             }
@@ -100,7 +100,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0)
             {
                 //已登录则重定向至首页
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "您已登录");
                 return RedirectToAction("Index", "Home");
             }
@@ -110,29 +110,29 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
 
-        public IActionResult SignOut()
-        {
-            //用户登出
-            //判断是否已登录
-            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
-            if (userId != 0)
-            {
-                //清空Session
-                HttpContext.Session.SetInt32("id",0);
-                HttpContext.Session.SetString("admin", false.ToString());
-                //跳转至登陆页
-                //提示信息
-                HttpContext.Session.SetString("tip", "已成功登出");
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                //未登录则重定向至首页
-                //提示信息
-                HttpContext.Session.SetString("tip", "请先登录");
-                return RedirectToAction("Index", "Home");
-            }
-        }
+        //public IActionResult SignOut()
+        //{
+        //    //用户登出
+        //    //判断是否已登录
+        //    int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+        //    if (userId != 0)
+        //    {
+        //        //清空Session
+        //        HttpContext.Session.SetInt32("id", 0);
+        //        HttpContext.Session.SetString("admin", false.ToString());
+        //        //跳转至登陆页
+
+        //        HttpContext.Session.SetString("tip", "已成功登出");
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //    else
+        //    {
+        //        //未登录则重定向至首页
+
+        //        HttpContext.Session.SetString("tip", "请先登录");
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
 
         public IActionResult Trace()
         {
@@ -146,7 +146,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "请先登录");
                 return RedirectToAction("Login", "Home");
             }
@@ -166,14 +166,14 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0)
             {
                 //要修改的用户信息不是当前用户，但没有管理员权限
-                if (( nowUserId != userId) && (isadmin = false))
+                if ((nowUserId != userId) && (isadmin = false))
                 {
                     //重定向至首页
-                    //提示信息
+
                     HttpContext.Session.SetString("tip", "没有权限");
                     return RedirectToAction("Index", "Home");
                 }
-                User user = UserManage.GetUserInfo(nowUserId);
+                User user = DAL.UserManage.GetUserInfo(nowUserId);
                 ViewData["user"] = user;
 
                 return View();
@@ -181,7 +181,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "请先登录");
                 return RedirectToAction("Login", "Home");
             }
@@ -203,13 +203,13 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "请先登录");
                 return RedirectToAction("Login", "Home");
             }
         }
 
-        public IActionResult OrderView(int orderId=0)
+        public IActionResult OrderView(int orderId = 0)
         {
             //获取订单详情
             //是否已登录
@@ -219,39 +219,80 @@ namespace OnlineDrinkOrderSystem.Controllers
 
             if (userId != 0)
             {
-                bool check = OrderManager.CheckUserOwnsOrder(userId, orderId);
-                if (check || isadmin)
+                bool checkOrderExist = OrderManager.CheckOrderIdExist(orderId);
+                if (checkOrderExist)
                 {
-                    //用户拥有订单，或当前用户有管理员权限
-                    //获取订单内详情列表
-                    Order_Detail detail = OrderManager.GetOrderDetail(orderId);
-                    List<Order_List> list = OrderManager.GetOrderList(orderId);
-                    //回传viewdata
-                    ViewData["list"] = list;
-                    ViewData["detail"] = detail;
-                    return View();
+                    //如果订单存在
+                    bool checkUserOwnsOrder = OrderManager.CheckUserOwnsOrder(userId, orderId);
+                    if (checkUserOwnsOrder || isadmin)
+                    {
+                        //用户拥有订单，或当前用户有管理员权限
+                        //获取订单内详情列表
+                        Order_Detail detail = OrderManager.GetOrderDetail(orderId);
+                        List<Order_List> list = OrderManager.GetOrderList(orderId);
+                        //回传viewdata
+                        ViewData["list"] = list;
+                        ViewData["detail"] = detail;
+                        return View();
+                    }
+                    else
+                    {
+                        //无访问权限
+
+                        HttpContext.Session.SetString("tip", "无访问权限");
+                        return RedirectToAction("Order", "Home");
+                    }
                 }
                 else
                 {
-                    //无访问权限
-                    //提示信息
-                    HttpContext.Session.SetString("tip", "无访问权限");
-                    return RedirectToAction("Index", "Home");
-                }
+                    //如果订单不存在
 
+                    HttpContext.Session.SetString("tip", "订单不存在");
+                    return RedirectToAction("Order", "Home");
+                }
             }
             else
             {
                 //未登录则重定向至登陆页面
-                //提示信息
+
                 HttpContext.Session.SetString("tip", "请先登录");
                 return RedirectToAction("Login", "Home");
             }
         }
-
-        public IActionResult Manage()
+        //订单管理
+        public IActionResult OrderManage()
         {
-            //后台管理
+            //判断是否已登录
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0)
+            {
+                //判断是否具有管理员权限
+                if (isadmin == true)
+                {
+                    //获取所有订单列表
+                    List<Order_Detail> order_Details = OrderManager.GetAllOrders();
+                    //回传viewdata
+                    ViewData["details"] = order_Details;
+                    return View();
+                }
+                else
+                {
+                    //重定向至首页
+                    HttpContext.Session.SetString("tip", "无访问权限");
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                //未登录则重定向至登陆页面
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Login", "Home");
+            }
+        }
+        //商品管理
+        public IActionResult ItemManage()
+        {
             //判断是否已登录
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
@@ -265,7 +306,6 @@ namespace OnlineDrinkOrderSystem.Controllers
                 else
                 {
                     //重定向至首页
-                    //提示信息
                     HttpContext.Session.SetString("tip", "无访问权限");
                     return RedirectToAction("Index", "Home");
                 }
@@ -273,18 +313,37 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                //提示信息
                 HttpContext.Session.SetString("tip", "无访问权限");
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
         }
-
-
-
-
-
-
-
+        //用户管理
+        public IActionResult UserManage()
+        {
+            //判断是否已登录
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0)
+            {
+                //判断是否具有管理员权限
+                if (isadmin == true)
+                {
+                    return View();
+                }
+                else
+                {
+                    //重定向至首页
+                    HttpContext.Session.SetString("tip", "无访问权限");
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                //未登录则重定向至登陆页面
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Login", "Home");
+            }
+        }
 
         public IActionResult Contact()
         {

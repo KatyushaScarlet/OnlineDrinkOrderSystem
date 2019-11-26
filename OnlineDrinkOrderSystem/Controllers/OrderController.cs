@@ -68,5 +68,34 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
             return JsonConvert.SerializeObject(response);
         }
+
+        //发货
+        [HttpGet]
+        public string SetOrderStatus(int orderId)
+        {
+            Response response = new Response();
+            response.status = false;
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0 && isadmin)
+            {
+                //设置状态为发货
+                bool result = OrderManager.SetOrderStatus(orderId, 2);
+                if (result)
+                {
+                    response.status = true;
+                    response.message = "操作成功";
+                }
+                else
+                {
+                    response.message = "操作失败";
+                }
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+            return JsonConvert.SerializeObject(response);
+        }
     }
 }

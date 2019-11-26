@@ -136,6 +136,20 @@ namespace OnlineDrinkOrderSystem.DAL
             return order_Details;
         }
 
+        //获取所有订单，按时间排序，新的在前（desc）
+        public static List<Order_Detail> GetAllOrders()
+        {
+            List<Order_Detail> order_Details = new List<Order_Detail>();
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail order by Order_Date desc"));
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Order_Detail detail = new Order_Detail();
+                detail = Tool.DataRow2Entity<Order_Detail>(row);
+                order_Details.Add(detail);
+            }
+            return order_Details;
+        }
+
         //获取单个订单详情
         public static Order_Detail GetOrderDetail(int orderId)
         {
@@ -161,6 +175,12 @@ namespace OnlineDrinkOrderSystem.DAL
                 order_Lists.Add(list);
             }
             return order_Lists;
+        }
+
+        //设置订单发货状态
+        public static bool SetOrderStatus(int orderId,int status)
+        {
+            return Convert.ToInt32(DbHelper.Action(string.Format("update Order_Detail set Shipment='{1}' where Order_ID='{0}'", orderId, status))) == 1;
         }
     }
 }

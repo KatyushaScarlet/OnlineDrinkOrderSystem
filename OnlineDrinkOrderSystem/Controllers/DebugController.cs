@@ -105,5 +105,11 @@ namespace OnlineDrinkOrderSystem.Controllers
         //    var temp = OrderManager.CheckUserOwnsOrder(userId, orderId);
         //    return temp.ToString();
         //}
+
+        [HttpGet]
+        public bool SetOrderStatus(int orderId, int status)
+        {
+            return OrderManager.SetOrderStatus(orderId, status);
+        }
     }
 }

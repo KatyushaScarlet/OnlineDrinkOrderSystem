@@ -29,9 +29,6 @@
     <link rel="stylesheet" href="/css/style.css"><!-- responsive css -->
     <link rel="stylesheet" href="/css/responsive.css"><!-- modernizr css -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    <!--Google OAuth-->
-    @*<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">*@
 </head>
 
 <body class="home-4">
@@ -126,15 +123,22 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    @if (isAdmin)
-                                    {
-                                        <li>
-                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                        </li>
-                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>
+                                    @if (isAdmin)
+                                    {
+                                        <li>
+                                            <a href="#">后台管理<i class="fa fa-angle-down"></i></a>
+                                            <div class="sub-menu">
+                                                <ul>
+                                                    <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
+                                                    <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
+                                                    <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
                                 </ul>
                             </nav>
                         </div>
@@ -165,15 +169,22 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    @if (isAdmin)
-                                    {
-                                        <li>
-                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                        </li>
-                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>
+                                    @if (isAdmin)
+                                    {
+                                        <li>
+                                            <a href="#">后台管理<i class="fa fa-angle-down"></i></a>
+                                            <div class="sub-menu">
+                                                <ul>
+                                                    <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
+                                                    <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
+                                                    <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
                                 </ul>
                             </nav>
                         </div>
