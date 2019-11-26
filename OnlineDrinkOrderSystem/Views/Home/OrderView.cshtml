@@ -2,8 +2,42 @@
 @{
     ViewData["Title"] = "OrderView";
     List<Order_List> list = ViewData["list"] as List<Order_List>;
-    Order_Detail detail = ViewData["detail"] as Order_Detail;
+    //Order_Detail detail = ViewData["detail"] as Order_Detail;
 }
-
-<h2>OrderView</h2>
-
+<!-- orderview-main-area-start -->
+<div class="cart-main-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">图片</th>
+                                    <th>名称</th>
+                                    <th>价格</th>
+                                    <th>数量</th>
+                                    <th>小计</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Order_List item in list)
+                                {
+                                <tr>
+                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                    <td><p>@item.Item_Name</p></td>
+                                    <td><p>@item.Order_Price</p></td>
+                                    <td><p>@item.Quantity</p></td>
+                                    <td><p>@(item.Order_Price*item.Quantity)</p></td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- orderview-main-area-end -->

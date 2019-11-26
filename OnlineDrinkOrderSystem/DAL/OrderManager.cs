@@ -122,7 +122,7 @@ namespace OnlineDrinkOrderSystem.DAL
             return Convert.ToInt32(temp) == 1;
         }
 
-        //获取用户的所有订单
+        //获取用户的所有订单，按时间排序，新的在前（desc）
         public static List<Order_Detail> GetUserOrders(int userId)
         {
             List<Order_Detail> order_Details = new List<Order_Detail>();
@@ -149,7 +149,7 @@ namespace OnlineDrinkOrderSystem.DAL
             return detail;
         }
 
-        //获取单个订单内商品列表 TODO 按商品id排序，小的在前
+        //获取单个订单内商品列表，按商品id排序，小的在前（asc）
         public static List<Order_List> GetOrderList(int orderId)
         {
             List<Order_List> order_Lists = new List<Order_List>();

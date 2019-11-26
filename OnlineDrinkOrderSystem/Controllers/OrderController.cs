@@ -38,19 +38,29 @@ namespace OnlineDrinkOrderSystem.Controllers
                         }
                     }
                 }
+                //更新购物车
                 ItemManager.UpdateCart(userId, cartResult);
-                //更新购物车后开始下单
-                User user = UserManage.GetUserInfo(userId);
-                bool result = OrderManager.NewOrder(user, delivery);
-                if (result)
+                if (carts.Count!=0)
                 {
-                    response.message = "下单成功";
-                    response.status = true;
+                    //开始下单
+                    User user = UserManage.GetUserInfo(userId);
+                    bool result = OrderManager.NewOrder(user, delivery);
+                    if (result)
+                    {
+                        response.message = "下单成功";
+                        response.status = true;
+                    }
+                    else
+                    {
+                        //商品数量是否为空
+                        response.message = "下单失败，部分商品暂无库存";
+                    }
                 }
                 else
                 {
-                    response.message = "下单失败，部分商品暂无库存";
+                    response.message = "下单失败，商品为空";
                 }
+
             }
             else
             {

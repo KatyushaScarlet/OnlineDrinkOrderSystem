@@ -40,7 +40,7 @@
                                     }
                                         <td class="product-quantity"><input type="number" id="count-@item.Item_ID" value="@item.Quantity" min="0" name="@item.Item_ID" onchange="updateSubtotal(@item.Item_ID)"></td>
                                         <td class="product-subtotal"><p>@item.Stock</p></td>
-                                        <td class="product-subtotal"><p id="subtotal-@item.Item_ID" class="subtotal">@(item.Item_Price * item.Quantity)</p></td>
+                                        <td class="product-subtotal"><p id="subtotal-@item.Item_ID" class="subtotal">@(item.Item_Price * ((100 - item.Discount)) / 100 * item.Quantity)</p></td>
                                         <td class="product-remove"><a href="#" onclick="deleteRow(@item.Item_ID)"><i class="fa fa-times"></i></a></td>
                                     </tr>
                                 }
