@@ -60,7 +60,7 @@
                                 {
                                     <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
                                     <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
-                                    <li><a href=@Url.ActionLink("SignOut","User")>登出</a></li>
+                                    <li><a href="#" onclick="SignOut()">登出</a></li>
                                 }
                                 else
                                 {
@@ -450,6 +450,20 @@
 
             return false;
         }
+
+        //登出
+        function SignOut() {
+            $.get("@Url.ActionLink("SignOut","User")", {}, function (data) {
+                var data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.href = "@Url.ActionLink("Index","Home")";
+                } else {
+                    location.href = "@Url.ActionLink("Login","Home")";
+                }
+            })
+        }
+
     </script>
 </body>
 </html>

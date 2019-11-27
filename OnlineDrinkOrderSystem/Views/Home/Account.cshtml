@@ -16,7 +16,7 @@
                     <p>修改账户资料</p>
                 </div>
             </div>
-            <form action="@Url.ActionLink("AlterUserInfo","User")" method="post">
+            <form id="form-account" onsubmit="return formAccount();">
                 <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
                     <div class="billing-fields">
                         <div class="row">
@@ -62,4 +62,19 @@
         </div>
     </div>
 </div>
+<script>
+    function formAccount(){
+        var submit = $("#form-account").serialize();
+        $.post("@Url.ActionLink("AlterUserInfo","User")", submit, function (data) {
+            var data = JSON.parse(data);
+            alert(data.message)
+            if (data.status) {
+                location.reload();
+            } else {
+                location.href = "@Url.ActionLink("Index","Home")";
+            }
+        });
+        return false;
+    }
+</script>
 <!-- user-login-area-end -->

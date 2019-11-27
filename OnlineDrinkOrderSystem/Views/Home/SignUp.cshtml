@@ -11,7 +11,7 @@
                     <p>创建一个新用户</p>
                 </div>
             </div>
-            <form action="@Url.ActionLink("SignUp","User")" method="post">
+            <form id="form-signup" onsubmit="return formSignup();">
                 <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
                     <div class="billing-fields">
                         <div class="single-form-item">
@@ -71,6 +71,20 @@
         } else {
             re_password.setCustomValidity('两次输入的密码不相同');
         }
+    }
+
+    function formSignup(){
+    var submit = $("#form-signup").serialize();
+    $.post("@Url.ActionLink("SignUp","User")", submit, function (data) {
+        var data = JSON.parse(data);
+        alert(data.message)
+        if (data.status) {
+            location.href = "@Url.ActionLink("Login","Home")";
+        } else {
+            location.reload();
+        }
+    });
+    return false;
     }
     
 </script>

@@ -15,9 +15,13 @@ namespace OnlineDrinkOrderSystem.Controllers
     public class UserController : Controller
     {
         //用户注册
+        //TODO:修改为返回json
         [HttpPost]
-        public IActionResult SignUp(string name = "", string password = "", string firstName = "", string lastName = "",string email="", string address = "")
+        public string SignUp(string name = "", string password = "", string firstName = "", string lastName = "",string email="", string address = "")
         {
+            Response response = new Response();
+            response.status = false;
+
             if (name != "" && password != "" && firstName != "" && email != "" && lastName != "" && address != "")
             {
                 bool exist = UserManager.CheckNameExist(name);
@@ -36,35 +40,37 @@ namespace OnlineDrinkOrderSystem.Controllers
                     {
                         //注册成功
                         //提示信息
-                        HttpContext.Session.SetString("tip", "注册成功，请重新登录");
-                        return RedirectToAction("Login", "Home");
+                        response.status = true;
+                        response.message="注册成功，请重新登录";
                     }
                     else
                     {
                         //注册失败
-                        HttpContext.Session.SetString("tip", "注册失败，请联系管理员");
-                        return RedirectToAction("SignUp", "Home");
+                        response.message="注册失败，请联系管理员";
                     }
                 }
                 else
                 {
                     //注册失败
-                    HttpContext.Session.SetString("tip", "注册失败，用户名已被使用");
-                    return RedirectToAction("SignUp", "Home");
+                    response.message="注册失败，用户名已被使用";
                 }
             }
             else
             {
                 //注册失败
-                HttpContext.Session.SetString("tip", "注册失败，请检查是否有资料未填写");
-                return RedirectToAction("SignUp", "Home");
+                response.message="注册失败，请检查是否有资料未填写";
             }
+
+            return JsonConvert.SerializeObject(response);
         }
 
         //用户登录
         [HttpPost]
-        public IActionResult LoginIn(string name="",string password="")
+        public string LoginIn(string name="",string password="")
         {
+            Response response = new Response();
+            response.status = false;
+
             int userId = UserManager.CheckPassword(name, password);
             if (userId!=0)
             {
@@ -76,21 +82,25 @@ namespace OnlineDrinkOrderSystem.Controllers
                     HttpContext.Session.SetString("admin", true.ToString());
                 }
                 //提示信息
-                HttpContext.Session.SetString("tip", "登录成功");
-                return RedirectToAction("Index", "Home");
+                response.message = "登录成功";
+                response.status = true;
             }
             else
             {
                 //登录失败
-                HttpContext.Session.SetString("tip", "登录失败，请检查用户名或密码是否正确");
-                return RedirectToAction("Login", "Home");
+                response.message = "登录失败，请检查用户名或密码是否正确";
             }
+
+            return JsonConvert.SerializeObject(response);
         }
 
         //用户登出
         [HttpGet]
-        public IActionResult SignOut()
+        public string SignOut()
         {
+            Response response = new Response();
+            response.status = false;
+
             //判断是否已登录
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId!=0)
@@ -98,22 +108,26 @@ namespace OnlineDrinkOrderSystem.Controllers
                 HttpContext.Session.SetInt32("id", 0);
                 HttpContext.Session.SetString("admin", false.ToString());
                 //提示信息
-                HttpContext.Session.SetString("tip", "已成功登出");
-                return RedirectToAction("Index", "Home");
+                response.status = true;
+                response.message = "已成功登出";
             }
             else
             {
                 //未登录则重定向至登陆页面
                 //提示信息
-                HttpContext.Session.SetString("tip", "请先登录");
-                return RedirectToAction("Login", "Home");
+                response.message = "请先登录";
             }
+
+            return JsonConvert.SerializeObject(response);
         }
 
-        [HttpPost]
         //修改用户信息
-        public IActionResult AlterUserInfo(string password = "", string firstName = "", string lastName = "", string email = "", string address = "")
+        [HttpPost]
+        public string AlterUserInfo(string password = "", string firstName = "", string lastName = "", string email = "", string address = "")
         {
+            Response response = new Response();
+            response.status = false;
+
             //判断是否已登录
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
@@ -133,31 +147,30 @@ namespace OnlineDrinkOrderSystem.Controllers
                     if (result)
                     {
                         //提示信息
-                        HttpContext.Session.SetString("tip", "修改成功");
-                        return RedirectToAction("Account", "Home");
+                        response.status = true;
+                        response.message = "修改成功";
                     }
                     else
                     {
                         //修改失败
                         //提示信息
-                        HttpContext.Session.SetString("tip", "修改失败，请联系管理员");
-                        return RedirectToAction("Account", "Home");
+                        response.message = "修改失败，请联系管理员";
                     }
                 }
                 else
                 {
                     //修改失败
-                    HttpContext.Session.SetString("tip", "修改失败，请检查是否有资料未填写");
-                    return RedirectToAction("Account", "Home");
+                    response.message = "修改失败，请检查是否有资料未填写";
                 }
             }
             else
             {
                 //未登录则重定向至登陆页面
                 //提示信息
-                HttpContext.Session.SetString("tip", "请先登录");
-                return RedirectToAction("Login", "Home");
+                response.message = "请先登录";
             }
+
+            return JsonConvert.SerializeObject(response);
         }
 
         //设置/取消管理员
