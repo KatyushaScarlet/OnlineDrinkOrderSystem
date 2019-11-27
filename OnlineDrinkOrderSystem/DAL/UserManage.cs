@@ -71,7 +71,7 @@ namespace OnlineDrinkOrderSystem.DAL
                 )) == 1;
         }
 
-        //修改用户信息
+        //修改用户信息（不涉及管理员权限）
         public static bool AlterUserInfo(User user)
         {
             int result = 0;
@@ -79,25 +79,23 @@ namespace OnlineDrinkOrderSystem.DAL
             if (!string.IsNullOrEmpty(user.User_Password))
             {
                 result = DbHelper.Action(string.Format("update User set " +
-                    "First_Name='{0}',Last_Name='{1}',Email='{2}',Address='{3}',Admin='{4}',User_Password='{6}' where User_ID='{5}'",
+                    "First_Name='{0}',Last_Name='{1}',Email='{2}',Address='{3}',User_Password='{4}' where User_ID='{5}'",
                     user.First_Name,
                     user.Last_Name,
                     user.Email,
                     user.Address,
-                    (user.Admin == true ? 1 : 0),//转换为tinyint
-                    user.User_ID,
-                    user.User_Password
+                    user.User_Password,
+                    user.User_ID
                     ));
             }
             else
             {
                 result = DbHelper.Action(string.Format("update User set " +
-                    "First_Name='{0}',Last_Name='{1}',Email='{2}',Address='{3}',Admin='{4}' where User_ID='{5}'",
+                    "First_Name='{0}',Last_Name='{1}',Email='{2}',Address='{3}' where User_ID='{4}'",
                     user.First_Name,
                     user.Last_Name,
                     user.Email,
                     user.Address,
-                    (user.Admin == true ? 1 : 0),//转换为tinyint
                     user.User_ID
                     ));
             }

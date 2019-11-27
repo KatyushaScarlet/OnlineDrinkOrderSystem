@@ -248,21 +248,6 @@ namespace OnlineDrinkOrderSystem.Controllers
                 //回传viewdata
                 ViewData["details"] = order_Details;
                 return View();
-                ////判断是否具有管理员权限
-                //if (isadmin == true)
-                //{
-                //    //获取所有订单列表
-                //    List<Order_Detail> order_Details = OrderManager.GetAllOrders();
-                //    //回传viewdata
-                //    ViewData["details"] = order_Details;
-                //    return View();
-                //}
-                //else
-                //{
-                //    //重定向至首页
-                //    HttpContext.Session.SetString("tip", "无访问权限");
-                //    return RedirectToAction("Index", "Home");
-                //}
             }
             else
             {
@@ -280,17 +265,6 @@ namespace OnlineDrinkOrderSystem.Controllers
             if (userId != 0 && isadmin)
             {
                 return View();
-                ////判断是否具有管理员权限
-                //if (isadmin == true)
-                //{
-                //    return View();
-                //}
-                //else
-                //{
-                //    //重定向至首页
-                //    HttpContext.Session.SetString("tip", "无访问权限");
-                //    return RedirectToAction("Index", "Home");
-                //}
             }
             else
             {
@@ -322,21 +296,6 @@ namespace OnlineDrinkOrderSystem.Controllers
                 ViewData["users"] = users;
                 return View();
 
-                ////判断是否具有管理员权限
-                //if (isadmin == true)
-                //{
-                //    //获取所有用户
-                //    List<User> users = UserManager.GetUsers();
-                //    //回传viewdata
-                //    ViewData["users"] = users;
-                //    return View();
-                //}
-                //else
-                //{
-                //    //重定向至首页
-                //    HttpContext.Session.SetString("tip", "无访问权限");
-                //    return RedirectToAction("Index", "Home");
-                //}
             }
             else
             {

@@ -41,7 +41,7 @@ namespace OnlineDrinkOrderSystem.Controllers
                         //注册成功
                         //提示信息
                         response.status = true;
-                        response.message="注册成功，请重新登录";
+                        response.message="注册成功";
                     }
                     else
                     {
@@ -82,8 +82,8 @@ namespace OnlineDrinkOrderSystem.Controllers
                     HttpContext.Session.SetString("admin", true.ToString());
                 }
                 //提示信息
-                response.message = "登录成功";
                 response.status = true;
+                response.message = "登录成功";
             }
             else
             {
@@ -123,20 +123,32 @@ namespace OnlineDrinkOrderSystem.Controllers
 
         //修改用户信息
         [HttpPost]
-        public string AlterUserInfo(string password = "", string firstName = "", string lastName = "", string email = "", string address = "")
+        public string AlterUserInfo(int userId = 0, string password = "", string firstName = "", string lastName = "", string email = "", string address = "")
         {
             Response response = new Response();
             response.status = false;
 
             //判断是否已登录
-            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
-            if (userId != 0)
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (nowUserId != 0)
             {
 
                 if (password != "" && firstName != "" && lastName != "" && email != "" &&  address != "")
                 {
                     User user = new User();
-                    user.User_ID = userId;
+
+                    if (userId != nowUserId && nowIsadmin)
+                    {
+                        //管理员修改用户信息
+                        user.User_ID = userId;
+                    }
+                    else
+                    {
+                        //用户自己修改信息
+                        user.User_ID = nowUserId;
+                    }
+
                     user.User_Password = password;
                     user.First_Name = firstName;
                     user.Last_Name = lastName;
@@ -225,9 +237,5 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
             return JsonConvert.SerializeObject(response);
         }
-
-        //[HttpPost]
-        ////修改用户信息/添加用户信息
-        //public IActionResult UserInfoManage()
     }
 }

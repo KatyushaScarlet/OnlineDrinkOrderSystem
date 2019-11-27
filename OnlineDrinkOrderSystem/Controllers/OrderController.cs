@@ -104,6 +104,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             Response response = new Response();
             response.status = false;
+
             int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
 

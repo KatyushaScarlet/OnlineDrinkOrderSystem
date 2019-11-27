@@ -34,7 +34,7 @@
                                         }
                                         else
                                         {
-                                            <td><a href="#">@item.User_Name</a></td>
+                                            <td><a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = item.User_ID })">@item.User_Name</a></td>
                                         }
                                         @if (item.Shipment == 1)
                                         {

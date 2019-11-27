@@ -58,6 +58,12 @@
                             <ul>
                                 @if (userId != 0)
                                 {
+                                    @if (isAdmin)
+                                    {
+                                        <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
+                                        <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
+                                        <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
+                                    }
                                     <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
                                     <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
                                     <li><a href="#" onclick="SignOut()">登出</a></li>
@@ -129,14 +135,13 @@
                                     @if (isAdmin)
                                     {
                                         <li>
-                                            <a href="#">后台管理<i class="fa fa-angle-down"></i></a>
-                                            <div class="sub-menu">
-                                                <ul>
-                                                    <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
-                                                    <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
-                                                    <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
-                                                </ul>
-                                            </div>
+                                            <a href="@Url.ActionLink("OrderManage","Home")">订单管理</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.ActionLink("ItemManage","Home")">商品管理</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.ActionLink("UserManage","Home")">用户管理</a>
                                         </li>
                                     }
                                 </ul>
@@ -175,14 +180,13 @@
                                     @if (isAdmin)
                                     {
                                         <li>
-                                            <a href="#">后台管理<i class="fa fa-angle-down"></i></a>
-                                            <div class="sub-menu">
-                                                <ul>
-                                                    <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
-                                                    <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
-                                                    <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
-                                                </ul>
-                                            </div>
+                                            <a href="@Url.ActionLink("OrderManage","Home")">订单管理</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.ActionLink("ItemManage","Home")">商品管理</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.ActionLink("UserManage","Home")">用户管理</a>
                                         </li>
                                     }
                                 </ul>
