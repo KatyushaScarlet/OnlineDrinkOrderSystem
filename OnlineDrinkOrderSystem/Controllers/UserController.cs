@@ -158,6 +158,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             response.status = false;
             int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
             if (nowUserId != 0 && nowIsadmin)
             {
                 //修改状态
@@ -171,6 +172,29 @@ namespace OnlineDrinkOrderSystem.Controllers
                 {
                     response.message = "操作失败";
                 }
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+            return JsonConvert.SerializeObject(response);
+        }
+
+        //删除用户
+        [HttpGet]
+        public string DeleteUser(int userId)
+        {
+            Response response = new Response();
+            response.status = false;
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                //删除用户
+                UserManager.DeleteUser(userId);
+                response.status = true;
+                response.message = "操作成功";
             }
             else
             {

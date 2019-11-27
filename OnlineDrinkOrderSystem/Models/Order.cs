@@ -14,6 +14,8 @@ namespace OnlineDrinkOrderSystem.Models
         public int Shipment{ get; set; }
         public string Address{ get; set; }
         public DateTime Order_Date{ get; set; } 
+
+        public string User_Name { get; set; }
     }
 
      public class Order_List

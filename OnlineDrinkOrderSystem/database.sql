@@ -49,7 +49,7 @@ Primary key(User_ID)-- 主键 用户id
 
 CREATE TABLE Review(
 Review_ID INT NOT NULL AUTO_INCREMENT,-- 评论id
-User_ID INT NOT NULL,-- 用户id
+User_ID INT ,-- 用户id
 Item_ID INT NOT NULL,-- 商品id
 Content VARCHAR(255) NOT NULL,-- 评论内容
 Recommend BOOLEAN NOT NULL,-- 推荐/不推荐
@@ -75,7 +75,7 @@ foreign key(Item_ID) references Item(Item_ID)-- 外键 商品id
 
 CREATE TABLE Order_Detail(
 Order_ID INT NOT NULL AUTO_INCREMENT,-- 订单id
-User_ID INT NOT NULL,-- 用户id
+User_ID INT ,-- 用户id
 Order_Sum DOUBLE NOT NULL,-- 订单总价
 Delivery INT NOT NULL,-- 取货方式（1、配送，2、自取）
 Shipment INT NOT NULL,-- 运送状态（1、未发货，2、已发货）

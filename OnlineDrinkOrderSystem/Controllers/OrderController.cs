@@ -97,5 +97,28 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
             return JsonConvert.SerializeObject(response);
         }
+
+        //删除订单
+        [HttpGet]
+        public string DeleteOrder(int orderId)
+        {
+            Response response = new Response();
+            response.status = false;
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                //删除订单
+                OrderManager.DeleteOrder(orderId);
+                response.status = true;
+                response.message = "操作成功";
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+            return JsonConvert.SerializeObject(response);
+        }
     }
 }

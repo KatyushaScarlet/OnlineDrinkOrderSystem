@@ -40,7 +40,9 @@
                                             <td><a href="#" onclick="setUserAdmin(@item.User_ID)">普通用户</a></td>
                                         }
                                     <td>
-                                        <a href="#" onclick="deleteUser(@item.User_ID)">删除用户</a>&nbsp;|&nbsp;<a href="@Url.Action("UserInfoManage", "Home", new { userId = item.User_ID })">修改信息</a>
+                                        <a href="#" onclick="deleteUser(@item.User_ID)">删除用户</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="@Url.Action("UserInfoManage", "Home", new { userId = item.User_ID })">修改信息</a>
                                     </td>
                                     </tr>
                                 }
@@ -93,7 +95,15 @@
 
     function deleteUser(id) {
         if (confirm("请确认是否要删除该用户")) {
-
+        $.get("@Url.ActionLink("DeleteUser","User")", {
+            userId:id,
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
+        });
         }
     }
 </script>

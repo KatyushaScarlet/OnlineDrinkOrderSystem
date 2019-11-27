@@ -140,7 +140,7 @@ namespace OnlineDrinkOrderSystem.DAL
         public static List<Order_Detail> GetAllOrders()
         {
             List<Order_Detail> order_Details = new List<Order_Detail>();
-            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail order by Order_Date desc"));
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail left join User on Order_Detail.User_ID=User.User_ID order by Order_Date desc"));
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
                 Order_Detail detail = new Order_Detail();
@@ -154,7 +154,7 @@ namespace OnlineDrinkOrderSystem.DAL
         public static Order_Detail GetOrderDetail(int orderId)
         {
             Order_Detail detail = new Order_Detail();
-            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail where Order_ID='{0}'", orderId));
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Order_Detail left join User on Order_Detail.User_ID=User.User_ID where Order_ID='{0}'", orderId));
             if (dataSet.Tables[0].Rows.Count != 0)
             {
                 DataRow dataRow = dataSet.Tables[0].Rows[0];
@@ -181,6 +181,15 @@ namespace OnlineDrinkOrderSystem.DAL
         public static bool SetOrderStatus(int orderId,int status)
         {
             return Convert.ToInt32(DbHelper.Action(string.Format("update Order_Detail set Shipment='{1}' where Order_ID='{0}'", orderId, status))) == 1;
+        }
+
+        //删除订单
+        public static void DeleteOrder(int orderId)
+        {
+            //删除订单内商品列表
+            DbHelper.Action(string.Format("delete from Order_List where Order_ID='{0}'", orderId));
+            //删除订单
+            DbHelper.Action(string.Format("delete from Order_Detail where Order_ID='{0}'", orderId));
         }
     }
 }

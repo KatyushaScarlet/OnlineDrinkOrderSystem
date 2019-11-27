@@ -10,6 +10,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2>地址：@detail.Address</h2>
+                <h2>配送：@(detail.Delivery == 1 ? "需要配送" : "到店自取")</h2>
                 <form action="#">
                     <div class="table-content table-responsive">
                         <table>
