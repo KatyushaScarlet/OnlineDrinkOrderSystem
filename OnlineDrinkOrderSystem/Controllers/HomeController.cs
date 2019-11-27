@@ -16,15 +16,9 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(string errorMessage = "")
+        public IActionResult Index()
         {
             //商店首页
-            //如果存在错误信息
-            if (errorMessage != null)
-            {
-                ViewBag.errorMessage = errorMessage;
-            }
-
             //获取商品类别
             List<Category> categories = ItemManager.GetCategoryList();
             ViewData["categories"] = categories;
@@ -63,15 +57,20 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             //购物车
             //判断是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
-            if (!string.IsNullOrEmpty(userId))
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId != 0)
             {
+                //获取购物车信息
+                List<Cart> carts = ItemManager.GetUserCart(userId);
+                ViewData["carts"] = carts;
                 return View();
             }
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { errorMessage = "请先登录" });
+
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -79,11 +78,13 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             //用户登录
             //判断是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
-            if (!string.IsNullOrEmpty(userId))
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId != 0)
             {
                 //已登录则重定向至首页
-                return RedirectToAction("Index", "Home", new { errorMessage = "您已登录" });
+
+                HttpContext.Session.SetString("tip", "您已登录");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -91,24 +92,21 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
 
-        public IActionResult SignOut()
+        public IActionResult SignUp()
         {
-            //用户登出
+            //用户登录
             //判断是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
-            if (!string.IsNullOrEmpty(userId))
-            {
-                //清空Session
-                HttpContext.Session.SetString("user_id", "");
-                HttpContext.Session.SetString("is_admin", false.ToString());
-                //跳转至登陆页
-                ViewData["sign_out"] = true.ToString();
-                return View("Login")
-;            }
-            else
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId != 0)
             {
                 //已登录则重定向至首页
-                return RedirectToAction("Index", "Home", new { errorMessage = "请先登录" });
+
+                HttpContext.Session.SetString("tip", "您已登录");
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
             }
         }
 
@@ -116,15 +114,17 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             //追踪清单
             //判断是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
-            if (!string.IsNullOrEmpty(userId))
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId != 0)
             {
                 return View();
             }
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { errorMessage = "请先登录" });
+
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -133,21 +133,23 @@ namespace OnlineDrinkOrderSystem.Controllers
             //我的账户
 
             //是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             //是否有管理权限
-            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("is_admin"));
-            //若id为空则默认为当前用户id
-            string nowUserId = id == 0 ? userId : id.ToString();
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            //若要修改的用户id为0则默认为当前用户id
+            int nowUserId = (id == 0) ? userId : id;
 
-            if (!string.IsNullOrEmpty(userId))
+            if (userId != 0)
             {
                 //要修改的用户信息不是当前用户，但没有管理员权限
-                if ((userId != nowUserId) && (isadmin = false))
+                if ((nowUserId != userId) && (isadmin = false))
                 {
-                    //重定向至登陆页面
-                    return RedirectToAction("Login", "Home", new { errorMessage = "没有权限" });
+                    //重定向至首页
+
+                    HttpContext.Session.SetString("tip", "没有权限");
+                    return RedirectToAction("Index", "Home");
                 }
-                User user = UserManage.GetUserInfo(nowUserId);
+                User user = UserManager.GetUserInfo(nowUserId);
                 ViewData["user"] = user;
 
                 return View();
@@ -155,7 +157,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { errorMessage = "请先登录" });
+
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
@@ -163,41 +167,201 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             //历史订单
             //判断是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
-            if (!string.IsNullOrEmpty(userId))
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            if (userId != 0)
             {
+                //获取订单列表
+                List<Order_Detail> order_Details = OrderManager.GetUserOrders(userId);
+                //回传viewdata
+                ViewData["details"] = order_Details;
                 return View();
             }
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Login", "Home", new { errorMessage = "请先登录" });
+
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
             }
         }
 
-        public IActionResult Manage()
+        public IActionResult OrderView(int orderId = 0)
         {
-            //后台管理
-            //判断是否已登录
-            string userId = HttpContext.Session.GetString("user_id");
-            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("is_admin"));
-            if (!string.IsNullOrEmpty(userId))
+            //获取订单详情
+            //是否已登录
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            //是否有管理权限
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
+            if (userId != 0)
             {
-                //判断是否具有管理员权限
-                if (isadmin == true)
+                bool checkOrderExist = OrderManager.CheckOrderIdExist(orderId);
+                if (checkOrderExist)
                 {
-                    return View();
+                    //如果订单存在
+                    bool checkUserOwnsOrder = OrderManager.CheckUserOwnsOrder(userId, orderId);
+                    if (checkUserOwnsOrder || isadmin)
+                    {
+                        //用户拥有订单，或当前用户有管理员权限
+                        //获取订单内详情列表
+                        Order_Detail detail = OrderManager.GetOrderDetail(orderId);
+                        List<Order_List> list = OrderManager.GetOrderList(orderId);
+                        //回传viewdata
+                        ViewData["list"] = list;
+                        ViewData["detail"] = detail;
+                        return View();
+                    }
+                    else
+                    {
+                        //无访问权限
+
+                        HttpContext.Session.SetString("tip", "无访问权限");
+                        return RedirectToAction("Order", "Home");
+                    }
                 }
                 else
                 {
-                    //重定向至首页
-                    return RedirectToAction("Index", "Home", new { errorMessage = "无访问权限" });
+                    //如果订单不存在
+
+                    HttpContext.Session.SetString("tip", "订单不存在");
+                    return RedirectToAction("Order", "Home");
                 }
             }
             else
             {
                 //未登录则重定向至登陆页面
-                return RedirectToAction("Index", "Home", new { errorMessage = "无访问权限" });
+
+                HttpContext.Session.SetString("tip", "请先登录");
+                return RedirectToAction("Login", "Home");
+            }
+        }
+        //订单管理
+        public IActionResult OrderManage()
+        {
+            //判断是否已登录且有管理员权限
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0 && isadmin)
+            {
+                //获取所有订单列表
+                List<Order_Detail> order_Details = OrderManager.GetAllOrders();
+                //回传viewdata
+                ViewData["details"] = order_Details;
+                return View();
+                ////判断是否具有管理员权限
+                //if (isadmin == true)
+                //{
+                //    //获取所有订单列表
+                //    List<Order_Detail> order_Details = OrderManager.GetAllOrders();
+                //    //回传viewdata
+                //    ViewData["details"] = order_Details;
+                //    return View();
+                //}
+                //else
+                //{
+                //    //重定向至首页
+                //    HttpContext.Session.SetString("tip", "无访问权限");
+                //    return RedirectToAction("Index", "Home");
+                //}
+            }
+            else
+            {
+                //重定向至首页
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        //商品管理
+        public IActionResult ItemManage()
+        {
+            //判断是否已登录且有管理员权限
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0 && isadmin)
+            {
+                return View();
+                ////判断是否具有管理员权限
+                //if (isadmin == true)
+                //{
+                //    return View();
+                //}
+                //else
+                //{
+                //    //重定向至首页
+                //    HttpContext.Session.SetString("tip", "无访问权限");
+                //    return RedirectToAction("Index", "Home");
+                //}
+            }
+            else
+            {
+                //重定向至首页
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        //商品信息修改/新增商品（id为0则为新增页面）
+        public IActionResult ItemInfoManage(int itemId= 0)
+        {
+            //TODO
+            //判断是否已登录且有管理员权限
+            ViewData["itemid"] = itemId;
+            return View();
+        }
+
+        //用户管理
+        public IActionResult UserManage()
+        {
+            //判断是否已登录且有管理员权限
+            int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (userId != 0&& isadmin)
+            {
+                //获取所有用户
+                List<User> users = UserManager.GetUsers();
+                //回传viewdata
+                ViewData["users"] = users;
+                return View();
+
+                ////判断是否具有管理员权限
+                //if (isadmin == true)
+                //{
+                //    //获取所有用户
+                //    List<User> users = UserManager.GetUsers();
+                //    //回传viewdata
+                //    ViewData["users"] = users;
+                //    return View();
+                //}
+                //else
+                //{
+                //    //重定向至首页
+                //    HttpContext.Session.SetString("tip", "无访问权限");
+                //    return RedirectToAction("Index", "Home");
+                //}
+            }
+            else
+            {
+                //重定向至首页
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        //用户信息修改/新增用户（id为0则为新增页面）
+        public IActionResult UserInfoManage(int userId=0)
+        {
+            //判断是否已登录且有管理员权限
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (nowUserId != 0&& nowIsadmin)
+            {
+                ViewData["userinfo"] = UserManager.GetUserInfo(userId);
+                return View();
+            }
+            else
+            {
+                //重定向至首页
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Index", "Home");
             }
         }
 

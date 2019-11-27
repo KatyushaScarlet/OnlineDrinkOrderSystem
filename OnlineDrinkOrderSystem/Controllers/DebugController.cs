@@ -15,6 +15,12 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             return "debug ok";
         }
+        ////用户权限变更测试
+        //[HttpGet]
+        //public bool ChangeUserPrivilege(int userId,bool isAdmin)
+        //{
+        //    return UserManager.ChangeUserPrivilege(userId, isAdmin);
+        //}
 
         ////商品添加测试
         //[HttpGet]
@@ -59,7 +65,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         //        item.Sold = rdm.Next(100, 1000);
         //        item.Discount = 0;
         //        var result = ItemManager.AddItem(item);
-                
+
         //        //成功计数
         //        if (result) success++;
         //    }
@@ -74,5 +80,42 @@ namespace OnlineDrinkOrderSystem.Controllers
         //    var result = JsonConvert.SerializeObject(items);
         //    return result;
         //}
+
+        //[HttpGet]
+        //public string GetUserOrders(int userId)
+        //{
+        //    var items = OrderManager.GetUserOrders(userId);
+        //    var result = JsonConvert.SerializeObject(items);
+        //    return result;
+        //}
+
+        //[HttpGet]
+
+        //public string GetOrderDetail(int orderId)
+        //{
+        //    var result = OrderManager.GetOrderDetail(orderId);
+        //    return JsonConvert.SerializeObject(result);
+        //}
+
+        //[HttpGet]
+        //public string GetOrderList(int orderId)
+        //{
+        //    var items = OrderManager.GetOrderList(orderId);
+        //    var result = JsonConvert.SerializeObject(items);
+        //    return result;
+        //}
+
+        //[HttpGet]
+        //public string CheckUserOwnsOrder(int userId, int orderId)
+        //{
+        //    var temp = OrderManager.CheckUserOwnsOrder(userId, orderId);
+        //    return temp.ToString();
+        //}
+
+        [HttpGet]
+        public bool SetOrderStatus(int orderId, int status)
+        {
+            return OrderManager.SetOrderStatus(orderId, status);
+        }
     }
 }

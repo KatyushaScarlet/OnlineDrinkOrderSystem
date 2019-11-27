@@ -6007,7 +6007,7 @@ nav.menu .cr-dropdown ul {
 
     .table-content table td {
         border-top: medium none;
-        font-size: 13px;
+        font-size: 20px;
         padding: 20px 10px;
         vertical-align: middle;
         font-family: 'Rufina', serif;
@@ -6020,7 +6020,7 @@ nav.menu .cr-dropdown ul {
 
         .table-content table td.product-name a {
             color: #6f6f6f;
-            font-size: 14px;
+            font-size: 20px;
             font-weight: 700;
             margin-left: 10px;
             text-decoration: none;
@@ -6042,7 +6042,7 @@ nav.menu .cr-dropdown ul {
             border: medium none;
             border-radius: 3px;
             color: #6f6f6f;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: normal;
             height: 40px;
             padding: 0 5px 0 10px;
@@ -6052,7 +6052,7 @@ nav.menu .cr-dropdown ul {
         }
 
         .table-content table td.product-subtotal {
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
             width: 120px;
             font-family: 'Rufina', serif;

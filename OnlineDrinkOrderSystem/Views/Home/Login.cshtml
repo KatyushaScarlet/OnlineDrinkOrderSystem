@@ -1,13 +1,8 @@
-﻿@using Microsoft.AspNetCore.Http
-@{
+﻿@{
     ViewData["Title"] = "Login";
-    ////获取当前用户id
-    //string userid = Context.Session.GetString("user_id");
-    //
-    bool signout = Convert.ToBoolean(ViewData["sign_out"]);
 }
 <!-- user-login-area-start -->
-<div class="user-login-area mb-70 main-area">
+<div class="user-login-area main-area mb-70">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -15,84 +10,25 @@
                     <h2>登录</h2>
                 </div>
             </div>
-            <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                <div class="login-form" align="center">
-                    <div id="my-signin2" class="g-signin2" data-onsuccess="onSignIn"></div>
+            <form action="@Url.ActionLink("LoginIn","User")" method="post">
+                <div class="col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                    <div class="login-form">
+                        <div class="single-login">
+                            <label>用户名<span>*</span></label>
+                            <input type="text" placeholder="请输入用户名" name="name" required/>
+                        </div>
+                        <div class="single-login">
+                            <label>密码<span>*</span></label>
+                            <input type="password" placeholder="请输入密码" name="password" required/>
+                        </div>
+                        <div class="single-login single-login-2">
+                            <a href="#" onclick="$('#submit').click();">登录</a>
+                            <input type="submit" id="submit" style="display:none" />
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 <!-- user-login-area-end -->
-@*<div class="g-signin2" data-onsuccess="onSignIn"></div>*@
-
-@if (signout)
-{
-    //需要登出
-    <script>
-        //登出用标识符
-        flagSignOut = true;
-
-        function onSuccess(googleUser) {
-            if (flagSignOut) {
-                var auth2 = gapi.auth2.getAuthInstance();
-                auth2.signOut().then(function () {
-                    alert("您已经成功登出！")
-                    //标识符修改为false
-                    flagSignOut = false;
-                });
-            } else {
-                var id_token = googleUser.getAuthResponse().id_token;
-                $.post("@Url.ActionLink("VerifyToken","User")", {
-                    token: id_token
-                }, function (data) {
-                    data = JSON.parse(data);
-                    alert(data.message);
-                    if (data.status) {
-                        //登录成功则跳转
-                        window.location.href = "/";
-                    }
-                });
-            }
-        }
-
-    </script>
-}
-else
-{
-    //需要登入
-    <script>
-    function onSuccess(googleUser) {
-        var id_token = googleUser.getAuthResponse().id_token;
-        $.post("@Url.ActionLink("VerifyToken","User")", {
-            token: id_token
-        }, function (data) {
-            data = JSON.parse(data);
-            alert(data.message);
-            if (data.status) {
-                //登录成功则跳转
-                window.location.href = "/";
-            }
-        })
-    }
-    </script>
-}
-
-<script>
-    function renderButton() {
-        gapi.signin2.render('my-signin2', {
-            'scope': 'profile email',
-            'width': 240,
-            'height': 50,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': onSuccess,
-            'onfailure': onFailure
-        });
-    }
-
-    function onFailure() {
-        alert("登录失败！");
-    }
-
-</script>

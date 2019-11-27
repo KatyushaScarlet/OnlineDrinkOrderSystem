@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewData["Title"] = "UserManage";
+    List<User> users = ViewData["users"] as List<User>;
+}
+<!-- usermanage-main-area-start -->
+<div class="cart-main-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>添加用户：<a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = 0 })">点击添加</a></h2>
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>姓</th>
+                                    <th>名</th>
+                                    <th>Email</th>
+                                    <th>权限</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (User item in users)
+                                {
+                                    <tr>
+                                        <td>@item.User_ID</td>
+                                        <td>@item.User_Name</td>
+                                        <td>@item.Last_Name</td>
+                                        <td>@item.First_Name</td>
+                                        <td>@item.Email</td>
+                                        @if (item.Admin)
+                                        {
+                                            <td><a href="#" onclick="unsetUserAdmin(@item.User_ID)">管理员</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td><a href="#" onclick="setUserAdmin(@item.User_ID)">普通用户</a></td>
+                                        }
+                                    <td>
+                                        <a href="#" onclick="deleteUser(@item.User_ID)">删除用户</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = item.User_ID })">修改信息</a>
+                                    </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    @*
+        $.get("", {
+
+        }, function (data) {
+
+        });
+        
+        *@
+    function setUserAdmin(id) {
+        if (confirm("请确认是否将该用户设置为管理员")) {
+        $.get("@Url.ActionLink("ChangeUserPrivilege","User")", {
+            userId:id,
+            isAdmin:true
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
+        });
+        }
+    }
+
+    function unsetUserAdmin(id) {
+        if (confirm("请确认是否删除该用户的管理员权限")) {
+        $.get("@Url.ActionLink("ChangeUserPrivilege","User")", {
+            userId:id,
+            isAdmin:false
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
+        });
+        }
+    }
+
+    function deleteUser(id) {
+        if (confirm("请确认是否要删除该用户")) {
+        $.get("@Url.ActionLink("DeleteUser","User")", {
+            userId:id,
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
+        });
+        }
+    }
+</script>
+<!-- usermanage-main-area-end -->

@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewData["Title"] = "OrderManage";
+    List<Order_Detail> details = ViewData["details"] as List<Order_Detail>;
+}
+<!-- ordermanage-main-area-start -->
+<div class="cart-main-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>总价</th>
+                                    <th>运费</th>
+                                    <th>用户</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Order_Detail item in details)
+                                {
+                                    <tr>
+                                        <td>@item.Order_Date</td>
+                                        <td>NTD$ @item.Order_Sum</td>
+                                        <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
+                                        @if (item.User_ID == 0)
+                                        {
+                                            <td>[用户已删除]</td>
+                                        }
+                                        else
+                                        {
+                                            <td><a href="#">@item.User_Name</a></td>
+                                        }
+                                        @if (item.Shipment == 1)
+                                        {
+                                            <td><a href="#" onclick="setOrderStatus(@item.Order_ID)">点击发货</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>已发货</td>
+                                        }
+                                        <td>
+                                            <a href="#" onclick="deleteOrder(@item.Order_ID)">删除订单</a>
+                                            &nbsp;|&nbsp;
+                                            <a href="@Url.ActionLink("OrderView", "Home", new { orderId = item.Order_ID })">查看详情</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function setOrderStatus(id) {
+        $.get("@Url.ActionLink("SetOrderStatus","Order")", {
+            orderId: id
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
+        });
+    }
+
+    function deleteOrder(id) {
+        if (confirm("请确认是否要删除该订单")) {
+            $.get("@Url.ActionLink("DeleteOrder","Order")", {
+                orderId:id,
+            }, function (data) {
+                    data = JSON.parse(data);
+                    alert(data.message);
+                    if (data.status) {
+                        location.reload();
+                    }
+            });
+        }
+    }
+</script>
+<!-- ordermanage-main-area-end -->

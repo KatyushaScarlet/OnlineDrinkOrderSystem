@@ -1,5 +1,6 @@
 ﻿
 @{
+    List<Cart> carts = ViewData["carts"] as List<Cart>;
     ViewData["Title"] = "Cart";
 }
 
@@ -8,36 +9,41 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <form action="#">
+                <form action="#" id="form-cart">
                     <div class="table-content table-responsive">
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="product-thumbnail">图书图片</th>
-                                    <th class="product-name">图书名称</th>
+                                    <th class="product-thumbnail">图片</th>
+                                    <th class="product-name">名称</th>
                                     <th class="product-price">价格</th>
                                     <th class="product-quantity">数量</th>
+                                    <th class="product-quantity">库存</th>
                                     <th class="product-subtotal">小计</th>
                                     <th class="product-remove">移除</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="/img/cart/1.jpg" alt="man" /></a></td>
-                                    <td class="product-name"><a href="#">Vestibulum suscipit</a></td>
-                                    <td class="product-price"><span class="amount">&yen;165.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">&yen;165.00</td>
-                                    <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="/img/cart/2.jpg" alt="man" /></a></td>
-                                    <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
-                                    <td class="product-price"><span class="amount">&yen;50.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">&yen;50.00</td>
-                                    <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                </tr>
+                                @foreach (Cart item in carts)
+                                {
+                                <tr id="row-@item.Item_ID">
+                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                    <td class="product-name">
+                                        <p>@item.Item_Name</p>
+                                        @if (item.Discount == 0)
+                                        {
+                                        <td class="product-price"><p id="price-@item.Item_ID">@item.Item_Price</p></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="product-price"><del>@item.Item_Price</del>&nbsp;<p id="price-@item.Item_ID">@((item.Item_Price * (100 - item.Discount) / 100).ToString("#0.00"))</p></td>
+                                    }
+                                        <td class="product-quantity"><input type="number" id="count-@item.Item_ID" value="@item.Quantity" min="0" name="@item.Item_ID" onchange="updateSubtotal(@item.Item_ID)"></td>
+                                        <td class="product-subtotal"><p>@item.Stock</p></td>
+                                        <td class="product-subtotal"><p id="subtotal-@item.Item_ID" class="subtotal">@(item.Item_Price * ((100 - item.Discount)) / 100 * item.Quantity)</p></td>
+                                        <td class="product-remove"><a href="#" onclick="deleteRow(@item.Item_ID)"><i class="fa fa-times"></i></a></td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -48,58 +54,121 @@
             <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
                 <div class="buttons-cart mb-30">
                     <ul>
-                        <li><a href="#">更新购物车</a></li>
-                        <li><a href="#">继续购物</a></li>
+                        <li><a href="#" onclick="updateCart()">更新购物车</a></li>
+                        <li><a href="/">继续购物</a></li>
                     </ul>
                 </div>
-
             </div>
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                 <div class="cart_totals">
-                    <h2>购物 总计</h2>
+                    <h2>Cart Totals</h2>
                     <table>
                         <tbody>
                             <tr class="cart-subtotal">
-                                <th>总价</th>
-                                <td>
-                                    <span class="amount">&yen;215.00</span>
-                                </td>
+                                <th>小计</th>
+                                <td><span class="amount" id="price-total1">NTD$ XXXX</span></td>
                             </tr>
                             <tr class="shipping">
-                                <th>运费</th>
+                                <th>服务费</th>
                                 <td>
                                     <ul id="shipping_method">
-                                        <li>
-                                            <input type="radio" name="shippingType">
-                                            <label>
-                                                派送费：
-                                                <span class="amount">NTD $30</span>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" name="shippingType">
-                                            <label>货到付款</label>
-                                        </li>
+                                        <li><input type="radio" name="deliver" onclick="updateTotal()" checked="checked" id="check-fee"><label>配送：<span class="amount">NTD$ 30</span></label></li>
+                                        <li><input type="radio" name="deliver" onclick="updateTotal()"><label>自取：<span class="amount">free</span></label></li>
                                     </ul>
-                                    <a href="#">Calculate Shipping</a>
                                 </td>
                             </tr>
                             <tr class="order-total">
-                                <th>应付</th>
-                                <td>
-                                    <strong>
-                                        <span class="amount">&yen;215.00</span>
-                                    </strong>
-                                </td>
+                                <th>总计</th>
+                                <td><strong><span class="amount" id="price-total2">NTD$ XXXX</span></strong></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="wc-proceed-to-checkout">
-                        <a href="#">付 款</a>
-                    </div>
+                    <div class="wc-proceed-to-checkout"><a href="#" onclick="newOrder()">结账</a></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    //更新购物车
+    function updateCart() {
+        $.post("@Url.ActionLink("UpdateCart","Item")", {
+            carts: $("#form-cart").serializeArray()
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
+        })
+    }
+
+    window.onload = function () {
+        updateSubtotal();
+    }
+
+    //更新价格（每行）
+    function updateSubtotal(id) {
+        var item = $("#subtotal-" + id)
+        var itemPrice = $("#price-" + id).text();
+        var itemCount = $("#count-" + id).val();
+        //四舍五入保留小数点后两位
+        var subtotalPrice = Math.round((itemPrice * itemCount) * 100) / 100;
+        item.text(subtotalPrice);
+        //同时更新总价
+        updateTotal();
+    }
+
+    //更新总价
+    function updateTotal() {
+        var items = $(".subtotal");
+        var sum = 0;
+        for (var i = 0; i < items.length; i++) {
+            sum += parseFloat(items[i].innerText);
+        };
+        //四舍五入保留小数点后两位
+        sum = Math.round(sum * 100) / 100;
+        //显示价格
+        var total1 = sum;
+        var total2 = sum;
+        if ($("#check-fee").prop("checked")) {
+            //选中时运费+30
+            total2 += 30;
+        }
+        $("#price-total1").text("NTD$ " + total1);
+        $("#price-total2").text("NTD$ " + total2);
+    }
+
+    //删除一行
+    function deleteRow(id) {
+        var item = $("#row-" + id);
+        item.remove();
+        //同时更新总价
+        updateTotal();
+    }
+
+
+    //结账
+    function newOrder() {
+        var delivery = 1;
+        if ($("#check-fee").prop("checked")) {
+            //选中时添加配送费
+            delivery = 1;
+        } else {
+            delivery = 2;
+        }
+
+        $.post("@Url.ActionLink("CreateOrder","Order")", {
+            carts: $("#form-cart").serializeArray(),
+            delivery: delivery
+        }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.href = "@Url.ActionLink("Order","Home")";
+                }
+        })
+    }
+
+</script>
 <!-- cart-main-area-end -->

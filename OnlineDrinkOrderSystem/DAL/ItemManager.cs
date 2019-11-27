@@ -51,7 +51,6 @@ namespace OnlineDrinkOrderSystem.DAL
         //搜索 关键词
         //根据销量/价格（从低到高/从高到低）/新品 排序
         //根据 类别 筛选
-
         public static List<Item> GetItemList(out int totalPages,int page = 0, int pageSize = 20, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
             string queryString = "";
@@ -124,11 +123,71 @@ namespace OnlineDrinkOrderSystem.DAL
                 item.Discount
                 )) == 1;
         }
+
+        //扣除商品库存
+        public static void ReduceStock(int id, int count)
+        {
+            DbHelper.Action(string.Format("update Item set Stock=Stock-'{1}' where Item_ID='{0}'", id, count));
+        }
+
         //修改商品信息
+
 
         //删除商品
         //将该商品评论删除
         //将购物车内的该商品删除
         //将用户追踪列表中该商品删除
+
+
+
+        //获取购物车信息
+        public static List<Cart> GetUserCart(int id)
+        {
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Cart LEFT JOIN Item on Cart.Item_ID=Item.Item_ID WHERE User_ID='{0}'", id));
+            List<Cart> carts = new List<Cart>();
+            foreach (DataRow dataRow in dataSet.Tables[0].Rows)
+            {
+                Cart cart = new Cart();
+                cart = Tool.DataRow2Entity<Cart>(dataRow);
+                carts.Add(cart);
+            }
+
+            return carts;
+        }
+
+        //将商品加入购物车
+        public static void AddItemToCart(int userId,int itemId, int itemCount)
+        {
+            //查找该商品是否已存在购物车中
+            bool exist = Convert.ToInt32(DbHelper.Read(string.Format("select count(*) from Cart where User_ID='{0}' and Item_ID='{1}'", userId, itemId))) != 0;
+            if (exist)
+            {
+                //已存在，添加数量
+                DbHelper.Action(string.Format("update Cart set Quantity=(Quantity+{2}) where User_ID='{0}' and Item_ID='{1}'", userId, itemId, itemCount));
+            }
+            else
+            {
+                //不存在，添加一条
+                DbHelper.Action(string.Format("insert into Cart values(null,'{0}','{1}','{2}')", userId, itemId, itemCount));
+            }
+            //商品点击数加一
+            DbHelper.Action(string.Format("update Item set Click_Counts=Click_Counts+1 where Item_ID='{0}'", itemId));
+        }
+
+        //更新购物车
+        public static void UpdateCart(int id,List<Cart> carts)
+        {
+            //清空原有的购物车
+            DbHelper.Action(string.Format("delete from Cart where User_ID='{0}'", id));
+
+            if (carts.Count!=0)
+            {
+                foreach (Cart item in carts)
+                {
+                    //逐条添加
+                    DbHelper.Action(string.Format("insert into Cart values(null,'{0}','{1}','{2}')", id, item.Item_ID, item.Quantity));
+                }
+            }
+        }
     }
 }

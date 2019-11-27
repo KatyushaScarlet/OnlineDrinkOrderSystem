@@ -1,14 +1,13 @@
 ﻿@using OnlineDrinkOrderSystem.Common;
 @using Microsoft.AspNetCore.Http
 @{
-    //获取错误信息
-    string errorMessage = ViewBag.errorMessage;
-    //清空错误信息
-    ViewBag.errorMessage = "";
+    //获取提示信息
+    string tipMessage = Context.Session.GetString("tip");
+    Context.Session.SetString("tip", "");
     //获取当前用户id
-    string userid = Context.Session.GetString("user_id");
+    int userId = Convert.ToInt32(Context.Session.GetInt32("id"));
     //获取当前用户权限
-    bool isadmin = Convert.ToBoolean(Context.Session.GetString("is_admin"));
+    bool isAdmin = Convert.ToBoolean(Context.Session.GetString("admin"));
 }
 <!doctype html>
 <html class="no-js" lang="zh-cn">
@@ -30,9 +29,6 @@
     <link rel="stylesheet" href="/css/style.css"><!-- responsive css -->
     <link rel="stylesheet" href="/css/responsive.css"><!-- modernizr css -->
     <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
-    <!--Google OAuth-->
-    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
-    <meta name="google-signin-client_id" content="503080678367-hc55im7qgftp6mrd9qbafdde29qq9fk2.apps.googleusercontent.com">
 </head>
 
 <body class="home-4">
@@ -60,15 +56,16 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="account-area text-right">
                             <ul>
-                                @if (string.IsNullOrEmpty(userid))
-                                {
-                                    <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
-                                }
-                                else
+                                @if (userId != 0)
                                 {
                                     <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
                                     <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
-                                    <li><a href=@Url.ActionLink("SignOut","Home")>登出</a></li>
+                                    <li><a href=@Url.ActionLink("SignOut","User")>登出</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
+                                    <li><a href=@Url.ActionLink("SignUp","Home")>注册</a></li>
                                 }
                             </ul>
                         </div>
@@ -126,15 +123,22 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    @if (isadmin)
-                                    {
-                                        <li>
-                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                        </li>
-                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>
+                                    @if (isAdmin)
+                                    {
+                                        <li>
+                                            <a href="#">后台管理<i class="fa fa-angle-down"></i></a>
+                                            <div class="sub-menu">
+                                                <ul>
+                                                    <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
+                                                    <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
+                                                    <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
                                 </ul>
                             </nav>
                         </div>
@@ -165,15 +169,22 @@
                                     <li>
                                         <a href="@Url.ActionLink("Order","Home")">历史订单</a>
                                     </li>
-                                    @if (isadmin)
-                                    {
-                                        <li>
-                                            <a href="@Url.ActionLink("Manage","Home")">后台管理</a>
-                                        </li>
-                                    }
                                     <li>
                                         <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
                                     </li>
+                                    @if (isAdmin)
+                                    {
+                                        <li>
+                                            <a href="#">后台管理<i class="fa fa-angle-down"></i></a>
+                                            <div class="sub-menu">
+                                                <ul>
+                                                    <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
+                                                    <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
+                                                    <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
                                 </ul>
                             </nav>
                         </div>
@@ -187,8 +198,8 @@
     <script>
         window.onload=function () {
         //输出错误信息
-        var errorMessage = "@Html.Raw(errorMessage)";
-        if (errorMessage != "")alert(errorMessage);
+        var tipMessage = "@Html.Raw(tipMessage)";
+        if (tipMessage != "")alert(tipMessage);
         };
     </script>
     @RenderBody()
@@ -344,7 +355,7 @@
                                     <!--保留格式-->
                                 </div>
                                 <form id="form-item-detail" onsubmit="return false;">
-                                    <input type="number" value="1" id="item-count"/>
+                                    <input type="number" value="1" min="1" id="item-count"/>
                                     <input type="text" value="" id="item-id" style="display:none"/>
                                     <button id="btn-add-cart">添加到购物车</button>
                                 </form>
@@ -387,12 +398,20 @@
                     if (data!=null) {
                         itemInfo = JSON.parse(data);
                         //更改Modal内信息
+                        document.getElementById("item-count").value = 1;//数量修改回1个
                         document.getElementById("item-img").src = itemInfo.Image_Url;//图片
                         document.getElementById("item-name").innerText = itemInfo.Item_Name;//名称
-                        document.getElementById("item-price").innerText = "NTD$ " + itemInfo.Item_Price;//价格
+                        var price = itemInfo.Item_Price;//价格
+                        var discount = itemInfo.Discount;//折扣
+                        if (discount != 0) {
+                            var discountPrice = price * (1 - discount / 100);
+                            document.getElementById("item-price").innerHTML = "NTD$ <del>" + price + "</del>" + " " + Math.round(discountPrice * 100) / 100;//保留两位小数
+                        } else { 
+                            document.getElementById("item-price").innerText = "NTD$ " + price;
+                        }
                         document.getElementById("item-discription").innerText = itemInfo.Description;//描述
                         document.getElementById("item-id").value = itemInfo.Item_ID;//id
-                        //折扣
+
                         document.getElementById("item-click").innerText = "热度："+itemInfo.Click_Counts;//点击量
                         document.getElementById("item-sold").innerText = "销量："+itemInfo.Sold;//销量
                         document.getElementById("item-time").innerText = "上架时间：" + itemInfo.Date_added;//上架日期
@@ -401,14 +420,14 @@
                             document.getElementById("item-stock-icon").className = "fa fa-check";
                             document.getElementById("item-stock").innerText = "有库存：" + itemInfo.Stock + "件";
                         } else {
-                            document.getElementById("item-stock-icon").className = "fa fa-remove";
+                            document.getElementById("item-stock-icon").className = "fa fa-times";
                             document.getElementById("item-stock").innerText = "无库存";
                         }
                     }
             });
         }
 
-
+        //添加按钮绑定
         document.getElementById("btn-add-cart").onclick = function () {
             addToCart();
         }
@@ -416,19 +435,20 @@
         //添加到购物车
         function addToCart(id, count) {
             if (id == null || count == null) {
-                //获取商品信息
+                //如果点击来自详情页，获取商品信息
                 id = document.getElementById("item-id").value;
                 count = document.getElementById("item-count").value;
-                //点击来自详情页
-                alert("click from detail");
-                alert("add " + id + "*" + count + " to cart");
-                
-            } else {
-                //点击来自菜单
-                alert("click from menu");
-                alert("add " + id + "*" + count + " to cart");
             }
-            return false
+
+            $.get("@Url.ActionLink("AddItemToCart","Item")", {
+                id:id,
+                count:count,
+            }, function (data) {
+                data = JSON.parse(data);
+                alert(data.message);
+            })
+
+            return false;
         }
     </script>
 </body>
