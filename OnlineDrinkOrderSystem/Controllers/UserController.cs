@@ -118,26 +118,36 @@ namespace OnlineDrinkOrderSystem.Controllers
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
-                User user = new User();
-                user.User_ID = userId;
-                user.User_Password = password;
-                user.First_Name = firstName;
-                user.Last_Name = lastName;
-                user.Email = email;
-                user.Address = address;
 
-                bool result = UserManager.AlterUserInfo(user);
-                if (result)
+                if (password != "" && firstName != "" && lastName != "" && email != "" &&  address != "")
                 {
-                    //提示信息
-                    HttpContext.Session.SetString("tip", "修改成功");
-                    return RedirectToAction("Account", "Home");
+                    User user = new User();
+                    user.User_ID = userId;
+                    user.User_Password = password;
+                    user.First_Name = firstName;
+                    user.Last_Name = lastName;
+                    user.Email = email;
+                    user.Address = address;
+
+                    bool result = UserManager.AlterUserInfo(user);
+                    if (result)
+                    {
+                        //提示信息
+                        HttpContext.Session.SetString("tip", "修改成功");
+                        return RedirectToAction("Account", "Home");
+                    }
+                    else
+                    {
+                        //修改失败
+                        //提示信息
+                        HttpContext.Session.SetString("tip", "修改失败，请联系管理员");
+                        return RedirectToAction("Account", "Home");
+                    }
                 }
                 else
                 {
                     //修改失败
-                    //提示信息
-                    HttpContext.Session.SetString("tip", "修改失败，请联系管理员");
+                    HttpContext.Session.SetString("tip", "修改失败，请检查是否有资料未填写");
                     return RedirectToAction("Account", "Home");
                 }
             }
@@ -202,5 +212,9 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
             return JsonConvert.SerializeObject(response);
         }
+
+        //[HttpPost]
+        ////修改用户信息/添加用户信息
+        //public IActionResult UserInfoManage()
     }
 }

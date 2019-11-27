@@ -1,7 +1,13 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "ItemInfoManage";
+    int itemid = Convert.ToInt32(ViewData["itemid"]);
 }
 
-<h2>ItemInfoManage</h2>
-
+@if (itemid != 0)
+{
+    <h2>修改商品信息</h2>
+}
+else
+{
+    <h2>新增商品</h2>
+}

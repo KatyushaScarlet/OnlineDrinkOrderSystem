@@ -8,6 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <h2>添加用户：<a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = 0 })">点击添加</a></h2>
                 <form action="#">
                     <div class="table-content table-responsive">
                         <table>
@@ -42,7 +43,7 @@
                                     <td>
                                         <a href="#" onclick="deleteUser(@item.User_ID)">删除用户</a>
                                         &nbsp;|&nbsp;
-                                        <a href="@Url.Action("UserInfoManage", "Home", new { userId = item.User_ID })">修改信息</a>
+                                        <a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = item.User_ID })">修改信息</a>
                                     </td>
                                     </tr>
                                 }
