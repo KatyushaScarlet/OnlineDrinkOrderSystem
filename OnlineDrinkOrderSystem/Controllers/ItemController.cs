@@ -25,6 +25,10 @@ namespace OnlineDrinkOrderSystem.Controllers
             return JsonConvert.SerializeObject(item);
         }
 
+        //修改物品信息 TODO
+
+        //新增物品 TODO
+
         //删除商品
         [HttpGet]
         public string DeleteItem(int itemId = 0)
@@ -51,7 +55,7 @@ namespace OnlineDrinkOrderSystem.Controllers
 
         //添加物品进购物车
         [HttpGet]
-        public string AddItemToCart(int id, int count)
+        public string AddItemToCart(int itemId, int count)
         {
             Response response = new Response();
             response.status = false;
@@ -59,7 +63,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
-                ItemManager.AddItemToCart(userId, id, count);
+                ItemManager.AddItemToCart(userId, itemId, count);
                 response.message = "添加成功";
                 response.status = true;
             }

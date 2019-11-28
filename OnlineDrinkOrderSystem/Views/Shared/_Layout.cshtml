@@ -396,7 +396,7 @@
             //alert("Id:" + id);
             //获取商品信息
             $.get("@Url.ActionLink("GetItem","Item")", {
-                id:id
+                itemId:id
             }, function (data) {
                     console.log(data);
                     if (data!=null) {
@@ -445,7 +445,7 @@
             }
 
             $.get("@Url.ActionLink("AddItemToCart","Item")", {
-                id:id,
+                itemId:id,
                 count:count,
             }, function (data) {
                 data = JSON.parse(data);

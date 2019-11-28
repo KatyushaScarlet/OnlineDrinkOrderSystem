@@ -38,10 +38,17 @@ namespace OnlineDrinkOrderSystem.Common
             return t; //Return
         }
 
+        //生成指定位数随机数
         static Random random = new Random(System.Environment.TickCount);
         public static int GetRandomNumber(int min, int max)
         {
             return random.Next(min, max);
+        }
+
+        //四舍五入（保留两位小数）
+        public static double Rounde(double input)
+        {
+            return Convert.ToDouble(input.ToString("#0.00"));
         }
     }
 }

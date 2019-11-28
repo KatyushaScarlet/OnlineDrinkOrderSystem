@@ -77,6 +77,7 @@ CREATE TABLE Order_Detail(
 Order_ID INT NOT NULL AUTO_INCREMENT,-- 订单id
 User_ID INT ,-- 用户id
 Order_Sum DOUBLE NOT NULL,-- 订单总价
+Order_Cost DOUBLE NOT NULL,-- 订单成本
 Delivery INT NOT NULL,-- 取货方式（1、配送，2、自取）
 Shipment INT NOT NULL,-- 运送状态（1、未发货，2、已发货）
 Address VARCHAR(255) NOT NULL,-- 寄送地址
@@ -90,7 +91,8 @@ foreign key(User_ID) references User(User_ID)-- 外键 用户id
 CREATE TABLE Order_List(
 Order_ID INT NOT NULL,-- 订单id
 Item_ID INT ,-- 商品id
-Order_Price DOUBLE NOT NULL,-- 商品价格（下单时价格）
+Order_Price DOUBLE NOT NULL,-- 商品价格（下单时）
+Order_Cost DOUBLE NOT NULL,-- 进价/成本（下单时）
 Quantity INT NOT NULL,-- 商品数量
 foreign key(Order_ID) references Order_Detail(Order_ID),-- 外键 订单id
 foreign key(Item_ID) references Item(Item_ID) --  外键 商品id

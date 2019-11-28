@@ -45,6 +45,11 @@ namespace OnlineDrinkOrderSystem.DAL
             return item;
         }
 
+        //获取商品成本
+        public static double GetItemCost(int id)
+        {
+            return Convert.ToDouble(DbHelper.Read(string.Format("select Cost from Item where Item_ID='{0}';", id)));
+        }
 
         //获取商品（列表）
         //页数，每页大小
@@ -89,8 +94,8 @@ namespace OnlineDrinkOrderSystem.DAL
             //查询总条目数量
             var sql2 = string.Format("select count(*) from Item left join Category on Item.Category_ID=Category.Category_ID where 1=1 {0}", queryString);
             int itemCount = Convert.ToInt32(DbHelper.Read(sql2));
-            //计算总页数
-            totalPages = itemCount / pageSize;
+            //计算总页数（向上取整）
+            totalPages = (int)Math.Ceiling((double)itemCount / (double)pageSize);
             //开始查询
             var sql1 = string.Format("select * from Item left join Category on Item.Category_ID=Category.Category_ID where 1=1 {0} limit {1},{2}", queryString, offSet, pageSize);
             DataSet dataSet = DbHelper.ReadDataSet(sql1);

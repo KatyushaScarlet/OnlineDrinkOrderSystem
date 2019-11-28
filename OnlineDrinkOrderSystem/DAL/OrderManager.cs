@@ -39,6 +39,9 @@ namespace OnlineDrinkOrderSystem.DAL
                 }
             }
 
+            //计算订单成本
+            double totalCost = 0;
+
             //生成列表
             foreach (Cart cart in carts)
             {
@@ -48,18 +51,23 @@ namespace OnlineDrinkOrderSystem.DAL
                 double itemPrice = cart.Item_Price;
                 if (cart.Discount != 0)
                 {
-                    //折扣价四舍五入到小数点后两位
-                    double temp = itemPrice * ((100.0 - cart.Discount) / 100.0);
-                    itemPrice = Math.Round(temp, 2);
+                    //折扣价四舍五入
+                    double calculate = itemPrice * ((100.0 - cart.Discount) / 100.0);
+                    itemPrice = Tool.Rounde(calculate);
                 }
+                //商品成本
+                double itemCost = ItemManager.GetItemCost(cart.Item_ID);
                 //创建一条记录
                 Order_List order_List = new Order_List();
                 order_List.Order_ID = orderId;//生成的id
                 order_List.Item_ID = cart.Item_ID;
+                order_List.Order_Cost = itemCost;//商品进价
                 order_List.Order_Price = itemPrice;//折扣价格
                 order_List.Quantity = cart.Quantity;
-                //加入总价（价格*数量）
+                //计入总价（价格*数量）
                 totalPrice += itemPrice * cart.Quantity;
+                //记入成本（价格*数量）
+                totalCost += itemCost * cart.Quantity;
                 //添加到订单列表中
                 list.Add(order_List);
             }
@@ -71,24 +79,26 @@ namespace OnlineDrinkOrderSystem.DAL
                 totalPrice += fee;
             }
 
-            //总价四舍五入到小数点后两位
-            totalPrice = Math.Round(totalPrice, 2);
+            //总价四舍五入（保留两位）
+            totalPrice = Tool.Rounde(totalPrice);
 
             //创建订单
             Order_Detail detail = new Order_Detail();
             detail.Order_ID = orderId;//生成的id
             detail.User_ID = user.User_ID;
             detail.Order_Sum = totalPrice;
+            detail.Order_Cost = totalCost;
             detail.Delivery = delivery;
             detail.Shipment = 1;//默认未发货
             detail.Address = user.Address;
             detail.Order_Date = DateTime.Now;
 
             //写入订单详情
-            DbHelper.Action(string.Format("insert into Order_Detail values('{0}','{1}','{2}','{3}','{4}','{5}','{6}')",
+            DbHelper.Action(string.Format("insert into Order_Detail values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')",
                 detail.Order_ID,
                 detail.User_ID,
                 detail.Order_Sum,
+                detail.Order_Cost,
                 detail.Delivery,
                 detail.Shipment,
                 detail.Address,
@@ -98,10 +108,11 @@ namespace OnlineDrinkOrderSystem.DAL
             //写入订单列表
             foreach (Order_List item in list)
             {
-                DbHelper.Action(string.Format("insert into Order_List values('{0}','{1}','{2}','{3}')",
+                DbHelper.Action(string.Format("insert into Order_List values('{0}','{1}','{2}','{3}','{4}')",
                     item.Order_ID,
                     item.Item_ID,
                     item.Order_Price,
+                    item.Order_Cost,
                     item.Quantity
                     ));
             }
