@@ -257,13 +257,31 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
         //商品管理
-        public IActionResult ItemManage()
+        public IActionResult ItemManage(int page = 1, int pageSize = 40, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
             //判断是否已登录且有管理员权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
             if (userId != 0 && isadmin)
             {
+                //获取所有商品列表
+                //页数必须大于0
+                page = (page < 1) ? 1 : page;
+                //获取商品类别
+                List<Category> categories = ItemManager.GetCategoryList();
+                ViewData["categories"] = categories;
+                //获取商品
+                int totalPages = 0;
+                List<Item> items = ItemManager.GetItemList(out totalPages, page - 1, pageSize, keyWord, category_ID, itemOrder);
+                ViewData["items"] = items;
+                ViewData["pages"] = totalPages;
+                //url参数
+                ViewData["page"] = page;
+                ViewData["pageSize"] = pageSize;
+                ViewData["keyWord"] = keyWord;
+                ViewData["category_ID"] = category_ID;
+                ViewData["itemOrder"] = itemOrder;
+
                 return View();
             }
             else
