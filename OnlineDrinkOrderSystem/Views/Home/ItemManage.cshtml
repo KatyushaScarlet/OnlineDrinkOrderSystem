@@ -46,50 +46,8 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="th">
                         <div class="row">
-                            @foreach (Item item in items)
-                            {
-                                <!-- single-product-start -->
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="product-wrapper mb-40">
-                                        <div class="product-img">
-                                            <a href="#">
-                                                <img src="@item.Image_Url"
-                                                     class="primary" />
-                                            </a>
-                                            <div class="quick-view">
-                                                <a class="action-view" href="#"
-                                                   data-target="#productModal" data-toggle="modal"
-                                                   title="快速浏览" onclick="openModalForItem(@item.Item_ID);"><i class="fa fa-search-plus"></i></a>
-                                            </div>
-                                            <div class="product-flag">
-                                                <ul>
-                                                    @*<li><span class="sale">new</span></li>*@
-                                                    @if (item.Discount != 0)
-                                                    {
-                                                        <li><span class="discount-percentage">-@item.Discount%</span></li>
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-details text-center">
-                                            <h4><a href="#">@item.Item_Name</a></h4>
-                                            <div class="product-price">
-                                                <ul>
-                                                    <li>NTD$ @item.Item_Price</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-link">
-                                            <div class="product-button">
-                                                <a href="#" onclick="addToCart(@item.Item_ID,1)">
-                                                    <i class="fa fa-shopping-cart"></i>添加到购物车
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- single-product-end -->
-                            }
+
+
                         </div>
                     </div>
                 </div>
