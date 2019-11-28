@@ -14,15 +14,39 @@ namespace OnlineDrinkOrderSystem.Controllers
     {
         //获取单个商品信息
         [HttpGet]
-        public string GetItem(int id = 0)
+        public string GetItem(int itemId = 0)
         {
-            Item item = ItemManager.GetItem(id);
+            Item item = ItemManager.GetItem(itemId);
             if (item != null)
             {
                 item.Cost = 0;//隐藏进价信息
             }
 
             return JsonConvert.SerializeObject(item);
+        }
+
+        //删除商品
+        [HttpGet]
+        public string DeleteItem(int itemId = 0)
+        {
+            Response response = new Response();
+            response.status = false;
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                //删除商品
+                ItemManager.DeleteItem(itemId);
+                response.status = true;
+                response.message = "操作成功";
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+
+            return JsonConvert.SerializeObject(response);
         }
 
         //添加物品进购物车

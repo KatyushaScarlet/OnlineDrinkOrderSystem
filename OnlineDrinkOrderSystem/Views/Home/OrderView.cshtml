@@ -27,11 +27,19 @@
                                 @foreach (Order_List item in list)
                                 {
                                 <tr>
-                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
-                                    <td><p>@item.Item_Name</p></td>
+                                    @if (item.Item_ID == 0)
+                                    {
+                                        <td>[商品已下架]</td>
+                                        <td>[商品已下架]</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                        <td><p>@item.Item_Name</p></td>
+                                    }
                                     <td><p>@item.Order_Price</p></td>
                                     <td><p>@item.Quantity</p></td>
-                                    <td><p>@(item.Order_Price*item.Quantity)</p></td>
+                                    <td><p>@(item.Order_Price * item.Quantity)</p></td>
                                 </tr>
                                 }
                             </tbody>

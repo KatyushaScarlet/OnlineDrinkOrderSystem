@@ -134,10 +134,23 @@ namespace OnlineDrinkOrderSystem.DAL
 
 
         //删除商品
-        //将该商品评论删除
-        //将购物车内的该商品删除
-        //将用户追踪列表中该商品删除
 
+
+
+
+        public static void DeleteItem(int id)
+        {
+            //将该商品评论删除
+            DbHelper.Action(string.Format("delete from Review where Item_ID='{0}';", id));
+            //将购物车内的该商品删除
+            DbHelper.Action(string.Format("delete from Cart where Item_ID='{0}';", id));
+            //将用户追踪列表中该商品id设为null
+            DbHelper.Action(string.Format("update Trace_List set Item_ID=NULL where Item_ID='{0}';", id));
+            //将订单内该商品id设为null
+            DbHelper.Action(string.Format("update Order_List set Item_ID=NULL where Item_ID='{0}';", id));
+            //删除商品
+            DbHelper.Action(string.Format("delete from Item where Item_ID='{0}';", id));
+        }
 
 
         //获取购物车信息

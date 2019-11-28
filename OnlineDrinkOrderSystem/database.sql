@@ -89,7 +89,7 @@ foreign key(User_ID) references User(User_ID)-- 外键 用户id
 
 CREATE TABLE Order_List(
 Order_ID INT NOT NULL,-- 订单id
-Item_ID INT NOT NULL,-- 商品id
+Item_ID INT ,-- 商品id
 Order_Price DOUBLE NOT NULL,-- 商品价格（下单时价格）
 Quantity INT NOT NULL,-- 商品数量
 foreign key(Order_ID) references Order_Detail(Order_ID),-- 外键 订单id
@@ -100,7 +100,7 @@ foreign key(Item_ID) references Item(Item_ID) --  外键 商品id
 
 CREATE TABLE Trace_List(
 User_ID INT NOT NULL,-- 用户id
-Item_ID INT NOT NULL,-- 商品id
+Item_ID INT ,-- 商品id
 Trace_Price DOUBLE NOT NULL,-- 商品价格（追踪时的价格）
 foreign key(User_ID) references User(User_ID),-- 外键 用户id
 foreign key(Item_ID) references Item(Item_ID)--  外键 商品id

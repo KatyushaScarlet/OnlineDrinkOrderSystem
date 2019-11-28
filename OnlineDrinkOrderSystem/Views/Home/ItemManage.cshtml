@@ -16,6 +16,7 @@
 <div class="shop-main-area mb-70 main-area">
     <div class="container">
         <div class="row">
+            <h2>添加商品：<a href="@Url.ActionLink("ItemInfoManage", "Home", new { userId = 0 })">点击添加</a></h2>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="toolbar mb-30">
                     <div class="shop-tab">
@@ -27,6 +28,7 @@
                     <div class="toolbar-sorter">
                         <span>分类</span>
                         <select id="categorier" class="sorter-options" data-role="sorter" onchange="changeCategory();">
+                            <option value="0">所有商品</option>
                             @foreach (var item in categories)
                             {
                                 <option value="@item.Category_ID">@item.Category_Name</option>
@@ -46,8 +48,55 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="th">
                         <div class="row">
-
-
+                            <div class="col-lg-12">
+                                <div class="table-content table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="product-thumbnail">图片</th>
+                                                <th>名称</th>
+                                                <th>类别</th>
+                                                <th>售价</th>
+                                                <th>进价</th>
+                                                <th>折扣</th>
+                                                <th>销量</th>
+                                                <th>库存</th>
+                                                <th>点击量</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Item item in items)
+                                            {
+                                                <tr>
+                                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                                    <td>@item.Item_Name</td>
+                                                    <td>@item.Category_Name</td>
+                                                    <td>@item.Item_Price</td>
+                                                    <td>@item.Cost</td>
+                                                    <td>-@item.Discount%</td>
+                                                    <td>@item.Sold</td>
+                                                    <td>@item.Stock</td>
+                                                    <td>@item.Click_Counts</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        ID:@item.Item_ID
+                                                    </td>
+                                                    <td colspan="2">
+                                                        上架时间：@item.Date_added
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <a href="#" onclick="deleteItem(@item.Item_ID)">删除商品</a>
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <a href="@Url.ActionLink("ItemInfoManage","Home",new { itemId = item.Item_ID })">修改信息</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -106,13 +155,6 @@
                                 }
                             }
                         </ul>
-                        @*<ul>
-                                <li><a href="#" class="active">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>*@
                     </div>
                 </div>
                 <!-- pagination-area-end -->
@@ -134,17 +176,17 @@
     //点击翻页：更改页数，排序条件不变，关键词不变
     //点击排序：回到第一页，关键词不变，分类不变
 
-    //根据url参数修改排序选中项
+    //根据url参数修改排序选中项（0为默认排序）
     var sorter = document.getElementById("sorter");
     sorter.options.selectedIndex = itemOrder;
 
-    //根据url参数修改类别选中项目
+    //根据url参数修改类别选中项目（0为不分类显示所有）
     var categorier = document.getElementById("categorier");
-    categorier.options.selectedIndex = category_ID - 1;
+    categorier.options.selectedIndex = category_ID;
 
     function changeCategory() {
         var index = categorier.options.selectedIndex;
-        category_ID = categorier.options[index].value;
+        category_ID = categorier.options.selectedIndex;
         page = 1;
         itemOrder = 0;
         keyWord = "";
@@ -176,5 +218,19 @@
 
     function redirectUrl() {
         location.href = "@Url.ActionLink("ItemManage","Home")?page=" + page + "&pageSize=" + pageSize + "&keyWord=" + keyWord + "&category_ID=" + category_ID + "&itemOrder=" + itemOrder;
+    }
+
+    function deleteItem(id) {
+        if (confirm("请确认是否要删除该商品")) {
+            $.get("@Url.ActionLink("DeleteItem","Item")", {
+                itemId: id
+            }, function (data) {
+                    data = JSON.parse(data);
+                    alert(data.message);
+                    if (data.status) {
+                        location.reload();
+                    }
+            });
+        }
     }
 </script>

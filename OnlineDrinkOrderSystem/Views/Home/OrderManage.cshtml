@@ -75,7 +75,7 @@
     function deleteOrder(id) {
         if (confirm("请确认是否要删除该订单")) {
             $.get("@Url.ActionLink("DeleteOrder","Order")", {
-                orderId:id,
+                orderId: id
             }, function (data) {
                     data = JSON.parse(data);
                     alert(data.message);

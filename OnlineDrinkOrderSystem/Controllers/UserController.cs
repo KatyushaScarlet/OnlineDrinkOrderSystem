@@ -15,7 +15,6 @@ namespace OnlineDrinkOrderSystem.Controllers
     public class UserController : Controller
     {
         //用户注册
-        //TODO:修改为返回json
         [HttpPost]
         public string SignUp(string name = "", string password = "", string firstName = "", string lastName = "",string email="", string address = "")
         {
