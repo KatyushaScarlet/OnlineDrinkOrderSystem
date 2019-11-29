@@ -36,7 +36,7 @@ namespace OnlineDrinkOrderSystem.DAL
         public static Item GetItem(int id)
         {
             Item item = null;
-            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Item where Item_ID='{0}'", id));
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Item left join Category on Item.Category_ID=Category.Category_ID where Item_ID='{0}'", id));
             if (dataSet.Tables[0].Rows.Count != 0)
             {
                 DataRow dataRow = dataSet.Tables[0].Rows[0];
@@ -136,13 +136,27 @@ namespace OnlineDrinkOrderSystem.DAL
         }
 
         //修改商品信息
-
+        public static bool AlterItemInfo(Item item)
+        {
+            return DbHelper.Action(string.Format("update Item set " +
+                "Item_Name='{0}' Image_Url='{1}' Description='{2}' Item_Price='{3}' Category_ID='{4}' Click_Counts='{5}' " +
+                "Stock='{6}' Date_added='{7}' Cost='{8}' Sold='{9}' Discount='{10}' where Item_ID='{11}'",
+                item.Item_Name,
+                item.Image_Url,
+                item.Description,
+                item.Item_Price,
+                item.Category_ID,
+                item.Click_Counts,
+                item.Stock,
+                item.Date_added,
+                item.Cost,
+                item.Sold,
+                item.Discount,
+                item.Item_ID
+                )) == 1;
+        }
 
         //删除商品
-
-
-
-
         public static void DeleteItem(int id)
         {
             //将该商品评论删除

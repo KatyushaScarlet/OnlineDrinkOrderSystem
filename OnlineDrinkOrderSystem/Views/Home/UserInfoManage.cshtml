@@ -4,6 +4,7 @@
     string formTitle = "";//表单标题
     string formActionLink = "";//表单提交地址
     string buttonTitle = "";//按钮名称
+    
     if (user.User_ID != 0)
     {
         //修改用户信息
@@ -97,7 +98,7 @@
             var data = JSON.parse(data);
             alert(data.message);
             if (data.status) {
-                location.href = "@Url.ActionLink("UserManage","Home")";
+                location.reload();
             }
         });
         return false;

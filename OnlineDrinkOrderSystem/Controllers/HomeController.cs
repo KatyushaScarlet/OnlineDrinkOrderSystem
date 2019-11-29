@@ -56,7 +56,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         public IActionResult Cart()
         {
             //购物车
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -77,7 +77,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         public IActionResult Login()
         {
             //用户登录
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -95,7 +95,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         public IActionResult SignUp()
         {
             //用户登录
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -113,7 +113,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         public IActionResult Trace()
         {
             //追踪清单
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -166,7 +166,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         public IActionResult Order()
         {
             //历史订单
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -238,7 +238,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         //订单管理
         public IActionResult OrderManage()
         {
-            //判断是否已登录且有管理员权限
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
             if (userId != 0 && isadmin)
@@ -259,7 +259,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         //商品管理
         public IActionResult ItemManage(int page = 1, int pageSize = 20, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
-            //判断是否已登录且有管理员权限
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
             if (userId != 0 && isadmin)
@@ -294,16 +294,30 @@ namespace OnlineDrinkOrderSystem.Controllers
         //商品信息修改/新增商品（id为0则为新增页面）
         public IActionResult ItemInfoManage(int itemId= 0)
         {
-            //TODO
-            //判断是否已登录且有管理员权限
-            ViewData["itemid"] = itemId;
-            return View();
+            //判断用户权限
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                if (itemId!=0)
+                {
+                    ViewData["iteminfo"] = ItemManager.GetItem(itemId);
+                }
+
+                return View();
+            }
+            else
+            {
+                //重定向至首页
+                HttpContext.Session.SetString("tip", "无访问权限");
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         //用户管理
         public IActionResult UserManage()
         {
-            //判断是否已登录且有管理员权限
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool isadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
             if (userId != 0&& isadmin)
@@ -326,12 +340,16 @@ namespace OnlineDrinkOrderSystem.Controllers
         //用户信息修改/新增用户（id为0则为新增页面）
         public IActionResult UserInfoManage(int userId=0)
         {
-            //判断是否已登录且有管理员权限
+            //判断用户权限
             int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
             if (nowUserId != 0&& nowIsadmin)
             {
-                ViewData["userinfo"] = UserManager.GetUserInfo(userId);
+                if (userId!=0)
+                {
+                    ViewData["userinfo"] = UserManager.GetUserInfo(userId);
+                }
+
                 return View();
             }
             else

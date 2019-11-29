@@ -1,13 +1,100 @@
 ﻿@{
     ViewData["Title"] = "ItemInfoManage";
-    int itemid = Convert.ToInt32(ViewData["itemid"]);
-}
+    Item itemInfo = ViewData["iteminfo"] as Item;
+    string formTitle = "";//表单标题
+    string formActionLink = "";//表单提交地址
+    string buttonTitle = "";//按钮名称
 
-@if (itemid != 0)
-{
-    <h2>修改商品信息</h2>
+    if (itemInfo.Item_ID != 0)
+    {
+        formTitle = "修改商品信息";
+        formActionLink = Url.ActionLink("AlterItemInfo", "Item");
+        buttonTitle = "修改";
+    }
+    else
+    {
+        formTitle = "添加商品";
+        formActionLink = Url.ActionLink("AddItem", "Item");
+        buttonTitle = "添加";
+    }
 }
-else
-{
-    <h2>新增商品</h2>
-}
+<div class="user-login-area main-area mb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="login-title text-center mb-30">
+                    <h2>商品管理</h2>
+                    <p>@formTitle</p>
+                </div>
+            </div>
+            <form id="form-item-info-manage" onsubmit="return formUserInfoManage();">
+                <div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+                    <div class="billing-fields">
+
+                        @*
+                        id          itemId              int
+                        名称         itemName            string
+                        图片链接        image               string
+                        描述          description             string
+                        价格          price           double
+                        分类          categoryId      int
+                        点击量         clickCount         int
+                        库存          stock               int
+                        添加日期        dateAdd             datetime
+                        成本          cost            double
+                        销量          sold            double
+                        折扣          discount            int
+
+                        *@
+                        <input type="hidden" value="@itemInfo.Item_ID" name="userId" />
+                        <div class="single-form-item">
+                            <label>商品名称<span>*</span></label>
+                            <input type="text" value="@itemInfo.Item_Name" name="name" required />
+                        </div>
+
+
+
+
+                        @*<div class="single-form-item">
+                            <label>用户名<span>*</span></label>
+                            <input type="text" value="@user.User_Name" placeholder="请输入用户名" name="name" required />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>姓<span>*</span></label>
+                                    <input type="text" value="@user.Last_Name" placeholder="姓氏" name="lastName" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>名<span>*</span></label>
+                                    <input type="text" value="@user.First_Name" placeholder="名字" name="firstName" required />
+                                </div>
+                            </div>
+                        </div>*@
+
+                        <div class="single-form-item">
+                            <a href="#" onclick="$('#submit').click();">@buttonTitle</a>
+                            <input type="submit" id="submit" style="display:none" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+        function formUserInfoManage() {
+        var submit = $("#form-item-info-manage").serialize();
+        $.post("@formActionLink", submit, function (data) {
+            var data = JSON.parse(data);
+            alert(data.message);
+            if (data.status) {
+                location.reload();
+            }
+        });
+        return false;
+    }
+</script>

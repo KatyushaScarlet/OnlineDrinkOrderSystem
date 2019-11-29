@@ -50,5 +50,18 @@ namespace OnlineDrinkOrderSystem.Common
         {
             return Convert.ToDouble(input.ToString("#0.00"));
         }
+
+        //批量判断参数是否为null或为空
+        public static bool IsNullOrEmpty(params string?[] args)
+        {
+            foreach (string? item in args)
+            {
+                if (string.IsNullOrEmpty(item))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OnlineDrinkOrderSystem.DAL;
 using OnlineDrinkOrderSystem.Models;
+using OnlineDrinkOrderSystem.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,108 @@ namespace OnlineDrinkOrderSystem.Controllers
             return JsonConvert.SerializeObject(item);
         }
 
-        //修改物品信息 TODO
+        //修改物品信息 TODO debug
+        [HttpPost]
+        public string AlterItemInfo(int itemId = 0, string itemName = "", string image = "", string description = "", double price = 0, int categoryId = 0, 
+            int clickCount = 0, int stock = 0, DateTime dateAdd=default, double cost = 0, int sold = 0, int discount = 0)
+        {
+            Response response = new Response();
+            response.status = false;
+            //判断用户权限
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
 
-        //新增物品 TODO
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                if (itemId != 0 && !Tool.IsNullOrEmpty(itemName, image, description))
+                {
+                    Item item = new Item();
+                    item.Item_ID = itemId;
+                    item.Item_Name = itemName;
+                    item.Image_Url = image;
+                    item.Description = description;
+                    item.Item_Price = price;
+                    item.Category_ID = categoryId;
+                    item.Click_Counts = clickCount;
+                    item.Stock = stock;
+                    item.Date_added = dateAdd;
+                    item.Cost = cost;
+                    item.Sold = sold;
+                    item.Discount = discount;
+
+                    bool result = ItemManager.AlterItemInfo(item);
+                    if (result)
+                    {
+                        response.status = true;
+                        response.message = "修改成功";
+                    }
+                    else
+                    {
+                        response.message = "修改失败，请联系管理员";
+                    }
+                }
+                else
+                {
+                    response.message = "修改失败，请检查资料是否填写完整";
+                }
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+            return JsonConvert.SerializeObject(response);
+        }
+
+        //添加商品 TODO debug
+        [HttpPost]
+        public string AddItem(string itemName = "", string image = "", string description = "", double price = 0, int categoryId = 0,
+            int clickCount = 0, int stock = 0, DateTime dateAdd = default, double cost = 0, int sold = 0, int discount = 0)
+        {
+            Response response = new Response();
+            response.status = false;
+            //判断用户权限
+            int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
+            bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
+
+            if (nowUserId != 0 && nowIsadmin)
+            {
+                if (!Tool.IsNullOrEmpty(itemName, image, description))
+                {
+                    Item item = new Item();
+                    item.Item_Name = itemName;
+                    item.Image_Url = image;
+                    item.Description = description;
+                    item.Item_Price = price;
+                    item.Category_ID = categoryId;
+                    item.Click_Counts = clickCount;
+                    item.Stock = stock;
+                    item.Date_added = dateAdd;
+                    item.Cost = cost;
+                    item.Sold = sold;
+                    item.Discount = discount;
+
+                    bool result = ItemManager.AddItem(item);
+                    if (result)
+                    {
+                        response.status = true;
+                        response.message = "添加成功";
+                    }
+                    else
+                    {
+                        response.message = "添加失败，请联系管理员";
+                    }
+                }
+                else
+                {
+                    response.message = "添加失败，请检查资料是否填写完整";
+                }
+            }
+            else
+            {
+                response.message = "没有权限";
+            }
+            return JsonConvert.SerializeObject(response);
+        }
 
         //删除商品
         [HttpGet]
@@ -59,7 +159,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             Response response = new Response();
             response.status = false;
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -80,7 +180,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             Response response = new Response();
             response.status = false;
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
