@@ -24,11 +24,6 @@
                     <div class="category-menu">
                         <nav class="menu">
                             <ul>
-                                @*<li><a href="@Url.ActionLink("Item","Home",new {category_ID=0})">所有商品</a></li>
-                                    @foreach (var item in categories)
-                                    {
-                                        <li><a href="@Url.ActionLink("Item","Home",new {category_ID=item.Category_ID})">@item.Category_Name</a></li>
-                                    }*@
                                 <li><a href="#" onclick="selectCategory(0);">所有商品</a></li>
                                 @foreach (var item in categories)
                                 {
@@ -42,7 +37,7 @@
                 <!-- banner-area-start -->
                 <div class="banner-area mb-30">
                     <div class="banner-img-2">
-                        <a href="#"><img src="/img/banner/21.jpg" alt="banner"></a>
+                        <a href="#"><img src="/img/banner/7.jpg" alt="banner"></a>
                     </div>
                 </div>
                 <!-- banner-area-end -->
@@ -173,13 +168,6 @@
                                 }
                             }
                         </ul>
-                        @*<ul>
-                                <li><a href="#" class="active">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#" class="angle"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>*@
                     </div>
                 </div>
                 <!-- pagination-area-end -->

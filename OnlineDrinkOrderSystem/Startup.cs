@@ -32,7 +32,6 @@ namespace OnlineDrinkOrderSystem
             services.AddMvc().AddRazorRuntimeCompilation();
             //¶ÁÈ¡ÅäÖÃ
             Configuration.GetSection("ConnectionStrings").Bind(connectionString);
-            Configuration.GetSection("GoogleOauthSettings").Bind(googleOauthSetting);
             //Session ÉèÖÃ
             services.AddSession(options =>
             {
