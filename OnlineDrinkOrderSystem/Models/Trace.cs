@@ -10,7 +10,8 @@ namespace OnlineDrinkOrderSystem.Models
         public int User_ID { get; set; }
         public int Item_ID { get; set; }
         public double Trace_Price { get; set; }
-        public double Item_Price { get; set; }
+        public string Image_Url { get; set; }
         public string Item_Name { get; set; }
+        public double Item_Price { get; set; }
     }
 }

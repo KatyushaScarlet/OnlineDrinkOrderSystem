@@ -13,25 +13,6 @@ namespace OnlineDrinkOrderSystem.Controllers
 {
     public class TraceController : Controller
     {
-        ////获取用户追踪列表
-        //[HttpGet]
-        //public string GetTraceList()
-        //{
-        //    Response response = new Response();
-        //    response.status = false;
-        //    //判断用户权限
-        //    int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
-        //    if (nowUserId != 0)
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        response.message = "请先登录";
-        //    }
-        //    return JsonConvert.SerializeObject(response);
-        //}
-
         //添加到追踪列表
         public string AddItemToList(int itemId)
         {
@@ -43,7 +24,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             {
                 TraceManager.AddItemToList(nowUserId, itemId);
                 response.status = true;
-                response.message = "添加成功";
+                response.message = "操作成功";
             }
             else
             {
@@ -63,7 +44,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             {
                 TraceManager.RemoveItemFromList(nowUserId, itemId);
                 response.status = true;
-                response.message = "删除成功";
+                response.message = "操作成功";
             }
             else
             {

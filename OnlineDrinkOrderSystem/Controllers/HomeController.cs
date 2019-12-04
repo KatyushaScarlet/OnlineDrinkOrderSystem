@@ -112,11 +112,15 @@ namespace OnlineDrinkOrderSystem.Controllers
 
         public IActionResult Trace()
         {
-            //追踪清单
+            //追踪列表
             //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
+                //获取追踪列表
+                List<Models.Trace> traces = TraceManager.GetTraceList(userId);
+                ViewData["traces"] = traces;
+
                 return View();
             }
             else

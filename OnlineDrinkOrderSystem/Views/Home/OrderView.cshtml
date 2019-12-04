@@ -36,7 +36,7 @@
                                     else
                                     {
                                         <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
-                                        <td><p>@item.Item_Name</p></td>
+                                        <td><a href="@Url.ActionLink("ItemInfoManage", "Home", new { itemId = @item.Item_ID })">@item.Item_Name</a></td>
                                     }
                                     <td><p>@item.Order_Price</p></td>
                                     <td><p>@item.Order_Cost</p></td>
