@@ -468,6 +468,19 @@
             })
         }
 
+        //添加到追踪列表
+        function addItemToTrace(id) {
+            $.get("@Url.ActionLink("AddItemToList","Trace")", {
+                itemId: id
+            }, function (data) {
+                var data = JSON.parse(data);
+                alert(data.message);
+                //if (data.status) {
+                //    location.reload();
+                //}
+            });
+        }
+
     </script>
 </body>
 </html>
