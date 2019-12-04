@@ -303,6 +303,9 @@ namespace OnlineDrinkOrderSystem.Controllers
                 {
                     ViewData["iteminfo"] = ItemManager.GetItem(itemId);
                 }
+                //获取商品类别
+                List<Category> categories = ItemManager.GetCategoryList();
+                ViewData["categories"] = categories;
 
                 return View();
             }

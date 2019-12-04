@@ -26,7 +26,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             return JsonConvert.SerializeObject(item);
         }
 
-        //修改物品信息 TODO debug
+        //修改物品信息
         [HttpPost]
         public string AlterItemInfo(int itemId = 0, string itemName = "", string image = "", string description = "", double price = 0, int categoryId = 0, 
             int clickCount = 0, int stock = 0, DateTime dateAdd=default, double cost = 0, int sold = 0, int discount = 0)

@@ -1,21 +1,29 @@
 ﻿@{
     ViewData["Title"] = "ItemInfoManage";
     Item itemInfo = ViewData["iteminfo"] as Item;
+    List<Category> categories = ViewData["categories"] as List<Category>;
     string formTitle = "";//表单标题
     string formActionLink = "";//表单提交地址
     string buttonTitle = "";//按钮名称
 
-    if (itemInfo.Item_ID != 0)
+    if (itemInfo != null)
     {
+        //修改商品信息
         formTitle = "修改商品信息";
         formActionLink = Url.ActionLink("AlterItemInfo", "Item");
         buttonTitle = "修改";
     }
     else
     {
+        //添加商品
         formTitle = "添加商品";
         formActionLink = Url.ActionLink("AddItem", "Item");
         buttonTitle = "添加";
+        //创建默认信息
+        itemInfo = new Item();
+        itemInfo.Image_Url = "/img/item/test.jpg";
+        itemInfo.Date_added = DateTime.Now;
+
     }
 }
 <div class="user-login-area main-area mb-70">
@@ -32,48 +40,111 @@
                     <div class="billing-fields">
 
                         @*
-                        id          itemId              int
-                        名称         itemName            string
-                        图片链接        image               string
-                        描述          description             string
-                        价格          price           double
-                        分类          categoryId      int
-                        点击量         clickCount         int
-                        库存          stock               int
-                        添加日期        dateAdd             datetime
-                        成本          cost            double
-                        销量          sold            double
-                        折扣          discount            int
+        id          itemId              int                      *
+        名称         itemName            string                   *
+        图片链接        image               string                 *
+        描述          description             string              *
+        价格          price           double                      *
+        分类          categoryId      int                         *
+        点击量         clickCount         int                      *
+        库存          stock               int                     *
+        添加日期        dateAdd             datetime                 *      
+        成本          cost            double                      *
+        销量          sold            double                      
+        折扣          discount            int                     *
 
                         *@
-                        <input type="hidden" value="@itemInfo.Item_ID" name="userId" />
-                        <div class="single-form-item">
-                            <label>商品名称<span>*</span></label>
-                            <input type="text" value="@itemInfo.Item_Name" name="name" required />
-                        </div>
+                        <input type="hidden" value="@itemInfo.Item_ID" name="itemId" />
+                        <div class="row">
 
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>商品图片</label>
+                                    <img id="image-box" src="@itemInfo.Image_Url" class="product-thumbnail" />
+                                </div>
+                            </div>
 
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>商品分类<span>*</span></label>
+                                    <select id="categorier" class="" data-role="sorter" name="categoryId" required>
+                                        @foreach (Category item in categories)
+                                        {
+                                            <option value="@item.Category_ID">@item.Category_Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
 
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>商品名称<span>*</span></label>
+                                    <input type="text" value="@itemInfo.Item_Name" name="itemName" required />
+                                </div>
+                            </div>
 
-                        @*<div class="single-form-item">
-                            <label>用户名<span>*</span></label>
-                            <input type="text" value="@user.User_Name" placeholder="请输入用户名" name="name" required />
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>图片地址<span>*</span></label>
+                                    <input id="input-image-url" type="text" value="@itemInfo.Image_Url" placeholder="" name="image" required />
+                                    <a href="#" onclick="loadImage();">预览</a>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="single-form-item">
-                                    <label>姓<span>*</span></label>
-                                    <input type="text" value="@user.Last_Name" placeholder="姓氏" name="lastName" required />
+                                    <label>价格<span>*</span></label>
+                                    <input type="text" value="@itemInfo.Item_Price" placeholder="" name="price" required />
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="single-form-item">
-                                    <label>名<span>*</span></label>
-                                    <input type="text" value="@user.First_Name" placeholder="名字" name="firstName" required />
+                                    <label>成本<span>*</span></label>
+                                    <input type="text" value="@itemInfo.Cost" placeholder="" name="cost" required />
                                 </div>
                             </div>
-                        </div>*@
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>折扣（-0%~-100%）<span>*</span></label>
+                                    <input type="number" min="0" max="100" value="@itemInfo.Discount" placeholder="" name="discount" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>库存<span>*</span></label>
+                                    <input type="number" min="0" value="@itemInfo.Stock" placeholder="" name="stock" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>销量<span>*</span></label>
+                                    <input type="number" min="0" value="@itemInfo.Sold" placeholder="" name="sold" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="single-form-item">
+                                    <label>点击量<span>*</span></label>
+                                    <input type="number" min="0" value="@itemInfo.Click_Counts" placeholder="" name="clickCount" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="single-form-item">
+                            <label>描述<span>*</span></label>
+                            <input type="text" value="@itemInfo.Description" placeholder="" name="description" required />
+                        </div>
+
+
+                        <div class="single-form-item">
+                            <label>添加日期<span>*</span></label>
+                            <input id="input-datetime" type="datetime-local" value="" placeholder="" name="dateAdd" required />
+                        </div>
 
                         <div class="single-form-item">
                             <a href="#" onclick="$('#submit').click();">@buttonTitle</a>
@@ -86,7 +157,22 @@
     </div>
 </div>
 <script>
-        function formUserInfoManage() {
+    //获取类别
+    var category_ID = "@(itemInfo.Category_ID-1)";
+
+    //获取添加日期
+    var datetimeValue="@itemInfo.Date_added.ToString("yyyy-MM-ddThh:mm")";
+
+    //修改下拉框
+    var categorier = document.getElementById("categorier");
+    categorier.options.selectedIndex = category_ID;
+
+    //修改时间日期控件
+    var datetimer = document.getElementById("input-datetime");
+    datetimer.value = datetimeValue;
+
+    //表单提交
+    function formUserInfoManage() {
         var submit = $("#form-item-info-manage").serialize();
         $.post("@formActionLink", submit, function (data) {
             var data = JSON.parse(data);
@@ -96,5 +182,11 @@
             }
         });
         return false;
+    }
+
+    //图片预览
+    function loadImage() {
+        var newImageUrl = $("#input-image-url").val();
+        $("#image-box").attr("src", newImageUrl);
     }
 </script>

@@ -139,8 +139,8 @@ namespace OnlineDrinkOrderSystem.DAL
         public static bool AlterItemInfo(Item item)
         {
             return DbHelper.Action(string.Format("update Item set " +
-                "Item_Name='{0}' Image_Url='{1}' Description='{2}' Item_Price='{3}' Category_ID='{4}' Click_Counts='{5}' " +
-                "Stock='{6}' Date_added='{7}' Cost='{8}' Sold='{9}' Discount='{10}' where Item_ID='{11}'",
+                "Item_Name='{0}', Image_Url='{1}', Description='{2}', Item_Price='{3}', Category_ID='{4}', Click_Counts='{5}', " +
+                "Stock='{6}', Date_added='{7}', Cost='{8}', Sold='{9}', Discount='{10}' where Item_ID='{11}'",
                 item.Item_Name,
                 item.Image_Url,
                 item.Description,
