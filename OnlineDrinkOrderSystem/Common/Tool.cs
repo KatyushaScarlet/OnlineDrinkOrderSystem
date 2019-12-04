@@ -38,7 +38,7 @@ namespace OnlineDrinkOrderSystem.Common
             return t; //Return
         }
 
-        //生成指定位数随机数
+        //生成指定范围随机数
         static Random random = new Random(System.Environment.TickCount);
         public static int GetRandomNumber(int min, int max)
         {
