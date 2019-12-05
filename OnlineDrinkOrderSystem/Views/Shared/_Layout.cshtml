@@ -354,17 +354,19 @@
                                 <p id="item-time">上架时间：</p>
                                 <p id="item-sold">销量：</p>
                                 <p id="item-click">热度：</p>
-                                <p id="item-discription">描述：</p>
+                                <p id="item-discription">商品信息：</p>
                                 <div class="quick-view-select">
                                     <!--保留格式-->
                                 </div>
                                 <form id="form-item-detail" onsubmit="return false;">
-                                    <input type="number" value="1" min="1" id="item-count"/>
-                                    <input type="text" value="" id="item-id" style="display:none"/>
+                                    <input type="number" value="1" min="1" id="item-count" />
+                                    <input type="text" value="" id="item-id" style="display:none" />
                                     <button id="btn-add-cart">添加到购物车</button>
                                 </form>
                                 <span><i class="fa fa-check" id="item-stock-icon"></i><span id="item-stock">有库存：XXX件</span></span>
                                 @*<span><i class="fa fa-remove"></i>无库存</span>*@
+                                <a href="#" id="link-trace">💗加入追踪</a>
+                                @*<a href="#" id="link-trace">💔移出追踪</a>*@
                             </div>
                         </div>
                     </div>
@@ -413,7 +415,7 @@
                         } else { 
                             document.getElementById("item-price").innerText = "NTD$ " + price;
                         }
-                        document.getElementById("item-discription").innerText = itemInfo.Description;//描述
+                        document.getElementById("item-discription").innerText = "商品信息：" + itemInfo.Description;//描述
                         document.getElementById("item-id").value = itemInfo.Item_ID;//id
 
                         document.getElementById("item-click").innerText = "热度："+itemInfo.Click_Counts;//点击量
@@ -427,6 +429,23 @@
                             document.getElementById("item-stock-icon").className = "fa fa-times";
                             document.getElementById("item-stock").innerText = "无库存";
                         }
+                        //更改【商品追踪】样式
+
+                        $.get("@Url.Action("CheckItemInTraceList","Trace")", {
+                            itemId:id
+                        }, function (data) {
+                                data = JSON.parse(data);
+                                console.log(data);
+                                if (data) {
+                                    //已在追踪列表中
+                                    $("#link-trace").text("💔移出追踪");
+                                    $("#link-trace").attr("href", "javascript:removeItemToTrace(" + id + ")");
+                                } else {
+                                    //不在追踪列表中
+                                    $("#link-trace").text("💗加入追踪");
+                                    $("#link-trace").attr("href", "javascript:addItemToTrace(" + id + ")");
+                                }
+                        });
                     }
             });
         }
@@ -450,6 +469,8 @@
             }, function (data) {
                 data = JSON.parse(data);
                 alert(data.message);
+                //关闭modal
+                $('#productModal').modal('hide');
             })
 
             return false;
@@ -475,12 +496,22 @@
             }, function (data) {
                 var data = JSON.parse(data);
                 alert(data.message);
-                //if (data.status) {
-                //    location.reload();
-                //}
+                //关闭modal
+                $('#productModal').modal('hide');
             });
         }
 
+        //移出追踪列表
+        function removeItemToTrace(id) {
+            $.get("@Url.ActionLink("RemoveItemFromList","Trace")", {
+                itemId: id
+            }, function (data) {
+                var data = JSON.parse(data);
+                alert(data.message);
+                //关闭modal
+                $('#productModal').modal('hide');
+            });
+        }
     </script>
 </body>
 </html>

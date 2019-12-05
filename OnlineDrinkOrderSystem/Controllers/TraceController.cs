@@ -14,6 +14,7 @@ namespace OnlineDrinkOrderSystem.Controllers
     public class TraceController : Controller
     {
         //添加到追踪列表
+        [HttpGet]
         public string AddItemToList(int itemId)
         {
             Response response = new Response();
@@ -34,6 +35,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         }
 
         //从追踪列表中移除
+        [HttpGet]
         public string RemoveItemFromList(int itemId)
         {
             Response response = new Response();
@@ -54,7 +56,8 @@ namespace OnlineDrinkOrderSystem.Controllers
         }
 
         //判断商品是否存在于用户的追踪列表中
-        public  string CheckItemInTraceList(int itemId)
+        [HttpGet]
+        public bool CheckItemInTraceList(int itemId)
         {
             Response response = new Response();
             response.status = false;
@@ -62,15 +65,13 @@ namespace OnlineDrinkOrderSystem.Controllers
             int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (nowUserId != 0)
             {
-                TraceManager.CheckItemInTraceList(nowUserId, itemId);
-                response.status = true;
-                response.message = "删除成功";
+                bool result = TraceManager.CheckItemInTraceList(nowUserId, itemId);
+                if (result)
+                {
+                    return true;
+                }
             }
-            else
-            {
-                response.message = "请先登录";
-            }
-            return JsonConvert.SerializeObject(response);
+            return false;
         }
     }
 }
