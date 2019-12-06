@@ -23,13 +23,13 @@
                             <tbody>
                                 @foreach (Order_Detail item in details)
                                 {
-                                    <tr>
-                                        <td>@item.Order_Date</td>
-                                        <td>NTD$ @item.Order_Sum</td>
-                                        <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
-                                        <td>@(item.Shipment == 1 ? "未发货" : "已发货")</td>
-                                        <td><a href="@Url.ActionLink("OrderView", "Home", new { orderId = item.Order_ID })">查看</a></td>
-                                    </tr>
+                                <tr>
+                                    <td>@item.Order_Date</td>
+                                    <td>NTD$ @item.Order_Sum</td>
+                                    <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
+                                    <td>@(item.Shipment == 1 ? "未发货" : "已发货")</td>
+                                    <td><a href="/Home/OrderView?orderId=@item.Order_ID">查看</a></td>
+                                </tr>
                                 }
                             </tbody>
                         </table>

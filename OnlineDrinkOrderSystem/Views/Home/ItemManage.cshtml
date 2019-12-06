@@ -16,7 +16,7 @@
 <div class="shop-main-area mb-70 main-area">
     <div class="container">
         <div class="row">
-            <h2>添加商品：<a href="@Url.ActionLink("ItemInfoManage", "Home", new { userId = 0 })">点击添加</a></h2>
+            <h2>添加商品：<a href="/Home/ItemInfoManage">点击添加</a></h2>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="toolbar mb-30">
                     <div class="shop-tab">
@@ -89,7 +89,7 @@
                                                         <a href="#" onclick="deleteItem(@item.Item_ID)">删除商品</a>
                                                     </td>
                                                     <td colspan="3">
-                                                        <a href="@Url.ActionLink("ItemInfoManage","Home",new { itemId = item.Item_ID })">修改信息</a>
+                                                        <a href="/Home/ItemInfoManage?itemId=@item.Item_ID">修改信息</a>
                                                     </td>
                                                 </tr>
                                             }
@@ -217,12 +217,12 @@
     }
 
     function redirectUrl() {
-        location.href = "@Url.ActionLink("ItemManage","Home")?page=" + page + "&pageSize=" + pageSize + "&keyWord=" + keyWord + "&category_ID=" + category_ID + "&itemOrder=" + itemOrder;
+        location.href = "/Home/ItemManage?page=" + page + "&pageSize=" + pageSize + "&keyWord=" + keyWord + "&category_ID=" + category_ID + "&itemOrder=" + itemOrder;
     }
 
     function deleteItem(id) {
         if (confirm("请确认是否要删除该商品")) {
-            $.get("@Url.ActionLink("DeleteItem","Item")", {
+            $.get("/Item/DeleteItem", {
                 itemId: id
             }, function (data) {
                     data = JSON.parse(data);

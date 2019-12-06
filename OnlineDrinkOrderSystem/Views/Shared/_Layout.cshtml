@@ -60,18 +60,18 @@
                                 {
                                     @if (isAdmin)
                                     {
-                                        <li><a href="@Url.ActionLink("OrderManage","Home")">订单管理</a></li>
-                                        <li><a href="@Url.ActionLink("ItemManage","Home")">商品管理</a></li>
-                                        <li><a href="@Url.ActionLink("UserManage","Home")">用户管理</a></li>
+                                        <li><a href="/Home/OrderManage">订单管理</a></li>
+                                        <li><a href="/Home/ItemManage">商品管理</a></li>
+                                        <li><a href="/Home/UserManage">用户管理</a></li>
                                     }
-                                    <li><a href=@Url.ActionLink("Account","Home")>帐户</a></li>
-                                    <li><a href=@Url.ActionLink("Cart","Home")>结账</a></li>
+                                    <li><a href=/Home/Account>帐户</a></li>
+                                    <li><a href=/Home/Cart>结账</a></li>
                                     <li><a href="#" onclick="SignOut()">登出</a></li>
                                 }
                                 else
                                 {
-                                    <li><a href=@Url.ActionLink("Login","Home")>登录</a></li>
-                                    <li><a href=@Url.ActionLink("SignUp","Home")>注册</a></li>
+                                    <li><a href=/Home/Login>登录</a></li>
+                                    <li><a href=/Home/SignUp>注册</a></li>
                                 }
                             </ul>
                         </div>
@@ -90,7 +90,7 @@
                     <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
                         <div class="header-search">
                             <form action="#">
-                                <input type="text" id="search-box" placeholder="您今天想要点什么？" /><a href="#" onclick="location.href = '@Url.ActionLink("Item","Home")?keyWord=' + document.getElementById('search-box').value"><i class="fa fa-search"></i></a>
+                                <input type="text" id="search-box" placeholder="您今天想要点什么？" /><a href="#" onclick="location.href = '/Home/Item?keyWord=' + document.getElementById('search-box').value"><i class="fa fa-search"></i></a>
                             </form>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                         <div class="my-cart">
                             <ul>
                                 <li>
-                                    <a href="@Url.ActionLink("Cart","Home")"><i class="fa fa-shopping-cart"></i>购物车</a>@*<span>2</span>*@
+                                    <a href="/Home/Cart"><i class="fa fa-shopping-cart"></i>购物车</a>@*<span>2</span>*@
                                 </li>
                             </ul>
                         </div>
@@ -115,33 +115,33 @@
                             <nav>
                                 <ul>
                                     <li class="active">
-                                        <a href="@Url.ActionLink("Index","Home")">商店首页</a>
+                                        <a href="/Home/Index">商店首页</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Item","Home")">商品浏览</a>
+                                        <a href="/Home/Item">商品浏览</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Trace","Home")">追踪清单</a>
+                                        <a href="/Home/Trace">追踪清单</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Account","Home")">我的账户</a>
+                                        <a href="/Home/Account">我的账户</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Order","Home")">历史订单</a>
+                                        <a href="/Home/Order">历史订单</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
+                                        <a href="/Home/Contact">联系我们</a>
                                     </li>
                                     @if (isAdmin)
                                     {
                                         <li>
-                                            <a href="@Url.ActionLink("OrderManage","Home")">订单管理</a>
+                                            <a href="/Home/OrderManage">订单管理</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.ActionLink("ItemManage","Home")">商品管理</a>
+                                            <a href="/Home/ItemManage">商品管理</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.ActionLink("UserManage","Home")">用户管理</a>
+                                            <a href="/Home/UserManage">用户管理</a>
                                         </li>
                                     }
                                 </ul>
@@ -160,33 +160,33 @@
                             <nav id="mobile-menu-active">
                                 <ul id="nav">
                                     <li>
-                                        <a href="@Url.ActionLink("Index","Home")">商店首页</a>
+                                        <a href="/Home/Index">商店首页</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Item","Home")">商品浏览</a>
+                                        <a href="/Home/Item">商品浏览</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Trace","Home")">追踪清单</a>
+                                        <a href="/Home/Trace">追踪清单</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Account","Home")">我的账户</a>
+                                        <a href="/Home/Account">我的账户</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Order","Home")">历史订单</a>
+                                        <a href="/Home/Order">历史订单</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
+                                        <a href="/Home/Contact">联系我们</a>
                                     </li>
                                     @if (isAdmin)
                                     {
                                         <li>
-                                            <a href="@Url.ActionLink("OrderManage","Home")">订单管理</a>
+                                            <a href="/Home/OrderManage">订单管理</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.ActionLink("ItemManage","Home")">商品管理</a>
+                                            <a href="/Home/ItemManage">商品管理</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.ActionLink("UserManage","Home")">用户管理</a>
+                                            <a href="/Home/UserManage">用户管理</a>
                                         </li>
                                     }
                                 </ul>
@@ -219,22 +219,22 @@
                             <nav>
                                 <ul>
                                     <li>
-                                        <a href="@Url.ActionLink("Index","Home")">商店首页</a>
+                                        <a href="/Home/Index">商店首页</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Item","Home")">商品浏览</a>
+                                        <a href="/Home/Item">商品浏览</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Trace","Home")">追踪清单</a>
+                                        <a href="/Home/Trace">追踪清单</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Account","Home")">我的账户</a>
+                                        <a href="/Home/Account">我的账户</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Order","Home")">历史订单</a>
+                                        <a href="/Home/Order">历史订单</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.ActionLink("Contact","Home")">联系我们</a>
+                                        <a href="/Home/Contact">联系我们</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -272,7 +272,7 @@
                                     </div>
                                     <div class="footer-mid-menu">
                                         <ul>
-                                            <li>@Html.ActionLink("联系我们", "Contact")</li>
+                                            <li><a href="/Home/Contact">联系我们</a></li>
                                             <li><a href="#">Sitemap</a></li>
                                             <li><a href="#">Stores</a></li>
                                             <li><a href="register.html">My account </a></li>
@@ -397,7 +397,7 @@
         function openModalForItem(id) {
             //alert("Id:" + id);
             //获取商品信息
-            $.get("@Url.ActionLink("GetItem","Item")", {
+            $.get("/Item/GetItem", {
                 itemId:id
             }, function (data) {
                     console.log(data);
@@ -463,7 +463,7 @@
                 count = document.getElementById("item-count").value;
             }
 
-            $.get("@Url.ActionLink("AddItemToCart","Item")", {
+            $.get("/Item/AddItemToCart", {
                 itemId:id,
                 count:count,
             }, function (data) {
@@ -478,20 +478,20 @@
 
         //登出
         function SignOut() {
-            $.get("@Url.ActionLink("SignOut","User")", {}, function (data) {
+            $.get("/User/SignOut", {}, function (data) {
                 var data = JSON.parse(data);
                 alert(data.message);
                 if (data.status) {
-                    location.href = "@Url.ActionLink("Index","Home")";
+                    location.href = "/Home/Index";
                 } else {
-                    location.href = "@Url.ActionLink("Login","Home")";
+                    location.href = "/Home/Login";
                 }
             })
         }
 
         //添加到追踪列表
         function addItemToTrace(id) {
-            $.get("@Url.ActionLink("AddItemToList","Trace")", {
+            $.get("/Trace/AddItemToList", {
                 itemId: id
             }, function (data) {
                 var data = JSON.parse(data);
@@ -503,7 +503,7 @@
 
         //移出追踪列表
         function removeItemToTrace(id) {
-            $.get("@Url.ActionLink("RemoveItemFromList","Trace")", {
+            $.get("/Trace/RemoveItemFromList", {
                 itemId: id
             }, function (data) {
                 var data = JSON.parse(data);

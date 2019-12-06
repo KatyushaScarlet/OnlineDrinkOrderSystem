@@ -65,13 +65,13 @@
 <script>
     function formAccount(){
         var submit = $("#form-account").serialize();
-        $.post("@Url.ActionLink("AlterUserInfo","User")", submit, function (data) {
+        $.post("/User/AlterUserInfo", submit, function (data) {
             var data = JSON.parse(data);
             alert(data.message)
             if (data.status) {
                 location.reload();
             } else {
-                location.href = "@Url.ActionLink("Index","Home")";
+                location.href = "/Home/Index";
             }
         });
         return false;

@@ -75,11 +75,11 @@
 
     function formSignup(){
     var submit = $("#form-signup").serialize();
-    $.post("@Url.ActionLink("SignUp","User")", submit, function (data) {
+    $.post("/User/SignUp", submit, function (data) {
         var data = JSON.parse(data);
         alert(data.message)
         if (data.status) {
-            location.href = "@Url.ActionLink("Login","Home")";
+            location.href = "/Home/Login";
         } else {
             location.reload();
         }

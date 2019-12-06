@@ -13,14 +13,14 @@
                 <div class="slider-area">
                     <div class="slider-active owl-carousel">
                         <div class="single-slider slider-hm4-1 pt-154 pb-154 bg-img"
-                             style="background-image:url(img/slider/1.jpg);">
+                             style="background-image:url(/img/slider/1.jpg);">
                             <div class="slider-content-4 slider-animated-1 pl-40">
                                 <h1>全场商品</h1>
                                 <h2>折扣30%起</h2>@*<a href="#">Shopping now!</a>*@
                             </div>
                         </div>
                         <div class="single-slider pt-154 pb-154 bg-img"
-                             style="background-image:url(img/slider/2.jpg);">
+                             style="background-image:url(/img/slider/2.jpg);">
                             <div class="slider-content-4 slider-animated-1 pl-40">
                                 <h1>全场商品</h1>
                                 <h2>折扣30%起</h2>@*<a href="#">Shopping now!</a>*@
@@ -94,10 +94,10 @@
                     <div class="category-menu">
                         <nav class="menu">
                             <ul>
-                                <li><a href="@Url.ActionLink("Item","Home",new {category_ID=0})">所有商品</a></li>
+                                <li><a href="/Home/Item">所有商品</a></li>
                                 @foreach (var item in categories)
                                 {
-                                    <li><a href="@Url.ActionLink("Item","Home",new {category_ID=item.Category_ID})">@item.Category_Name</a></li>
+                                    <li><a href="/Home/Item?category_ID=@item.Category_ID">@item.Category_Name</a></li>
                                 }
                             </ul>
                         </nav>

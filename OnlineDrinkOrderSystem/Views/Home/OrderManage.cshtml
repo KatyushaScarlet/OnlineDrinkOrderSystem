@@ -25,33 +25,33 @@
                             <tbody>
                                 @foreach (Order_Detail item in details)
                                 {
-                                <tr>
-                                    <td>@item.Order_Date</td>
-                                    <td>NTD$ @item.Order_Sum</td>
-                                    <td>NTD$ @item.Order_Cost</td>
-                                    <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
-                                    @if (item.User_ID == 0)
-                                    {
-                                        <td>[用户已删除]</td>
-                                    }
-                                    else
-                                    {
-                                        <td><a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = item.User_ID })">@item.User_Name</a></td>
-                                    }
-                                    @if (item.Shipment == 1)
-                                    {
-                                        <td><a href="#" onclick="setOrderStatus(@item.Order_ID)">点击发货</a></td>
-                                    }
-                                    else
-                                    {
-                                        <td>已发货</td>
-                                    }
-                                    <td>
-                                        <a href="#" onclick="deleteOrder(@item.Order_ID)">删除订单</a>
-                                        &nbsp;|&nbsp;
-                                        <a href="@Url.ActionLink("OrderView", "Home", new { orderId = item.Order_ID })">查看详情</a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>@item.Order_Date</td>
+                                        <td>NTD$ @item.Order_Sum</td>
+                                        <td>NTD$ @item.Order_Cost</td>
+                                        <td>NTD$ @(item.Delivery == 1 ? 30 : 0)</td>
+                                        @if (item.User_ID == 0)
+                                        {
+                                            <td>[用户已删除]</td>
+                                        }
+                                        else
+                                        {
+                                            <td><a href="/Home/UserInfoManage?userId=@item.User_ID">@item.User_Name</a></td>
+                                        }
+                                        @if (item.Shipment == 1)
+                                        {
+                                            <td><a href="#" onclick="setOrderStatus(@item.Order_ID)">点击发货</a></td>
+                                        }
+                                        else
+                                        {
+                                            <td>已发货</td>
+                                        }
+                                        <td>
+                                            <a href="#" onclick="deleteOrder(@item.Order_ID)">删除订单</a>
+                                            &nbsp;|&nbsp;
+                                            <a href="/Home/OrderView?orderId=@item.Order_ID">查看详情</a>
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -63,27 +63,27 @@
 </div>
 <script>
     function setOrderStatus(id) {
-        $.get("@Url.ActionLink("SetOrderStatus","Order")", {
+        $.get("/Order/SetOrderStatus", {
             orderId: id
         }, function (data) {
-                data = JSON.parse(data);
-                alert(data.message);
-                if (data.status) {
-                    location.reload();
-                }
+            data = JSON.parse(data);
+            alert(data.message);
+            if (data.status) {
+                location.reload();
+            }
         });
     }
 
     function deleteOrder(id) {
         if (confirm("请确认是否要删除该订单")) {
-            $.get("@Url.ActionLink("DeleteOrder","Order")", {
+            $.get("/Order/DeleteOrder", {
                 orderId: id
             }, function (data) {
-                    data = JSON.parse(data);
-                    alert(data.message);
-                    if (data.status) {
-                        location.reload();
-                    }
+                data = JSON.parse(data);
+                alert(data.message);
+                if (data.status) {
+                    location.reload();
+                }
             });
         }
     }

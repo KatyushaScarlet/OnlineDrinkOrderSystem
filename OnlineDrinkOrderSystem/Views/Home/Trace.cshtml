@@ -50,7 +50,7 @@
     function deleteItemFromTrace(id) {
         //alert("delete:" + id);
         if (confirm("是否要将商品移出追踪列表？")) {
-            $.get("@Url.ActionLink("RemoveItemFromList","Trace")", {
+            $.get("/Trace/RemoveItemFromList", {
                 itemId:id
             }, function (data) {
                     var data = JSON.parse(data);

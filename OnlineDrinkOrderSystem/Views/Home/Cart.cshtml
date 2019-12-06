@@ -92,7 +92,7 @@
 <script>
     //更新购物车
     function updateCart() {
-        $.post("@Url.ActionLink("UpdateCart","Item")", {
+        $.post("/Item/UpdateCart", {
             carts: $("#form-cart").serializeArray()
         }, function (data) {
                 data = JSON.parse(data);
@@ -158,14 +158,14 @@
             delivery = 2;
         }
 
-        $.post("@Url.ActionLink("CreateOrder","Order")", {
+        $.post("/Order/CreateOrder", {
             carts: $("#form-cart").serializeArray(),
             delivery: delivery
         }, function (data) {
                 data = JSON.parse(data);
                 alert(data.message);
                 if (data.status) {
-                    location.href = "@Url.ActionLink("Order","Home")";
+                    location.href = "/Home/Order";
                 }
         })
     }

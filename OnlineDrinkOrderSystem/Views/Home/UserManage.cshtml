@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h2>添加用户：<a href="@Url.ActionLink("UserInfoManage", "Home", new { userId = 0 })">点击添加</a></h2>
+                <h2>添加用户：<a href="/Home/UserInfoManage">点击添加</a></h2>
                 <form action="#">
                     <div class="table-content table-responsive">
                         <table>
@@ -43,7 +43,7 @@
                                     <td>
                                         <a href="#" onclick="deleteUser(@item.User_ID)">删除用户</a>
                                         &nbsp;|&nbsp;
-                                        <a href="@Url.ActionLink("ItemInfoManage", "Home", new { itemId = item.User_ID })">修改信息</a>
+                                        <a href="/Home/UserInfoManage?userId=@item.User_ID">修改信息</a>
                                     </td>
                                     </tr>
                                 }
@@ -66,7 +66,7 @@
         *@
     function setUserAdmin(id) {
         if (confirm("请确认是否将该用户设置为管理员")) {
-        $.get("@Url.ActionLink("ChangeUserPrivilege","User")", {
+        $.get("/User/ChangeUserPrivilege", {
             userId:id,
             isAdmin:true
         }, function (data) {
@@ -81,7 +81,7 @@
 
     function unsetUserAdmin(id) {
         if (confirm("请确认是否删除该用户的管理员权限")) {
-        $.get("@Url.ActionLink("ChangeUserPrivilege","User")", {
+        $.get("/User/ChangeUserPrivilege", {
             userId:id,
             isAdmin:false
         }, function (data) {
@@ -96,7 +96,7 @@
 
     function deleteUser(id) {
         if (confirm("请确认是否要删除该用户")) {
-        $.get("@Url.ActionLink("DeleteUser","User")", {
+        $.get("/User/DeleteUser", {
             userId:id,
         }, function (data) {
                 data = JSON.parse(data);

@@ -34,11 +34,11 @@
 <script>
     function formLogin(){
         var submit = $("#form-login").serialize();
-        $.post("@Url.ActionLink("LoginIn","User")", submit, function (data) {
+        $.post("/User/LoginIn", submit, function (data) {
             var data = JSON.parse(data);
             alert(data.message)
             if (data.status) {
-                location.href = "@Url.ActionLink("Index","Home")";
+                location.href = "/Home/Index";
             }
         });
         return false;

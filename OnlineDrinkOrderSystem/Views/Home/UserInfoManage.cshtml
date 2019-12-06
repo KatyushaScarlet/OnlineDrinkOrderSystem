@@ -4,20 +4,23 @@
     string formTitle = "";//表单标题
     string formActionLink = "";//表单提交地址
     string buttonTitle = "";//按钮名称
+    bool editUser = false;
 
     if (user != null)
     {
         //修改用户信息
         formTitle = "修改用户信息";
-        formActionLink = Url.ActionLink("AlterUserInfo","User");
+        formActionLink = "/User/AlterUserInfo";
         buttonTitle = "修改";
+        editUser = true;
     }
     else
     {
         //添加用户
         formTitle = "创建一个新用户";
-        formActionLink = Url.ActionLink("SignUp","User");
+        formActionLink = "/User/SignUp";
         buttonTitle = "添加";
+        editUser = false;
         //创建默认信息
         user = new User();
     }
@@ -37,7 +40,14 @@
                         <input type="hidden" value="@user.User_ID" name="userId"/>
                         <div class="single-form-item">
                             <label>用户名<span>*</span></label>
-                            <input type="text" value="@user.User_Name" placeholder="请输入用户名" name="name" required />
+                            @if (editUser)
+                            {
+                                <input type="text" value="@user.User_Name" placeholder="不可修改" disabled />
+                            }
+                            else
+                            {
+                                <input type="text" value="@user.User_Name" placeholder="请输入用户名" name="name" required />
+                            }
                         </div>
 
                         <div class="row">
