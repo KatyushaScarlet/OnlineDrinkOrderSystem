@@ -1,7 +1,236 @@
 ﻿
 @{
     ViewData["Title"] = "ItemManage";
+    //获取商品列表与分类列表
+    List<Item> items = ViewData["items"] as List<Item>;
+    List<Category> categories = ViewData["categories"] as List<Category>;
+    //获取url参数
+    int totalPages = Convert.ToInt32(ViewData["pages"]);
+    int nowPage = Convert.ToInt32(ViewData["page"]);
+    int nowPageSize = Convert.ToInt32(ViewData["pageSize"]);
+    string nowKeyWord = Convert.ToString(ViewData["keyWord"]);
+    int nowCategory_ID = Convert.ToInt32(ViewData["category_ID"]);
+    int nowItemOrder = Convert.ToInt32(ViewData["itemOrder"]);
 }
+<!-- shop-main-area-start -->
+<div class="shop-main-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <h2>添加商品：<a href="@Url.ActionLink("ItemInfoManage", "Home", new { userId = 0 })">点击添加</a></h2>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="toolbar mb-30">
+                    <div class="shop-tab">
+                        <div class="list-page">
+                            <p>当前在第 @(nowPage) 页，共有 @totalPages 页</p>
+                        </div>
+                    </div>
 
-<h2>ItemManage</h2>
+                    <div class="toolbar-sorter">
+                        <span>分类</span>
+                        <select id="categorier" class="sorter-options" data-role="sorter" onchange="changeCategory();">
+                            <option value="0">所有商品</option>
+                            @foreach (var item in categories)
+                            {
+                                <option value="@item.Category_ID">@item.Category_Name</option>
+                            }
+                        </select>
+                        <span>排序</span>
+                        <select id="sorter" class="sorter-options" data-role="sorter" onchange="changeOrder();">
+                            <option value="0">默认排序</option>
+                            <option value="1">销量最高</option>
+                            <option value="2">最新上架</option>
+                            <option value="3">价格从低到高</option>
+                            <option value="4">价格从高到低</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- tab-area-start -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="th">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-content table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="product-thumbnail">图片</th>
+                                                <th>名称</th>
+                                                <th>类别</th>
+                                                <th>售价</th>
+                                                <th>进价</th>
+                                                <th>折扣</th>
+                                                <th>销量</th>
+                                                <th>库存</th>
+                                                <th>点击量</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Item item in items)
+                                            {
+                                                <tr>
+                                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                                    <td>@item.Item_Name</td>
+                                                    <td>@item.Category_Name</td>
+                                                    <td>@item.Item_Price</td>
+                                                    <td>@item.Cost</td>
+                                                    <td>-@item.Discount%</td>
+                                                    <td>@item.Sold</td>
+                                                    <td>@item.Stock</td>
+                                                    <td>@item.Click_Counts</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        ID:@item.Item_ID
+                                                    </td>
+                                                    <td colspan="2">
+                                                        上架时间：@item.Date_added
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <a href="#" onclick="deleteItem(@item.Item_ID)">删除商品</a>
+                                                    </td>
+                                                    <td colspan="3">
+                                                        <a href="@Url.ActionLink("ItemInfoManage","Home",new { itemId = item.Item_ID })">修改信息</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- tab-area-end -->
+                <!-- pagination-area-start -->
+                <div class="pagination-area mt-50">
+                    <div class="list-page-2">
+                        <p>当前在第 @(nowPage) 页，共有 @totalPages 页</p>
+                    </div>
+                    <div class="page-number">
+                        <ul>
+                            @{
+                                if (nowPage == 1)
+                                {
+                                    //如果当前在首页，则禁止向前翻页
+                                    <li class="disabled"><a>&laquo;</a></li>
+                                    <li class="disabled"><a>&lt;</a></li>
+                                }
+                                else
+                                {
+                                    //转到第一页/向前一页
+                                    <li><a href="#" onclick="selectPage(1);">&laquo;</a></li>
+                                    <li><a href="#" onclick="selectPage(page - 1);">&lt;</a></li>
+                                }
+                                //当前页的前四页
+                                for (int i = 4; i > 0; i--)
+                                {
+                                    if ((nowPage - i) > 0)
+                                    {
+                                        <li><a href="#" onclick="selectPage(page - @i);">@(nowPage - i)</a></li>
+                                    }
+                                }
+                                //当前页
+                                <li><a href="#" onclick="selectPage(page);">@nowPage</a></li>
+                                //当前页的后四页
+                                for (int i = 1; i <= 4; i++)
+                                {
+                                    if ((nowPage + i) <= totalPages)
+                                    {
+                                        <li><a href="#" onclick="selectPage(page + @i);">@(nowPage + i)</a></li>
+                                    }
 
+                                }
+
+                                if (ViewBag.page == ViewBag.pages)
+                                {
+                                    //如果当前在末尾页，则禁止向后翻页
+                                    <li class="disabled"><a>&gt;</a></li>
+                                    <li class="disabled"><a>&raquo;</a></li>
+                                }
+                                else
+                                {
+                                    //向后一页/转到最后一页
+                                    <li><a href="#" onclick="selectPage(page + 1);">&gt;</a></li>
+                                    <li><a href="#" onclick="selectPage(@totalPages);">&raquo;</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- pagination-area-end -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var pages = @totalPages;
+    var page = @nowPage;
+    var pageSize = @nowPageSize;
+    var keyWord = "@nowKeyWord";
+    var category_ID = @nowCategory_ID;
+    var itemOrder = @nowItemOrder;
+    //操作逻辑：
+
+    //新关键词：回到第一页，排序条件清空，分类清空（默认）
+    //点击分类：回到第一页，排序条件清空，关键词清空（id=0查询所有商品）
+    //点击翻页：更改页数，排序条件不变，关键词不变
+    //点击排序：回到第一页，关键词不变，分类不变
+
+    //根据url参数修改排序选中项（0为默认排序）
+    var sorter = document.getElementById("sorter");
+    sorter.options.selectedIndex = itemOrder;
+
+    //根据url参数修改类别选中项目（0为不分类显示所有）
+    var categorier = document.getElementById("categorier");
+    categorier.options.selectedIndex = category_ID;
+
+    function changeCategory() {
+        var index = categorier.options.selectedIndex;
+        category_ID = categorier.options.selectedIndex;
+        page = 1;
+        itemOrder = 0;
+        keyWord = "";
+
+        redirectUrl();
+    }
+
+    //function selectCategory(i) {
+    //    category_ID = i;
+    //    page = 1;
+    //    itemOrder = 0;
+    //    keyWord = "";
+
+    //    redirectUrl();
+    //}
+
+    function selectPage(p) {
+        page = p;
+
+        redirectUrl();
+    }
+
+    function changeOrder() {
+        itemOrder = sorter.options.selectedIndex;
+        page = 1;
+
+        redirectUrl();
+    }
+
+    function redirectUrl() {
+        location.href = "@Url.ActionLink("ItemManage","Home")?page=" + page + "&pageSize=" + pageSize + "&keyWord=" + keyWord + "&category_ID=" + category_ID + "&itemOrder=" + itemOrder;
+    }
+
+    function deleteItem(id) {
+        if (confirm("请确认是否要删除该商品")) {
+            $.get("@Url.ActionLink("DeleteItem","Item")", {
+                itemId: id
+            }, function (data) {
+                    data = JSON.parse(data);
+                    alert(data.message);
+                    if (data.status) {
+                        location.reload();
+                    }
+            });
+        }
+    }
+</script>

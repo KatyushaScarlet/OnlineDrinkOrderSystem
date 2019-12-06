@@ -1,7 +1,64 @@
 ﻿
 @{
     ViewData["Title"] = "Trace";
+    //获取追踪列表
+    List<Trace> traces = ViewData["traces"] as List<Trace>;
 }
 
-<h2>Trace</h2>
-
+<!-- trace-main-area-start -->
+<div class="cart-main-area mb-70 main-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <tr>
+                                <th class="product-thumbnail">图片</th>
+                                <th>名称</th>
+                                <th>收藏时价格</th>
+                                <th>目前价格</th>
+                                <th>操作</th>
+                            </tr>
+                            <tbody>
+                                @foreach (Trace item in traces)
+                                {
+                                    <tr>
+                                        <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                        <td>
+                                            <a class="action-view" href="#"
+                                               data-target="#productModal" data-toggle="modal"
+                                               onclick="openModalForItem(@item.Item_ID)">
+                                                @item.Item_Name
+                                            </a>
+                                        </td>
+                                        <td>@item.Trace_Price</td>
+                                        <td>@item.Item_Price</td>
+                                        <td><a href="#" onclick="deleteItemFromTrace(@item.Item_ID)">移出追踪</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- trace-main-area-end -->
+<script>
+    function deleteItemFromTrace(id) {
+        //alert("delete:" + id);
+        if (confirm("是否要将商品移出追踪列表？")) {
+            $.get("@Url.ActionLink("RemoveItemFromList","Trace")", {
+                itemId:id
+            }, function (data) {
+                    var data = JSON.parse(data);
+                    alert(data.message);
+                    if (data.status) {
+                        location.reload();
+                    }
+            })
+        }
+    }
+</script>

@@ -18,11 +18,11 @@
     "OnlineDrinkOrderSystem": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://aquas.club:5000",
+      "launchUrl": "http://aquas.com:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://aquas.club:5000"
+      "applicationUrl": "http://aquas.com:5000"
     }
   }
 }

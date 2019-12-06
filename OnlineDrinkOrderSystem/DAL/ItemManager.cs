@@ -36,7 +36,7 @@ namespace OnlineDrinkOrderSystem.DAL
         public static Item GetItem(int id)
         {
             Item item = null;
-            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Item where Item_ID='{0}'", id));
+            DataSet dataSet = DbHelper.ReadDataSet(string.Format("select * from Item left join Category on Item.Category_ID=Category.Category_ID where Item_ID='{0}'", id));
             if (dataSet.Tables[0].Rows.Count != 0)
             {
                 DataRow dataRow = dataSet.Tables[0].Rows[0];
@@ -45,6 +45,11 @@ namespace OnlineDrinkOrderSystem.DAL
             return item;
         }
 
+        //获取商品成本
+        public static double GetItemCost(int id)
+        {
+            return Convert.ToDouble(DbHelper.Read(string.Format("select Cost from Item where Item_ID='{0}';", id)));
+        }
 
         //获取商品（列表）
         //页数，每页大小
@@ -89,8 +94,8 @@ namespace OnlineDrinkOrderSystem.DAL
             //查询总条目数量
             var sql2 = string.Format("select count(*) from Item left join Category on Item.Category_ID=Category.Category_ID where 1=1 {0}", queryString);
             int itemCount = Convert.ToInt32(DbHelper.Read(sql2));
-            //计算总页数
-            totalPages = itemCount / pageSize;
+            //计算总页数（向上取整）
+            totalPages = (int)Math.Ceiling((double)itemCount / (double)pageSize);
             //开始查询
             var sql1 = string.Format("select * from Item left join Category on Item.Category_ID=Category.Category_ID where 1=1 {0} limit {1},{2}", queryString, offSet, pageSize);
             DataSet dataSet = DbHelper.ReadDataSet(sql1);
@@ -131,13 +136,40 @@ namespace OnlineDrinkOrderSystem.DAL
         }
 
         //修改商品信息
-
+        public static bool AlterItemInfo(Item item)
+        {
+            return DbHelper.Action(string.Format("update Item set " +
+                "Item_Name='{0}', Image_Url='{1}', Description='{2}', Item_Price='{3}', Category_ID='{4}', Click_Counts='{5}', " +
+                "Stock='{6}', Date_added='{7}', Cost='{8}', Sold='{9}', Discount='{10}' where Item_ID='{11}'",
+                item.Item_Name,
+                item.Image_Url,
+                item.Description,
+                item.Item_Price,
+                item.Category_ID,
+                item.Click_Counts,
+                item.Stock,
+                item.Date_added,
+                item.Cost,
+                item.Sold,
+                item.Discount,
+                item.Item_ID
+                )) == 1;
+        }
 
         //删除商品
-        //将该商品评论删除
-        //将购物车内的该商品删除
-        //将用户追踪列表中该商品删除
-
+        public static void DeleteItem(int id)
+        {
+            //将该商品评论删除
+            DbHelper.Action(string.Format("delete from Review where Item_ID='{0}';", id));
+            //将购物车内的该商品删除
+            DbHelper.Action(string.Format("delete from Cart where Item_ID='{0}';", id));
+            //将用户追踪列表中该商品id设为null
+            DbHelper.Action(string.Format("update Trace_List set Item_ID=NULL where Item_ID='{0}';", id));
+            //将订单内该商品id设为null
+            DbHelper.Action(string.Format("update Order_List set Item_ID=NULL where Item_ID='{0}';", id));
+            //删除商品
+            DbHelper.Action(string.Format("delete from Item where Item_ID='{0}';", id));
+        }
 
 
         //获取购物车信息

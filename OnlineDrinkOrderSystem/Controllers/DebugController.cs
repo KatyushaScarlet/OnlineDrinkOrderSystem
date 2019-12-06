@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OnlineDrinkOrderSystem.Models;
 using OnlineDrinkOrderSystem.DAL;
+using OnlineDrinkOrderSystem.Common;
 using Newtonsoft.Json;
 
 namespace OnlineDrinkOrderSystem.Controllers
@@ -14,6 +15,11 @@ namespace OnlineDrinkOrderSystem.Controllers
         public string Index()
         {
             return "debug ok";
+        }
+
+        public double Round(double input=0)
+        {
+            return Tool.Rounde(input);
         }
         ////用户权限变更测试
         //[HttpGet]

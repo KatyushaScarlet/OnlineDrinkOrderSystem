@@ -19,6 +19,7 @@
                                     <th class="product-thumbnail">图片</th>
                                     <th>名称</th>
                                     <th>价格</th>
+                                    <th>成本</th>
                                     <th>数量</th>
                                     <th>小计</th>
                                 </tr>
@@ -27,11 +28,20 @@
                                 @foreach (Order_List item in list)
                                 {
                                 <tr>
-                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
-                                    <td><p>@item.Item_Name</p></td>
+                                    @if (item.Item_ID == 0)
+                                    {
+                                        <td>[商品已下架]</td>
+                                        <td>[商品已下架]</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                        <td><a href="@Url.ActionLink("ItemInfoManage", "Home", new { itemId = @item.Item_ID })">@item.Item_Name</a></td>
+                                    }
                                     <td><p>@item.Order_Price</p></td>
+                                    <td><p>@item.Order_Cost</p></td>
                                     <td><p>@item.Quantity</p></td>
-                                    <td><p>@(item.Order_Price*item.Quantity)</p></td>
+                                    <td><p>@(item.Order_Price * item.Quantity)</p></td>
                                 </tr>
                                 }
                             </tbody>

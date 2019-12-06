@@ -18,7 +18,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             Response response = new Response();
             response.status = false;
-            //判断是否已登录
+            //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             if (userId != 0)
             {
@@ -104,6 +104,7 @@ namespace OnlineDrinkOrderSystem.Controllers
         {
             Response response = new Response();
             response.status = false;
+
             int nowUserId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
             bool nowIsadmin = Convert.ToBoolean(HttpContext.Session.GetString("admin"));
 
