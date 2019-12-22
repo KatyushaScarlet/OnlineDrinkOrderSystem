@@ -261,7 +261,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             }
         }
         //商品管理
-        public IActionResult ItemManage(int page = 1, int pageSize = 20, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
+        public IActionResult ItemManage(int page = 1, int pageSize = 10, string keyWord = "", int category_ID = 0, ItemOrder itemOrder = ItemOrder.none)
         {
             //判断用户权限
             int userId = Convert.ToInt32(HttpContext.Session.GetInt32("id"));
