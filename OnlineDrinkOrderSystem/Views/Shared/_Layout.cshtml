@@ -350,7 +350,7 @@
                         <div class="col-md-7 col-sm-7 col-xs-12">
                             <div class="modal-pro-content">
                                 <h3 id="item-name">名称</h3>
-                                <div class="price"><span id="item-price">NTD$ 价格</span></div>
+                                <div class="price"><span id="item-price">$ 价格</span></div>
                                 <p id="item-time">上架时间：</p>
                                 <p id="item-sold">销量：</p>
                                 <p id="item-click">热度：</p>
@@ -411,9 +411,9 @@
                         var discount = itemInfo.Discount;//折扣
                         if (discount != 0) {
                             var discountPrice = price * (1 - discount / 100);
-                            document.getElementById("item-price").innerHTML = "NTD$ <del>" + price + "</del>" + " " + Math.round(discountPrice * 100) / 100;//保留两位小数
+                            document.getElementById("item-price").innerHTML = "$ <del>" + price + "</del>" + " " + Math.round(discountPrice * 100) / 100;//保留两位小数
                         } else { 
-                            document.getElementById("item-price").innerText = "NTD$ " + price;
+                            document.getElementById("item-price").innerText = "$ " + price;
                         }
                         document.getElementById("item-discription").innerText = "商品信息：" + itemInfo.Description;//描述
                         document.getElementById("item-id").value = itemInfo.Item_ID;//id

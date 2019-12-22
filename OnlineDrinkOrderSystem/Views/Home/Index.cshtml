@@ -147,7 +147,14 @@
                                         <h4><a href="#">@items[i].Item_Name</a></h4>
                                         <div class="product-price">
                                             <ul>
-                                                <li>NTD$ @items[i].Item_Price</li>
+                                                @if (items[i].Discount != 0)
+                                                {
+                                                    <li>$ <del>@items[i].Item_Price</del>&nbsp;@((items[i].Item_Price * (100 - items[i].Discount) / 100).ToString("#0.00"))</li>
+                                                }
+                                                else
+                                                {
+                                                    <li>$ @items[i].Item_Price</li>
+                                                }
                                             </ul>
                                         </div>
                                     </div>
@@ -186,7 +193,14 @@
                                         <h4><a href="#">@items[i + 1].Item_Name</a></h4>
                                         <div class="product-price">
                                             <ul>
-                                                <li>NTD$ @items[i + 1].Item_Price</li>
+                                                @if (items[i + 1].Discount != 0)
+                                                {
+                                                <li>$ <del>@items[i + 1].Item_Price</del>&nbsp;@((items[i + 1].Item_Price * (100 - items[i + 1].Discount) / 100).ToString("#0.00"))</li>
+                                                }
+                                                else
+                                                {
+                                                    <li>$ @items[i + 1].Item_Price</li>
+                                                }
                                             </ul>
                                         </div>
                                     </div>

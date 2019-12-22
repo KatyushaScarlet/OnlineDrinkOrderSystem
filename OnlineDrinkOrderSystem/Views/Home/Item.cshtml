@@ -95,7 +95,14 @@
                                             <h4><a href="#">@item.Item_Name</a></h4>
                                             <div class="product-price">
                                                 <ul>
-                                                    <li>NTD$ @item.Item_Price</li>
+                                                    @if (item.Discount != 0)
+                                                    {
+                                                        <li>$ <del>@item.Item_Price</del>&nbsp;@((item.Item_Price * (100 - item.Discount) / 100).ToString("#0.00"))</li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>$ @item.Item_Price</li>
+                                                    }
                                                 </ul>
                                             </div>
                                         </div>

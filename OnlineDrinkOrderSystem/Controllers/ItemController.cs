@@ -78,7 +78,7 @@ namespace OnlineDrinkOrderSystem.Controllers
             return JsonConvert.SerializeObject(response);
         }
 
-        //添加商品 TODO debug
+        //添加商品
         [HttpPost]
         public string AddItem(string itemName = "", string image = "", string description = "", double price = 0, int categoryId = 0,
             int clickCount = 0, int stock = 0, DateTime dateAdd = default, double cost = 0, int sold = 0, int discount = 0)
