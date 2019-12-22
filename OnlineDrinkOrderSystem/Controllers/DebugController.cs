@@ -79,6 +79,45 @@ namespace OnlineDrinkOrderSystem.Controllers
         //    return string.Format("add items {0}/{1} ok", success, count);
         //}
 
+        //商品批量添加
+        [HttpGet]
+        public string AddItems()
+        {
+            //冰淇淋 id=5 001-006 
+            //冰沙 id=3 007-016 
+            //果汁 id=2 017-021 
+            //咖啡 id=4 022-029
+            //奶茶 id=1 030-034
+
+            int success = 0;
+            for (int i = 30; i <= 34; i++)
+            {
+                //取新的随机种子
+                Random rdm = new Random(int.Parse(DateTime.Now.ToString("HHmmssfff")).GetHashCode());//保证不重复
+
+                //创建新商品
+                Item item = new Item();
+                item.Item_Name = "奶茶" + rdm.Next(100000, 999999);
+                item.Image_Url = string.Format("/img/item/{0}.jpg", i.ToString("D3"));
+                item.Description = "此处为 "+ item.Item_Name + " 的商品描述";
+                item.Item_Price = (int)rdm.Next(3, 5) * 10;
+                item.Category_ID = 1;
+                item.Click_Counts = rdm.Next(100, 999);
+                item.Stock = rdm.Next(10, 99);
+                item.Date_added = DateTime.Now.AddDays(0 - rdm.Next(0, 1000));
+                item.Cost = item.Item_Price / 2;
+                item.Sold = rdm.Next(10, 99);
+                item.Discount = 0;
+                var result = ItemManager.AddItem(item);
+
+                //成功计数
+                if (result) success++;
+            }
+
+            return string.Format("add items {0} ok", success);
+        }
+
+
         //[HttpGet]
         //public string GetItemList(int page, int pagesize, string keyword, int category_ID, ItemOrder itemOrder)
         //{
