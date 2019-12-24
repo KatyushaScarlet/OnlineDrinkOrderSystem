@@ -117,6 +117,9 @@ namespace OnlineDrinkOrderSystem.DAL
                     ));
             }
 
+            //下单成功后清空原有的购物车
+            DbHelper.Action(string.Format("delete from Cart where User_ID='{0}'", user.User_ID));
+
             return true;
         }
 

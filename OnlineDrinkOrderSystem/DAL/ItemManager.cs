@@ -160,7 +160,7 @@ namespace OnlineDrinkOrderSystem.DAL
         public static void DeleteItem(int id)
         {
             //将该商品评论删除
-            DbHelper.Action(string.Format("delete from Review where Item_ID='{0}';", id));
+            //DbHelper.Action(string.Format("delete from Review where Item_ID='{0}';", id));
             //将购物车内的该商品删除
             DbHelper.Action(string.Format("delete from Cart where Item_ID='{0}';", id));
             //将用户追踪列表中该商品id设为null

@@ -112,7 +112,7 @@ namespace OnlineDrinkOrderSystem.DAL
 
         //删除用户
         //同时删除：购物车、追踪列表
-        //FK id更改为0：评论、订单
+       //FK id更改为0：评论、订单
         public static void DeleteUser(int userId)
         {
             /*
@@ -126,7 +126,7 @@ namespace OnlineDrinkOrderSystem.DAL
             //删除追踪列表
             DbHelper.Action(string.Format("delete from Trace_List where User_ID='{0}'", userId));
             //评论 id设置为null
-            DbHelper.Action(string.Format("update Review set User_ID=null where User_ID='{0}'", userId));
+            //DbHelper.Action(string.Format("update Review set User_ID=null where User_ID='{0}'", userId));
             //订单 id设置为null
             DbHelper.Action(string.Format("update Order_Detail set User_ID=null where User_ID='{0}'", userId));
             //删除用户

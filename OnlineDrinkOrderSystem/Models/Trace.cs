@@ -13,5 +13,6 @@ namespace OnlineDrinkOrderSystem.Models
         public string Image_Url { get; set; }
         public string Item_Name { get; set; }
         public double Item_Price { get; set; }
+        public int Discount { get; set; }
     }
 }

@@ -18,24 +18,33 @@
                                 <th>名称</th>
                                 <th>收藏时价格</th>
                                 <th>目前价格</th>
+                                <th>目前折扣</th>
                                 <th>操作</th>
                             </tr>
                             <tbody>
                                 @foreach (Trace item in traces)
                                 {
-                                    <tr>
-                                        <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
-                                        <td>
-                                            <a class="action-view" href="#"
-                                               data-target="#productModal" data-toggle="modal"
-                                               onclick="openModalForItem(@item.Item_ID)">
-                                                @item.Item_Name
-                                            </a>
-                                        </td>
-                                        <td>@item.Trace_Price</td>
+                                <tr>
+                                    <td class="product-thumbnail"><img src="@item.Image_Url" /></td>
+                                    <td>
+                                        <a class="action-view" href="#"
+                                           data-target="#productModal" data-toggle="modal"
+                                           onclick="openModalForItem(@item.Item_ID)">
+                                            @item.Item_Name
+                                        </a>
+                                    </td>
+                                    <td>@item.Trace_Price</td>
+                                    @if (item.Discount != 0)
+                                    {
+                                        <td>@((item.Item_Price * (100 - item.Discount) / 100).ToString("#0.00"))</td>
+                                    }
+                                    else
+                                    {
                                         <td>@item.Item_Price</td>
-                                        <td><a href="#" onclick="deleteItemFromTrace(@item.Item_ID)">移出追踪</a></td>
-                                    </tr>
+                                    }
+                                    <td>@item.Discount</td>
+                                    <td><a href="#" onclick="deleteItemFromTrace(@item.Item_ID)">移出追踪</a></td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
