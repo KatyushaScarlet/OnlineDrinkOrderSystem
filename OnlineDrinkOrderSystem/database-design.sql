@@ -45,14 +45,14 @@ UNIQUE(User_Name),-- 用户名唯一
 Primary key(User_ID)-- 主键 用户id
 );
 
--- 评论（仅表结构，未实作）
+-- 评论
 
 CREATE TABLE Review(
 Review_ID INT NOT NULL AUTO_INCREMENT,-- 评论id
 User_ID INT ,-- 用户id
 Item_ID INT NOT NULL,-- 商品id
 Content VARCHAR(255) NOT NULL,-- 评论内容
-Recommend BOOLEAN NOT NULL,-- 推荐/不推荐
+Recommend DOUBLE NOT NULL,-- 推荐程度
 Date DATETIME NOT NULL,-- 评价日期
 PRIMARY key(Review_ID),-- 主键 评论id
 foreign key(User_ID) REFERENCES User(User_ID),-- 外键 用户id

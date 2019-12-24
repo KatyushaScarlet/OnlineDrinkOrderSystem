@@ -102,7 +102,7 @@ namespace OnlineDrinkOrderSystem.DAL
                 detail.Delivery,
                 detail.Shipment,
                 detail.Address,
-                detail.Order_Date
+                detail.Order_Date.ToString("yyyy-MM-ddTHH:mm:ss")
                 ));
 
             //写入订单列表

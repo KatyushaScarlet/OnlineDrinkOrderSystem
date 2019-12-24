@@ -122,7 +122,7 @@ namespace OnlineDrinkOrderSystem.DAL
                 item.Category_ID,
                 item.Click_Counts,
                 item.Stock,
-                item.Date_added,
+                item.Date_added.ToString("yyyy-MM-ddTHH:mm:ss"),
                 item.Cost,
                 item.Sold,
                 item.Discount
@@ -148,7 +148,7 @@ namespace OnlineDrinkOrderSystem.DAL
                 item.Category_ID,
                 item.Click_Counts,
                 item.Stock,
-                item.Date_added,
+                item.Date_added.ToString("yyyy-MM-ddTHH:mm:ss"),
                 item.Cost,
                 item.Sold,
                 item.Discount,

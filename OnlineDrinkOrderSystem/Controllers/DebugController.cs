@@ -17,10 +17,17 @@ namespace OnlineDrinkOrderSystem.Controllers
             return "debug ok";
         }
 
-        public double Round(double input=0)
-        {
-            return Tool.Rounde(input);
-        }
+        //sql测试
+
+        //public string check(string name)
+        //{
+        //    return UserManager.CheckNameExist(name).ToString();
+        //}
+
+        //public double Round(double input=0)
+        //{
+        //    return Tool.Rounde(input);
+        //}
         ////用户权限变更测试
         //[HttpGet]
         //public bool ChangeUserPrivilege(int userId,bool isAdmin)
@@ -80,42 +87,42 @@ namespace OnlineDrinkOrderSystem.Controllers
         //}
 
         //商品批量添加
-        [HttpGet]
-        public string AddItems()
-        {
-            //冰淇淋 id=5 001-006 
-            //冰沙 id=3 007-016 
-            //果汁 id=2 017-021 
-            //咖啡 id=4 022-029
-            //奶茶 id=1 030-034
+        //[HttpGet]
+        //public string AddItems()
+        //{
+        //    //冰淇淋 id=5 001-006 
+        //    //冰沙 id=3 007-016 
+        //    //果汁 id=2 017-021 
+        //    //咖啡 id=4 022-029
+        //    //奶茶 id=1 030-034
 
-            int success = 0;
-            for (int i = 30; i <= 34; i++)
-            {
-                //取新的随机种子
-                Random rdm = new Random(int.Parse(DateTime.Now.ToString("HHmmssfff")).GetHashCode());//保证不重复
+        //    int success = 0;
+        //    for (int i = 30; i <= 34; i++)
+        //    {
+        //        //取新的随机种子
+        //        Random rdm = new Random(int.Parse(DateTime.Now.ToString("HHmmssfff")).GetHashCode());//保证不重复
 
-                //创建新商品
-                Item item = new Item();
-                item.Item_Name = "奶茶" + rdm.Next(100000, 999999);
-                item.Image_Url = string.Format("/img/item/{0}.jpg", i.ToString("D3"));
-                item.Description = "此处为 "+ item.Item_Name + " 的商品描述";
-                item.Item_Price = (int)rdm.Next(3, 5) * 10;
-                item.Category_ID = 1;
-                item.Click_Counts = rdm.Next(100, 999);
-                item.Stock = rdm.Next(10, 99);
-                item.Date_added = DateTime.Now.AddDays(0 - rdm.Next(0, 1000));
-                item.Cost = item.Item_Price / 2;
-                item.Sold = rdm.Next(10, 99);
-                item.Discount = 0;
-                var result = ItemManager.AddItem(item);
+        //        //创建新商品
+        //        Item item = new Item();
+        //        item.Item_Name = "奶茶" + rdm.Next(100000, 999999);
+        //        item.Image_Url = string.Format("/img/item/{0}.jpg", i.ToString("D3"));
+        //        item.Description = "此处为 "+ item.Item_Name + " 的商品描述";
+        //        item.Item_Price = (int)rdm.Next(3, 5) * 10;
+        //        item.Category_ID = 1;
+        //        item.Click_Counts = rdm.Next(100, 999);
+        //        item.Stock = rdm.Next(10, 99);
+        //        item.Date_added = DateTime.Now.AddDays(0 - rdm.Next(0, 1000));
+        //        item.Cost = item.Item_Price / 2;
+        //        item.Sold = rdm.Next(10, 99);
+        //        item.Discount = 0;
+        //        var result = ItemManager.AddItem(item);
 
-                //成功计数
-                if (result) success++;
-            }
+        //        //成功计数
+        //        if (result) success++;
+        //    }
 
-            return string.Format("add items {0} ok", success);
-        }
+        //    return string.Format("add items {0} ok", success);
+        //}
 
 
         //[HttpGet]
@@ -157,10 +164,10 @@ namespace OnlineDrinkOrderSystem.Controllers
         //    return temp.ToString();
         //}
 
-        [HttpGet]
-        public bool SetOrderStatus(int orderId, int status)
-        {
-            return OrderManager.SetOrderStatus(orderId, status);
-        }
+        //[HttpGet]
+        //public bool SetOrderStatus(int orderId, int status)
+        //{
+        //    return OrderManager.SetOrderStatus(orderId, status);
+        //}
     }
 }
